@@ -1,19 +1,22 @@
 import { z } from "zod"
 
-import { creationTimestampFields, uuidSchema } from "./base-schema"
+import { uuidSchema } from "./base-schema"
 
 const hashtagSchema = z.object({
   id: uuidSchema,
 
-  name: z.string().nonempty({ message: "Content cannot be empty" }),
-  postsCount: z.number().min(0, { message: "Posts count cannot be less than 0" }),
+  name: z
+    .string()
+    .min(3, { message: "Hashtag must be at least 3 characters long." })
+    .max(50, { message: "Hashtag cannot exceed 50 characters." }),
 
-  ...creationTimestampFields
+  postsCount: z.number().int().min(0).default(0),
+
+  createdAt: z.string().datetime()
 })
 
-export const createHashtagSchema = hashtagSchema.pick({
+export const postHashtagSchema = hashtagSchema.pick({
   name: true
 })
 
 export type HashtagType = z.infer<typeof hashtagSchema>
-export type CreateHashtagType = z.infer<typeof createHashtagSchema>

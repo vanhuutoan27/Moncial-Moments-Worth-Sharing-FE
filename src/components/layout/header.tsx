@@ -1,7 +1,7 @@
 import React from "react"
 
 import {
-  ArrowRightIcon,
+  ArrowRight,
   BellRing,
   BoltIcon,
   BookOpenIcon,
@@ -9,7 +9,7 @@ import {
   Layers2Icon,
   LogOutIcon,
   MessageCircle,
-  SearchIcon,
+  Search,
   UsersRound
 } from "lucide-react"
 
@@ -30,10 +30,9 @@ function Header() {
   return (
     <div className="flex h-16 items-center justify-between gap-2">
       <div className="flex w-full items-center gap-2 md:gap-10">
-        <div className="flex items-center text-3xl font-bold">
-          <span className="text-primary">Mon</span>
-          <p>cial</p>
-        </div>
+        <h2 className="text-3xl font-bold">
+          Mon<span>cial</span>
+        </h2>
 
         <div className="*:not-first:mt-2">
           <div className="relative">
@@ -44,14 +43,14 @@ function Header() {
               type="text"
             />
             <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
-              <SearchIcon size={16} />
+              <Search size={16} />
             </div>
             <button
               className="text-primary hover:text-primary/30 focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] duration-300 outline-none hover:cursor-pointer focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
               aria-label="Submit search"
               type="submit"
             >
-              <ArrowRightIcon size={16} aria-hidden="true" />
+              <ArrowRight size={16} aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -63,14 +62,16 @@ function Header() {
             size={16}
             className="hover:text-primary/30 text-primary duration-300 hover:cursor-pointer"
           />
+
           <MessageCircle
             size={16}
             className="hover:text-primary/30 text-primary duration-300 hover:cursor-pointer"
           />
+
           <BellRing
             size={16}
             className="hover:text-primary/30 text-primary duration-300 hover:cursor-pointer"
-          />{" "}
+          />
         </div>
 
         <DropdownMenu>

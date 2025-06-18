@@ -1,7 +1,7 @@
 import React from "react"
 
-function MobileMenuLayout() {
-  return <div>MobileMenuLayout</div>
+function MobileMenu() {
+  return <div>MobileMenu</div>
 }
 
-export default MobileMenuLayout
+export default MobileMenu
