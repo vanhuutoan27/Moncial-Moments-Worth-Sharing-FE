@@ -3,7 +3,7 @@ import { z } from "zod"
 import { Privacy } from "@/constants/enums/Privacy"
 
 import { uuidSchema } from "./base-schema"
-import { postHashtagSchema } from "./hashtag-schema"
+import { authorSchema } from "./user-schema"
 
 export const postImageSchema = z.object({
   url: z.string().url({ message: "Image URL must be a valid URL" }),
@@ -13,6 +13,8 @@ export const postImageSchema = z.object({
 const postSchema = z.object({
   id: uuidSchema,
   authorId: uuidSchema,
+
+  author: authorSchema,
 
   caption: z.string().max(2000, { message: "Caption cannot exceed 2000 characters." }).optional(),
   location: z.string().max(100, { message: "Location must not exceed 100 characters" }).optional(),
@@ -27,7 +29,12 @@ const postSchema = z.object({
   }),
 
   hashtags: z
-    .array(postHashtagSchema)
+    .array(
+      z
+        .string()
+        .min(3, { message: "Hashtag must be at least 3 characters long." })
+        .max(50, { message: "Hashtag cannot exceed 50 characters." })
+    )
     .max(20, { message: "Cannot add more than 20 hashtags per post." })
     .optional(),
 
@@ -68,6 +75,8 @@ export const updatePostLocationSchema = postSchema.pick({
 export const updatePostPrivacySchema = postSchema.pick({
   privacy: true
 })
+
+export type PostImageType = z.infer<typeof postImageSchema>
 
 export type PostType = z.infer<typeof postSchema>
 export type CreatePostType = z.infer<typeof createPostSchema>

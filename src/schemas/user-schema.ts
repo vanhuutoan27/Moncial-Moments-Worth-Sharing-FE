@@ -53,4 +53,11 @@ export const userSchema = z.object({
   updatedAt: z.string().datetime()
 })
 
+export const authorSchema = userSchema.pick({
+  id: true,
+  fullName: true,
+  username: true,
+  avatarUrl: true
+})
+
 export type UserType = z.infer<typeof userSchema>
