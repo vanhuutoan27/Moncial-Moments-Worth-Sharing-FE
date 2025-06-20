@@ -70,7 +70,7 @@ function Header() {
               >
                 <Avatar>
                   <AvatarImage
-                    src="https://firebasestorage.googleapis.com/v0/b/diamoondb-1412.appspot.com/o/Moncial%2Fusers%2Fz6687477819732_e0db4afc5aae1f583e360609f165d2ba.jpg?alt=media&token=4d589775-25cd-4ee1-8221-4fd935691264"
+                    src="https://firebasestorage.googleapis.com/v0/b/diamoondb-1412.appspot.com/o/Moncial%2Fusers%2F28a9df75-5841-4351-9f4a-78b209514b10.jpg?alt=media&token=e316d291-6534-4c7c-ae96-a8ff35a3a946"
                     alt="Zotaeus"
                   />
                   <AvatarFallback>Z</AvatarFallback>
