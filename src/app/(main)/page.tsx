@@ -2,9 +2,8 @@
 
 import React from "react"
 
-import PostCard from "@/components/features/(main)/post-card"
-
-import { postsData } from "@/constants/data/posts"
+import MainFeeds from "@/components/features/(main)/main-feeds"
+import NewPost from "@/components/features/(main)/new-post"
 
 function HomePage() {
   // const { posts, loading, error } = usePosts()
@@ -14,10 +13,9 @@ function HomePage() {
   // }
 
   return (
-    <div className="flex flex-col items-center space-y-6">
-      {postsData.map((post) => (
-        <PostCard key={post.id} postData={post} />
-      ))}
+    <div className="mx-auto flex max-w-lg flex-col items-center space-y-6">
+      <NewPost />
+      <MainFeeds />
     </div>
   )
 }

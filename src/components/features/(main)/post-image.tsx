@@ -3,7 +3,9 @@ import React, { useCallback, useEffect, useState } from "react"
 import Image from "next/image"
 
 import useEmblaCarousel from "embla-carousel-react"
+import { X } from "lucide-react"
 
+import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 
 import { cn } from "@/lib/utils"
@@ -21,6 +23,8 @@ interface PostImageProps {
   images: PostImageType[]
   aspectRatio?: "square" | "portrait" | "landscape" | "wide"
   priority?: boolean
+  onImageRemove?: (index: number) => void
+  showDeleteButtons?: boolean
   className?: string
 }
 
@@ -28,6 +32,8 @@ export function PostImage({
   images,
   aspectRatio = "portrait",
   priority = false,
+  onImageRemove,
+  showDeleteButtons = false,
   className = ""
 }: PostImageProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false })
@@ -59,6 +65,17 @@ export function PostImage({
     setLoadedImages((prev) => new Set([...prev, index]))
   }
 
+  const handleImageRemove = (index: number, e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (onImageRemove) {
+      onImageRemove(index)
+    }
+  }
+
+  if (images.length === 0) {
+    return null
+  }
+
   if (images.length === 1) {
     return (
       <div
@@ -83,6 +100,18 @@ export function PostImage({
             loadedImages.has(0) && "opacity-100"
           )}
         />
+
+        {showDeleteButtons && onImageRemove && (
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            onClick={(e) => handleImageRemove(0, e)}
+            className="transition-color absolute top-2 right-2 z-20 bg-black/50 text-white duration-300 hover:text-black"
+          >
+            <X size={14} />
+          </Button>
+        )}
       </div>
     )
   }
@@ -97,6 +126,7 @@ export function PostImage({
               className={cn("relative min-w-0 flex-[0_0_100%]", ASPECT_RATIOS[aspectRatio])}
             >
               {!loadedImages.has(index) && <Skeleton className="absolute inset-0 h-full w-full" />}
+
               <Image
                 src={image.url}
                 alt={image.altText || `Post image ${index + 1}`}
@@ -105,11 +135,23 @@ export function PostImage({
                 loading={priority && index === 0 ? "eager" : "lazy"}
                 onLoad={() => handleImageLoad(index)}
                 className={cn(
-                  "object-cover transition-all duration-300",
+                  "object-cover transition-opacity duration-300",
                   !loadedImages.has(index) && "opacity-0",
                   loadedImages.has(index) && "opacity-100"
                 )}
               />
+
+              {showDeleteButtons && onImageRemove && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  onClick={(e) => handleImageRemove(index, e)}
+                  className="transition-color absolute top-2 right-2 z-20 bg-black/50 text-white duration-300 hover:text-black"
+                >
+                  <X size={14} />
+                </Button>
+              )}
             </div>
           ))}
         </div>
@@ -125,14 +167,13 @@ export function PostImage({
                 index === selectedIndex ? "bg-white" : "bg-white/20 hover:bg-white/50"
               )}
               onClick={() => scrollTo(index)}
-              aria-label={`Go to slide ${index + 1}`}
             />
           ))}
         </div>
       )}
 
-      {images.length > 1 && (
-        <div className="absolute top-2 right-2 z-10 rounded-full bg-black/20 px-2 py-1 text-xs text-white backdrop-blur select-none">
+      {images.length > 1 && !showDeleteButtons && (
+        <div className="absolute top-2 right-2 z-10 rounded-full bg-black/40 px-2 py-1 text-xs text-white backdrop-blur select-none">
           {selectedIndex + 1}/{images.length}
         </div>
       )}

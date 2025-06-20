@@ -1,19 +1,19 @@
-"use client"
-
 import React from "react"
 
 import {
   Bell,
-  Bolt,
-  BookOpen,
   ChevronDown,
   Layers2,
   LogOut,
   MessageCircle,
-  Pin,
+  Monitor,
+  Moon,
   Search,
+  Sun,
+  SunMoon,
   UserPen
 } from "lucide-react"
+import { useTheme } from "next-themes"
 
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { Button } from "../ui/button"
@@ -23,18 +23,29 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger
 } from "../ui/dropdown-menu"
 import { Input } from "../ui/input"
 
 function Header() {
+  const { theme, setTheme } = useTheme()
+
+  const routes = [
+    { label: "Profile", icon: UserPen },
+    { label: "Settings", icon: Layers2 }
+  ]
+
   return (
     <div className="bg-background border-border sticky top-0 z-50 w-full border shadow-sm">
       <div className="container mx-auto flex h-16 items-center justify-between gap-2">
-        <div className="flex items-center gap-12">
-          <h2 className="cursor-pointer text-2xl font-bold tracking-wider text-black">
-            Mon<span className="text-secondary">cial</span>
+        <div className="flex items-center gap-20">
+          <h2 className="text-foreground cursor-pointer text-2xl font-bold tracking-wider">
+            Mon<span className="text-primary">cial</span>
           </h2>
 
           <div className="relative">
@@ -49,15 +60,15 @@ function Header() {
         </div>
 
         <div className="flex items-center space-x-8">
-          <div className="space-x-1">
-            <Button variant="ghost" size="icon" className="relative rounded-full duration-300">
+          <div className="hidden space-x-1 lg:flex">
+            <Button variant="ghost" size="icon" className="relative">
               <MessageCircle size={20} color="var(--primary)" className="opacity-70" />
-              <span className="border-background absolute top-1.5 right-1.5 size-3 rounded-full border-2 bg-sky-700" />
+              <span className="border-background bg-destructive absolute top-1.5 right-1.5 size-3 rounded-full border-2" />
             </Button>
 
-            <Button variant="ghost" size="icon" className="relative rounded-full duration-300">
+            <Button variant="ghost" size="icon" className="relative">
               <Bell size={20} color="var(--primary)" className="opacity-70" />
-              <span className="border-background absolute top-1.5 right-1.5 size-3 rounded-full border-2 bg-sky-700" />
+              <span className="border-background bg-destructive absolute top-1.5 right-1.5 size-3 rounded-full border-2" />
             </Button>
           </div>
 
@@ -66,15 +77,20 @@ function Header() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="focus-visible:ring-ring/0 hover:bg-transparent"
+                className="hover:bg-transparent focus-visible:ring-0 dark:hover:bg-transparent"
               >
-                <Avatar>
-                  <AvatarImage
-                    src="https://firebasestorage.googleapis.com/v0/b/diamoondb-1412.appspot.com/o/Moncial%2Fusers%2F28a9df75-5841-4351-9f4a-78b209514b10.jpg?alt=media&token=e316d291-6534-4c7c-ae96-a8ff35a3a946"
-                    alt="Zotaeus"
-                  />
-                  <AvatarFallback>Z</AvatarFallback>
-                </Avatar>
+                <div className="relative">
+                  <Avatar>
+                    <AvatarImage
+                      src="https://firebasestorage.googleapis.com/v0/b/diamoondb-1412.appspot.com/o/Moncial%2Fusers%2F28a9df75-5841-4351-9f4a-78b209514b10.jpg?alt=media&token=e316d291-6534-4c7c-ae96-a8ff35a3a946"
+                      alt="Zotaeus"
+                    />
+                    <AvatarFallback>Z</AvatarFallback>
+                  </Avatar>
+
+                  <span className="border-background absolute -right-0.5 -bottom-0.5 size-3 rounded-full border-2 bg-emerald-500" />
+                </div>
+
                 <ChevronDown size={16} color="var(--primary)" className="opacity-70" />
               </Button>
             </DropdownMenuTrigger>
@@ -90,37 +106,63 @@ function Header() {
               <DropdownMenuSeparator />
 
               <DropdownMenuGroup>
-                <DropdownMenuItem>
-                  <Bolt size={16} color="var(--primary)" className="opacity-70" />
-                  <span>Option 1</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Layers2 size={16} color="var(--primary)" className="opacity-70" />
-                  <span>Option 2</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <BookOpen size={16} color="var(--primary)" className="opacity-70" />
-                  <span>Option 3</span>
-                </DropdownMenuItem>
+                {routes.map((route, index) => {
+                  const Icon = route.icon
+
+                  return (
+                    <DropdownMenuItem key={index}>
+                      <Icon size={16} color="var(--primary)" className="opacity-70" />
+                      <span>{route.label}</span>
+                    </DropdownMenuItem>
+                  )
+                })}
               </DropdownMenuGroup>
 
               <DropdownMenuSeparator />
 
               <DropdownMenuGroup>
-                <DropdownMenuItem>
-                  <Pin size={16} color="var(--primary)" className="opacity-70" />
-                  <span>Option 4</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <UserPen size={16} color="var(--primary)" className="opacity-70" />
-                  <span>Option 5</span>
-                </DropdownMenuItem>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>
+                    <SunMoon size={16} color="var(--primary)" className="opacity-70" />
+                    <span>Theme</span>
+                  </DropdownMenuSubTrigger>
+
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent>
+                      <DropdownMenuItem
+                        onClick={() => setTheme("light")}
+                        className={`cursor-pointer ${theme === "light" ? "bg-border" : ""}`}
+                      >
+                        <Sun size={16} color="var(--primary)" className="opacity-70" />
+                        <span>Light</span>
+                      </DropdownMenuItem>
+
+                      <DropdownMenuItem
+                        onClick={() => setTheme("dark")}
+                        className={`cursor-pointer ${theme === "dark" ? "bg-border" : ""}`}
+                      >
+                        <Moon size={16} color="var(--primary)" className="opacity-70" />
+                        <span>Dark</span>
+                      </DropdownMenuItem>
+
+                      <DropdownMenuSeparator />
+
+                      <DropdownMenuItem
+                        onClick={() => setTheme("system")}
+                        className={`cursor-pointer ${theme === "system" ? "bg-border" : ""}`}
+                      >
+                        <Monitor size={16} color="var(--primary)" className="opacity-70" />
+                        <span>System</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
               </DropdownMenuGroup>
 
               <DropdownMenuSeparator />
 
               <DropdownMenuItem variant="destructive">
-                <LogOut size={16} color="var(--primary)" className="opacity-70" />
+                <LogOut size={16} color="var(--destructive)" className="opacity-70" />
                 <span>Logout</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
