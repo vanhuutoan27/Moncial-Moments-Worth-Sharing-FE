@@ -3,6 +3,8 @@ import { Poppins } from "next/font/google"
 
 import { Toaster } from "@/components/ui/sonner"
 
+import { ThemeProvider } from "@/providers/theme-provider"
+
 import "../styles/globals.css"
 
 const poppins = Poppins({
@@ -22,10 +24,17 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="light">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${poppins.variable} antialiased`}>
-        {children}
-        <Toaster />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   )
