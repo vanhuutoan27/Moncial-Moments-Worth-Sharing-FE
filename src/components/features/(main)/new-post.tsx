@@ -1,11 +1,10 @@
 import React, { useCallback, useRef, useState } from "react"
 
 import {
-  Camera,
   ChevronDown,
   Globe,
   Hash,
-  Image,
+  Image as ImageIcon,
   LockKeyhole,
   MapPin,
   PencilLine,
@@ -336,7 +335,7 @@ function NewPost() {
               onClick={triggerImageSelection}
               className="font-normal"
             >
-              <Image size={12} color="#fff" />
+              <ImageIcon size={12} color="#fff" />
               Upload
             </Button>
 
@@ -371,10 +370,9 @@ function NewPost() {
 
               <PostImage
                 images={processedPostImages}
-                aspectRatio="portrait"
-                priority={true}
+                priority
                 onImageRemove={handleImageRemoval}
-                showDeleteButtons={true}
+                showDeleteButtons
               />
             </div>
           )}
