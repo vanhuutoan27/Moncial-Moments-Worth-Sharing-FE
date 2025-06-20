@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { Privacy } from "@/constants/enums/privacy"
+import { Privacy } from "@/constants/privacy"
 
 import { uuidSchema } from "./base-schema"
 import { authorSchema } from "./user-schema"

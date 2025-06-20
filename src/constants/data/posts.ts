@@ -1,4 +1,4 @@
-import { Privacy } from "../enums/privacy"
+import { Privacy } from "../privacy"
 
 export const postsData = [
   {
