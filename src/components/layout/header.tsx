@@ -1,4 +1,8 @@
+"use client"
+
 import React from "react"
+
+import Link from "next/link"
 
 import {
   Bell,
@@ -44,9 +48,11 @@ function Header() {
     <div className="bg-background border-border sticky top-0 z-50 w-full border shadow-sm">
       <div className="container mx-auto flex h-16 items-center justify-between gap-2">
         <div className="flex items-center gap-20">
-          <h2 className="text-foreground cursor-pointer text-2xl font-bold tracking-wider">
-            Mon<span className="text-primary">cial</span>
-          </h2>
+          <Link href="/">
+            <h2 className="text-foreground cursor-pointer text-2xl font-bold tracking-wider select-none">
+              Mon<span className="text-primary">cial</span>
+            </h2>
+          </Link>
 
           <div className="relative">
             <Input type="text" placeholder="Search something..." className="w-[400px]" />
@@ -85,7 +91,7 @@ function Header() {
                       src="https://firebasestorage.googleapis.com/v0/b/diamoondb-1412.appspot.com/o/Moncial%2Fusers%2F28a9df75-5841-4351-9f4a-78b209514b10.jpg?alt=media&token=e316d291-6534-4c7c-ae96-a8ff35a3a946"
                       alt="Zotaeus"
                     />
-                    <AvatarFallback>Z</AvatarFallback>
+                    <AvatarFallback>{"Zotaeus".charAt(0)}</AvatarFallback>
                   </Avatar>
 
                   <span className="border-background absolute -right-0.5 -bottom-0.5 size-3 rounded-full border-2 bg-emerald-500" />

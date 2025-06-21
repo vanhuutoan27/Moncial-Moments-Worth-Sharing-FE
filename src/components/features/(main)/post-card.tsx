@@ -1,21 +1,13 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useCallback, useMemo, useState } from "react"
 
 import { formatDistanceToNow } from "date-fns"
-import {
-  Bolt,
-  BookOpen,
-  Bookmark,
-  Ellipsis,
-  Heart,
-  Layers2,
-  MessageCircle,
-  Send,
-  Trash2
-} from "lucide-react"
+import { Bolt, BookOpen, Ellipsis, Layers2, Trash2 } from "lucide-react"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import UserAvatar from "@/components/shared/user-avatar"
+import UserProfile from "@/components/shared/user-profile"
+
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -25,63 +17,126 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 
 import { PostType } from "@/schemas/post-schema"
 
+import PostActions from "./post-actions"
+import PostContent from "./post-content"
 import { PostImage } from "./post-image"
+import PostLikes from "./post-likes"
 
 interface PostCardProps {
   postData: PostType
+  onLike?: (postId: string, isLiked: boolean) => void
+  onBookmark?: (postId: string, isBookmarked: boolean) => void
+  onShare?: (postId: string) => void
+  onComment?: (postId: string) => void
+  onMenuAction?: (postId: string, action: string) => void
 }
 
-function PostCard({ postData }: PostCardProps) {
+function PostCard({
+  postData,
+  onLike,
+  onBookmark,
+  onShare,
+  onComment,
+  onMenuAction
+}: PostCardProps) {
   const [isLiked, setIsLiked] = useState<boolean>(false)
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(false)
 
-  const handleLikeToggle = () => {
-    setIsLiked((prev) => !prev)
-  }
+  const formattedDate = useMemo(
+    () => formatDistanceToNow(new Date(postData.createdAt), { addSuffix: true }),
+    [postData.createdAt]
+  )
+
+  const commentsText = useMemo(() => {
+    if (postData.commentsCount === 0) return "No comments yet"
+    if (postData.commentsCount === 1) return "View 1 comment"
+    return `View all ${postData.commentsCount} comments`
+  }, [postData.commentsCount])
+
+  const handleLikeToggle = useCallback(() => {
+    const newLikedState = !isLiked
+    setIsLiked(newLikedState)
+    onLike?.(postData.id, newLikedState)
+  }, [isLiked, onLike, postData.id])
+
+  const handleComment = useCallback(() => {
+    onComment?.(postData.id)
+  }, [onComment, postData.id])
+
+  const handleShare = useCallback(() => {
+    onShare?.(postData.id)
+  }, [onShare, postData.id])
+
+  const handleBookmarkToggle = useCallback(() => {
+    const newBookmarkedState = !isBookmarked
+    setIsBookmarked(newBookmarkedState)
+    onBookmark?.(postData.id, newBookmarkedState)
+  }, [isBookmarked, onBookmark, postData.id])
+
+  const handleMenuAction = useCallback(
+    (action: string) => {
+      onMenuAction?.(postData.id, action)
+    },
+    [onMenuAction, postData.id]
+  )
 
   return (
     <div className="border-border flex w-full flex-col gap-4 rounded-lg border p-4 shadow-md">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Avatar className="size-10">
-            <AvatarImage src={postData.author.avatarUrl} alt={postData.author.fullName} />
-            <AvatarFallback>{postData.author.fullName}</AvatarFallback>
-          </Avatar>
+          <HoverCard>
+            <HoverCardTrigger asChild>
+              <UserAvatar user={postData.author} />
+            </HoverCardTrigger>
+
+            <HoverCardContent className="w-80">
+              <UserProfile author={postData.author} />
+            </HoverCardContent>
+          </HoverCard>
 
           <div>
-            <h3 className="text-foreground w-fit cursor-pointer text-sm font-semibold">
-              {postData.author.fullName}
-            </h3>
+            <HoverCard>
+              <HoverCardTrigger asChild>
+                <h3 className="text-foreground w-fit cursor-pointer text-sm font-semibold">
+                  {postData.author.fullName}
+                </h3>
+              </HoverCardTrigger>
+
+              <HoverCardContent className="w-80">
+                <UserProfile author={postData.author} />
+              </HoverCardContent>
+            </HoverCard>
 
             <p className="text-muted-foreground text-xs">
-              {postData.location} •{" "}
-              {formatDistanceToNow(new Date(postData.createdAt), { addSuffix: true })}
+              {postData.location} • {formattedDate}
             </p>
           </div>
         </div>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" aria-label="Post options">
               <Ellipsis size={20} color="var(--primary)" className="opacity-70" />
             </Button>
           </DropdownMenuTrigger>
 
           <DropdownMenuContent className="max-w-64">
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleMenuAction("option1")}>
                 <Bolt size={16} color="var(--primary)" className="opacity-70" />
                 <span>Option 1</span>
               </DropdownMenuItem>
 
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleMenuAction("option2")}>
                 <Layers2 size={16} color="var(--primary)" className="opacity-70" />
                 <span>Option 2</span>
               </DropdownMenuItem>
 
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleMenuAction("option3")}>
                 <BookOpen size={16} color="var(--primary)" className="opacity-70" />
                 <span>Option 3</span>
               </DropdownMenuItem>
@@ -89,9 +144,9 @@ function PostCard({ postData }: PostCardProps) {
 
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem variant="destructive">
+            <DropdownMenuItem variant="destructive" onClick={() => handleMenuAction("delete")}>
               <Trash2 size={16} color="var(--destructive)" className="opacity-70" />
-              <span>Option 4</span>
+              <span>Delete</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -102,54 +157,21 @@ function PostCard({ postData }: PostCardProps) {
       )}
 
       <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <div className="space-x-1">
-            <Button
-              variant="ghost"
-              size="icon"
-              className={`${isLiked ? "bg-border" : ""}`}
-              onClick={handleLikeToggle}
-            >
-              <Heart
-                size={20}
-                color={isLiked ? "var(--destructive)" : "var(--primary)"}
-                fill={isLiked ? "var(--destructive)" : "none"}
-                className="opacity-70"
-              />
-            </Button>
+        <PostActions
+          isLiked={isLiked}
+          isBookmarked={isBookmarked}
+          onLike={handleLikeToggle}
+          onComment={handleComment}
+          onShare={handleShare}
+          onBookmark={handleBookmarkToggle}
+        />
 
-            <Button variant="ghost" size="icon">
-              <MessageCircle size={20} color="var(--primary)" className="opacity-70" />
-            </Button>
+        <PostLikes likesCount={postData.likesCount} />
 
-            <Button variant="ghost" size="icon">
-              <Send size={20} color="var(--primary)" className="opacity-70" />
-            </Button>
-          </div>
-
-          <Button variant="ghost" size="icon">
-            <Bookmark size={20} color="var(--primary)" className="opacity-70" />
-          </Button>
-        </div>
-
-        <div>
-          <h4 className="text-foreground text-sm">{postData.caption} </h4>
-
-          <p className="text-muted-foreground text-sm">
-            {postData.hashtags?.map((hashtag, index) => (
-              <span key={index} className="cursor-pointer hover:underline">
-                #{hashtag}{" "}
-              </span>
-            ))}
-          </p>
-        </div>
+        <PostContent caption={postData.caption} hashtags={postData.hashtags} />
       </div>
 
-      <p className="text-muted-foreground w-fit cursor-pointer text-sm">
-        {postData.commentsCount > 0
-          ? `View ${postData.commentsCount > 1 ? `all ${postData.commentsCount} comments` : `${postData.commentsCount} comment`}`
-          : "No comments yet"}
-      </p>
+      <p className="text-muted-foreground w-fit cursor-pointer text-sm">{commentsText}</p>
     </div>
   )
 }

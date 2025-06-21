@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useCallback, useRef, useState } from "react"
 
 import {
@@ -9,6 +11,7 @@ import {
   MapPin,
   PencilLine,
   Trash2,
+  Upload,
   Users,
   X
 } from "lucide-react"
@@ -33,7 +36,6 @@ import { PostImageType } from "@/schemas/post-schema"
 
 import { PostImage } from "./post-image"
 
-// Constants - sử dụng SCREAMING_SNAKE_CASE cho constants
 const HASHTAG_SUGGESTIONS = [
   "photography",
   "travel",
@@ -61,14 +63,16 @@ const HASHTAG_SUGGESTION_DISPLAY_LIMIT = 6
 
 function NewPost() {
   const imageInputRef = useRef<HTMLInputElement>(null)
+  const dropZoneRef = useRef<HTMLDivElement>(null)
 
-  const [isPostExpanded, setIsPostExpanded] = useState<boolean>(false)
-  const [isHashtagSectionVisible, setIsHashtagSectionVisible] = useState<boolean>(false)
+  const [isPostExpanded, setIsPostExpanded] = useState(false)
+  const [isHashtagSectionVisible, setIsHashtagSectionVisible] = useState(false)
+  const [isDragOver, setIsDragOver] = useState(false)
 
   const [selectedPrivacy, setSelectedPrivacy] = useState<Privacy>(Privacy.PUBLIC)
-  const [captionText, setCaptionText] = useState<string>("")
+  const [captionText, setCaptionText] = useState("")
   const [selectedHashtags, setSelectedHashtags] = useState<string[]>([])
-  const [currentHashtagInput, setCurrentHashtagInput] = useState<string>("")
+  const [currentHashtagInput, setCurrentHashtagInput] = useState("")
 
   const [uploadedImageFiles, setUploadedImageFiles] = useState<File[]>([])
   const [processedPostImages, setProcessedPostImages] = useState<PostImageType[]>([])
@@ -77,6 +81,52 @@ function NewPost() {
   const PrivacyIcon = privacyConfig.icon
 
   const canAddMoreHashtags = selectedHashtags.length < MAX_HASHTAG_COUNT
+
+  const filteredHashtagSuggestions = HASHTAG_SUGGESTIONS.filter(
+    (suggestion) => !selectedHashtags.includes(suggestion)
+  )
+    .filter((suggestion) => suggestion.includes(currentHashtagInput.toLowerCase()))
+    .slice(0, HASHTAG_SUGGESTION_DISPLAY_LIMIT)
+
+  const shouldShowHashtagSuggestions = filteredHashtagSuggestions.length > 0
+
+  const sanitizeHashtagInput = useCallback((input: string): string => {
+    return input.replace(/^#/, "").trim().toLowerCase()
+  }, [])
+
+  const processImageFile = useCallback((file: File): Promise<PostImageType> => {
+    return new Promise((resolve) => {
+      const fileReader = new FileReader()
+      fileReader.onload = (loadEvent) => {
+        const imageDataUrl = loadEvent.target?.result as string
+        const postImage: PostImageType = {
+          url: imageDataUrl,
+          altText: file.name
+        }
+        resolve(postImage)
+      }
+      fileReader.readAsDataURL(file)
+    })
+  }, [])
+
+  const processFiles = useCallback(
+    async (files: FileList | File[]) => {
+      const filesToProcess = Array.from(files).filter((file) => file.type.startsWith("image/"))
+      if (filesToProcess.length === 0) return
+
+      const processedImages = await Promise.all(
+        filesToProcess.map((file) => processImageFile(file))
+      )
+
+      setUploadedImageFiles((prev) => [...prev, ...filesToProcess])
+      setProcessedPostImages((prev) => [...prev, ...processedImages])
+
+      if (!isPostExpanded) {
+        setIsPostExpanded(true)
+      }
+    },
+    [processImageFile, isPostExpanded]
+  )
 
   const handlePostExpansion = useCallback(() => {
     setIsPostExpanded(true)
@@ -88,6 +138,7 @@ function NewPost() {
     setCurrentHashtagInput("")
     setUploadedImageFiles([])
     setProcessedPostImages([])
+    setCaptionText("")
   }, [])
 
   const handlePrivacySelection = useCallback((newPrivacy: Privacy) => {
@@ -99,45 +150,18 @@ function NewPost() {
     setCaptionText(newCaption)
   }, [])
 
-  const processImageFile = useCallback((file: File): Promise<PostImageType> => {
-    return new Promise((resolve) => {
-      const fileReader = new FileReader()
-
-      fileReader.onload = (loadEvent) => {
-        const imageDataUrl = loadEvent.target?.result as string
-
-        const postImage: PostImageType = {
-          url: imageDataUrl,
-          altText: file.name
-        }
-        resolve(postImage)
-      }
-
-      fileReader.readAsDataURL(file)
-    })
-  }, [])
-
   const handleImageSelection = useCallback(
     async (event: React.ChangeEvent<HTMLInputElement>) => {
       const selectedFiles = event.target.files
       if (!selectedFiles) return
 
-      const filesToProcess = Array.from(selectedFiles).filter((file) =>
-        file.type.startsWith("image/")
-      )
-
-      const processedImages = await Promise.all(
-        filesToProcess.map((file) => processImageFile(file))
-      )
-
-      setUploadedImageFiles((prev) => [...prev, ...filesToProcess])
-      setProcessedPostImages((prev) => [...prev, ...processedImages])
+      await processFiles(selectedFiles)
 
       if (imageInputRef.current) {
         imageInputRef.current.value = ""
       }
     },
-    [processImageFile]
+    [processFiles]
   )
 
   const handleImageRemoval = useCallback((indexToRemove: number) => {
@@ -154,12 +178,37 @@ function NewPost() {
     imageInputRef.current?.click()
   }, [])
 
-  const toggleHashtagSection = useCallback(() => {
-    setIsHashtagSectionVisible((prev) => !prev)
+  const handleDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault()
+    event.stopPropagation()
+    setIsDragOver(true)
   }, [])
 
-  const sanitizeHashtagInput = useCallback((input: string): string => {
-    return input.replace(/^#/, "").trim().toLowerCase()
+  const handleDragLeave = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault()
+    event.stopPropagation()
+
+    if (!dropZoneRef.current?.contains(event.relatedTarget as Node)) {
+      setIsDragOver(false)
+    }
+  }, [])
+
+  const handleDrop = useCallback(
+    async (event: React.DragEvent<HTMLDivElement>) => {
+      event.preventDefault()
+      event.stopPropagation()
+      setIsDragOver(false)
+
+      const files = event.dataTransfer.files
+      if (files.length > 0) {
+        await processFiles(files)
+      }
+    },
+    [processFiles]
+  )
+
+  const toggleHashtagSection = useCallback(() => {
+    setIsHashtagSectionVisible((prev) => !prev)
   }, [])
 
   const addHashtagToSelection = useCallback(
@@ -200,23 +249,32 @@ function NewPost() {
     [currentHashtagInput, selectedHashtags, addHashtagToSelection]
   )
 
-  const filteredHashtagSuggestions = HASHTAG_SUGGESTIONS.filter(
-    (suggestion) => !selectedHashtags.includes(suggestion)
-  )
-    .filter((suggestion) => suggestion.includes(currentHashtagInput.toLowerCase()))
-    .slice(0, HASHTAG_SUGGESTION_DISPLAY_LIMIT)
-
-  const shouldShowHashtagSuggestions = filteredHashtagSuggestions.length > 0
-
   return (
-    <div className="bg-background border-border flex w-full flex-col gap-4 rounded-lg border p-4 shadow-md">
+    <div
+      ref={dropZoneRef}
+      className={`bg-background border-border relative flex w-full flex-col gap-4 rounded-lg border p-4 shadow-md transition-all duration-200 ${
+        isDragOver ? "border-primary outline-primary outline" : ""
+      }`}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+    >
+      {isDragOver && (
+        <div className="bg-primary/10 absolute inset-0 z-10 flex items-center justify-center rounded-lg backdrop-blur">
+          <div className="flex flex-col items-center gap-2">
+            <Upload size={40} color="var(--primary)" />
+            <p className="text-primary text-lg font-medium">Drop images here to upload</p>
+          </div>
+        </div>
+      )}
+
       <div className="flex items-center gap-4">
         <Avatar className="size-10">
           <AvatarImage
             src="https://firebasestorage.googleapis.com/v0/b/diamoondb-1412.appspot.com/o/Moncial%2Fusers%2F28a9df75-5841-4351-9f4a-78b209514b10.jpg?alt=media&token=e316d291-6534-4c7c-ae96-a8ff35a3a946"
             alt="Zotaeus"
           />
-          <AvatarFallback>Z</AvatarFallback>
+          <AvatarFallback>{"Zotaeus".charAt(0)}</AvatarFallback>
         </Avatar>
 
         {!isPostExpanded ? (
@@ -387,7 +445,7 @@ function NewPost() {
               </div>
 
               <div className="space-y-3">
-                <div className="border-input dark:bg-input/20 flex flex-wrap items-center gap-2 rounded-md border bg-transparent px-3 shadow-xs">
+                <div className="border-input dark:bg-input/20 flex flex-wrap items-center gap-x-2 gap-y-0 rounded-md border bg-transparent px-3 py-1 shadow-xs">
                   {selectedHashtags.map((hashtag) => (
                     <Badge key={hashtag} variant="default" className="rounded-sm">
                       #{hashtag}
