@@ -49,6 +49,14 @@ export const userSchema = z.object({
   isPrivate: z.boolean().default(false),
   isActive: z.boolean().default(true),
 
+  followersCount: z.number().int().min(0).default(0),
+  followingCount: z.number().int().min(0).default(0),
+  postsCount: z.number().int().min(0).default(0),
+  likesCount: z.number().int().min(0).default(0),
+  commentsCount: z.number().int().min(0).default(0),
+  sharesCount: z.number().int().min(0).default(0),
+  bookmarksCount: z.number().int().min(0).default(0),
+
   createdAt: z.string().datetime(),
   updatedAt: z.string().datetime()
 })
@@ -61,3 +69,4 @@ export const authorSchema = userSchema.pick({
 })
 
 export type UserType = z.infer<typeof userSchema>
+export type AuthorType = z.infer<typeof authorSchema>
