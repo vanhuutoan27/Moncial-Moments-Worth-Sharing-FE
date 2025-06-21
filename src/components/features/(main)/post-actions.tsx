@@ -8,21 +8,14 @@ import { Button } from "@/components/ui/button"
 
 interface PostActionsProps {
   isLiked: boolean
-  isBookmarked: boolean
+  isSaved: boolean
   onLike: () => void
   onComment: () => void
   onShare: () => void
-  onBookmark: () => void
+  onSave: () => void
 }
 
-function PostActions({
-  isLiked,
-  isBookmarked,
-  onLike,
-  onBookmark,
-  onComment,
-  onShare
-}: PostActionsProps) {
+function PostActions({ isLiked, isSaved, onLike, onSave, onComment, onShare }: PostActionsProps) {
   return (
     <div className="flex items-center justify-between">
       <div className="space-x-1">
@@ -52,13 +45,13 @@ function PostActions({
       <Button
         variant="ghost"
         size="icon"
-        className={`${isBookmarked ? "bg-border" : ""}`}
-        onClick={onBookmark}
+        className={`${isSaved ? "bg-border" : ""}`}
+        onClick={onSave}
       >
         <Bookmark
           size={20}
-          color={isBookmarked ? "#eab308" : "var(--primary)"}
-          fill={isBookmarked ? "#eab308" : "none"}
+          color={isSaved ? "#eab308" : "var(--primary)"}
+          fill={isSaved ? "#eab308" : "none"}
           className="opacity-70"
         />
       </Button>

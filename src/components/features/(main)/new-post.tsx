@@ -34,7 +34,7 @@ import { Privacy, getPrivacyInfo } from "@/constants/enums/privacy"
 
 import { PostImageType } from "@/schemas/post-schema"
 
-import { PostImage } from "./post-image"
+import PostImage from "./post-image"
 
 const HASHTAG_SUGGESTIONS = [
   "photography",
@@ -373,7 +373,7 @@ function NewPost() {
 
           <div className="flex gap-2">
             <Button type="button" variant="outline" size="sm" className="font-normal">
-              <MapPin size={12} color="#fff" />
+              <MapPin size={12} color="var(--primary)" />
               Location
             </Button>
 
@@ -393,7 +393,10 @@ function NewPost() {
               onClick={triggerImageSelection}
               className="font-normal"
             >
-              <ImageIcon size={12} color="#fff" />
+              <ImageIcon
+                size={12}
+                color={uploadedImageFiles.length > 0 ? "var(--foreground)" : "var(--primary)"}
+              />
               Upload
             </Button>
 
@@ -404,7 +407,10 @@ function NewPost() {
               onClick={toggleHashtagSection}
               className="font-normal"
             >
-              <Hash size={12} color="#fff" />
+              <Hash
+                size={12}
+                color={isHashtagSectionVisible ? "var(--foreground)" : "var(--primary)"}
+              />
               Hashtag
             </Button>
           </div>

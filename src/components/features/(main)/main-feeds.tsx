@@ -8,7 +8,7 @@ import { postsData } from "@/constants/data/posts"
 
 import PostCard from "./post-card"
 
-type SortOption = "newest" | "oldest" | "trending"
+type SortOption = "newest" | "oldest" | "trending" | "following" | "saved"
 
 function MainFeeds() {
   const [activeTab, setActiveTab] = useState<SortOption>("newest")
@@ -50,11 +50,7 @@ function MainFeeds() {
       <Tabs value={activeTab} onValueChange={handleTabChange} className="items-end">
         <TabsList className="bg-transparent">
           {tabs.map((tab) => (
-            <TabsTrigger
-              key={tab.value}
-              value={tab.value}
-              className="data-[state=active]:bg-muted data-[state=active]:shadow-none"
-            >
+            <TabsTrigger key={tab.value} value={tab.value}>
               {tab.label}
             </TabsTrigger>
           ))}

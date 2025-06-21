@@ -3,7 +3,7 @@
 import React, { useCallback, useMemo, useState } from "react"
 
 import { formatDistanceToNow } from "date-fns"
-import { Bolt, BookOpen, Ellipsis, Layers2, Trash2 } from "lucide-react"
+import { Bookmark, Ellipsis, Eye, Trash2 } from "lucide-react"
 
 import UserAvatar from "@/components/shared/user-avatar"
 import UserProfile from "@/components/shared/user-profile"
@@ -23,28 +23,21 @@ import { PostType } from "@/schemas/post-schema"
 
 import PostActions from "./post-actions"
 import PostContent from "./post-content"
-import { PostImage } from "./post-image"
+import PostImage from "./post-image"
 import PostLikes from "./post-likes"
 
 interface PostCardProps {
   postData: PostType
   onLike?: (postId: string, isLiked: boolean) => void
-  onBookmark?: (postId: string, isBookmarked: boolean) => void
+  onSave?: (postId: string, isSaved: boolean) => void
   onShare?: (postId: string) => void
   onComment?: (postId: string) => void
   onMenuAction?: (postId: string, action: string) => void
 }
 
-function PostCard({
-  postData,
-  onLike,
-  onBookmark,
-  onShare,
-  onComment,
-  onMenuAction
-}: PostCardProps) {
+function PostCard({ postData, onLike, onSave, onShare, onComment, onMenuAction }: PostCardProps) {
   const [isLiked, setIsLiked] = useState<boolean>(false)
-  const [isBookmarked, setIsBookmarked] = useState<boolean>(false)
+  const [isSaved, setIsSaved] = useState<boolean>(false)
 
   const formattedDate = useMemo(
     () => formatDistanceToNow(new Date(postData.createdAt), { addSuffix: true }),
@@ -71,11 +64,11 @@ function PostCard({
     onShare?.(postData.id)
   }, [onShare, postData.id])
 
-  const handleBookmarkToggle = useCallback(() => {
-    const newBookmarkedState = !isBookmarked
-    setIsBookmarked(newBookmarkedState)
-    onBookmark?.(postData.id, newBookmarkedState)
-  }, [isBookmarked, onBookmark, postData.id])
+  const handleSaveToggle = useCallback(() => {
+    const newSavedState = !isSaved
+    setIsSaved(newSavedState)
+    onSave?.(postData.id, newSavedState)
+  }, [isSaved, onSave, postData.id])
 
   const handleMenuAction = useCallback(
     (action: string) => {
@@ -112,7 +105,8 @@ function PostCard({
             </HoverCard>
 
             <p className="text-muted-foreground text-xs">
-              {postData.location} • {formattedDate}
+              <span className="cursor-pointer hover:underline">@{postData.author.username}</span> •{" "}
+              {formattedDate} {postData && `• ${postData.location}`}
             </p>
           </div>
         </div>
@@ -127,18 +121,13 @@ function PostCard({
           <DropdownMenuContent className="max-w-64">
             <DropdownMenuGroup>
               <DropdownMenuItem onClick={() => handleMenuAction("option1")}>
-                <Bolt size={16} color="var(--primary)" className="opacity-70" />
-                <span>Option 1</span>
+                <Bookmark size={16} color="var(--primary)" className="opacity-70" />
+                <span>Save post</span>
               </DropdownMenuItem>
 
               <DropdownMenuItem onClick={() => handleMenuAction("option2")}>
-                <Layers2 size={16} color="var(--primary)" className="opacity-70" />
-                <span>Option 2</span>
-              </DropdownMenuItem>
-
-              <DropdownMenuItem onClick={() => handleMenuAction("option3")}>
-                <BookOpen size={16} color="var(--primary)" className="opacity-70" />
-                <span>Option 3</span>
+                <Eye size={16} color="var(--primary)" className="opacity-70" />
+                <span>Hide post</span>
               </DropdownMenuItem>
             </DropdownMenuGroup>
 
@@ -146,7 +135,7 @@ function PostCard({
 
             <DropdownMenuItem variant="destructive" onClick={() => handleMenuAction("delete")}>
               <Trash2 size={16} color="var(--destructive)" className="opacity-70" />
-              <span>Delete</span>
+              <span>Delete post</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -159,11 +148,11 @@ function PostCard({
       <div className="space-y-2">
         <PostActions
           isLiked={isLiked}
-          isBookmarked={isBookmarked}
+          isSaved={isSaved}
           onLike={handleLikeToggle}
           onComment={handleComment}
           onShare={handleShare}
-          onBookmark={handleBookmarkToggle}
+          onSave={handleSaveToggle}
         />
 
         <PostLikes likesCount={postData.likesCount} />

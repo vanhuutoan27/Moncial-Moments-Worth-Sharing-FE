@@ -30,7 +30,7 @@ interface PostImageProps {
   className?: string
 }
 
-export function PostImage({
+function PostImage({
   images,
   aspectRatio = "portrait",
   priority = false,
@@ -182,3 +182,5 @@ export function PostImage({
     </div>
   )
 }
+
+export default PostImage
