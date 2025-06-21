@@ -9,7 +9,7 @@ interface PostContentProps {
 
 function PostContent({ caption, hashtags }: PostContentProps) {
   return (
-    <div className="space-y-1">
+    <div className="space-y-0.5">
       <h4 className="text-foreground text-sm">{caption} </h4>
 
       <p className="text-muted-foreground text-sm">

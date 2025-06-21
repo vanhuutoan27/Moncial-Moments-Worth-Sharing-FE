@@ -8,41 +8,62 @@ import { postsData } from "@/constants/data/posts"
 
 import PostCard from "./post-card"
 
-type SortOption = "newest" | "oldest" | "trending" | "following" | "saved"
+type FeedOption = "feed" | "trending" | "following" | "saved"
 
 function MainFeeds() {
-  const [activeTab, setActiveTab] = useState<SortOption>("newest")
+  const [activeTab, setActiveTab] = useState<FeedOption>("feed")
 
-  const tabs: { value: SortOption; label: string }[] = [
-    { value: "newest", label: "Newest" },
-    { value: "oldest", label: "Oldest" },
-    { value: "trending", label: "Trending" }
+  const followingUserIds = useMemo(() => ["user1", "user2", "user3"], [])
+  // const savedPostIds = useMemo(() => ["post1", "post3", "post5"], [])
+
+  const tabs: { value: FeedOption; label: string }[] = [
+    { value: "feed", label: "Feed" },
+    { value: "trending", label: "Trending" },
+    { value: "following", label: "Following" },
+    { value: "saved", label: "Saved" }
   ]
 
-  const sortedPostsData = useMemo(() => {
+  const filteredPostsData = useMemo(() => {
     const posts = [...postsData]
 
     switch (activeTab) {
-      case "newest":
-        return posts.sort(
-          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        )
-
-      case "oldest":
-        return posts.sort(
-          (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-        )
+      case "feed":
+        return posts
+          .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+          .sort((a, b) => {
+            const aIsFollowing = followingUserIds.includes(a.authorId)
+            const bIsFollowing = followingUserIds.includes(b.authorId)
+            if (aIsFollowing && !bIsFollowing) return -1
+            if (!aIsFollowing && bIsFollowing) return 1
+            return 0
+          })
 
       case "trending":
-        return posts.sort((a, b) => b.likesCount - a.likesCount)
+        return posts
+          .filter((post) => {
+            const postTime = new Date(post.createdAt).getTime()
+            const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000
+            return postTime > oneDayAgo
+          })
+          .sort((a, b) => {
+            const aEngagement = a.likesCount + a.commentsCount
+            const bEngagement = b.likesCount + b.commentsCount
+            return bEngagement - aEngagement
+          })
+
+      case "following":
+        return posts
+
+      case "saved":
+        return posts
 
       default:
         return posts
     }
-  }, [activeTab])
+  }, [activeTab, followingUserIds])
 
   const handleTabChange = useCallback((value: string) => {
-    setActiveTab(value as SortOption)
+    setActiveTab(value as FeedOption)
   }, [])
 
   return (
@@ -59,9 +80,16 @@ function MainFeeds() {
         {tabs.map((tab) => (
           <TabsContent key={tab.value} value={tab.value} className="w-full">
             <div className="flex flex-col items-center space-y-6">
-              {sortedPostsData.map((post) => (
-                <PostCard key={post.id} postData={post} />
-              ))}
+              {filteredPostsData.length > 0 ? (
+                filteredPostsData.map((post) => <PostCard key={post.id} postData={post} />)
+              ) : (
+                <p className="text-muted-foreground my-10 text-center text-base">
+                  {activeTab === "following" && "No posts from people you follow"}
+                  {activeTab === "saved" && "No saved posts"}
+                  {activeTab === "trending" && "No trending posts in the last 24 hours"}
+                  {activeTab === "feed" && "No posts available"}
+                </p>
+              )}
             </div>
           </TabsContent>
         ))}

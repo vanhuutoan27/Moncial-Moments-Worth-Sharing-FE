@@ -91,7 +91,7 @@ function PostCard({ postData, onLike, onSave, onShare, onComment, onMenuAction }
             </HoverCardContent>
           </HoverCard>
 
-          <div>
+          <div className="space-y-0.5">
             <HoverCard>
               <HoverCardTrigger asChild>
                 <h3 className="text-foreground w-fit cursor-pointer text-sm font-semibold">
@@ -105,8 +105,8 @@ function PostCard({ postData, onLike, onSave, onShare, onComment, onMenuAction }
             </HoverCard>
 
             <p className="text-muted-foreground text-xs">
-              <span className="cursor-pointer hover:underline">@{postData.author.username}</span> •{" "}
-              {formattedDate} {postData && `• ${postData.location}`}
+              <span className="cursor-pointer hover:underline">@{postData.author.username}</span>{" "}
+              {postData && `• ${postData.location}`} • {formattedDate}
             </p>
           </div>
         </div>
@@ -114,7 +114,7 @@ function PostCard({ postData, onLike, onSave, onShare, onComment, onMenuAction }
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" aria-label="Post options">
-              <Ellipsis size={20} color="var(--primary)" className="opacity-70" />
+              <Ellipsis size={20} color="var(--primary)" className="size-5 opacity-70" />
             </Button>
           </DropdownMenuTrigger>
 
@@ -145,7 +145,7 @@ function PostCard({ postData, onLike, onSave, onShare, onComment, onMenuAction }
         <PostImage images={postData.images} priority />
       )}
 
-      <div className="space-y-2">
+      <div className="space-y-4">
         <PostActions
           isLiked={isLiked}
           isSaved={isSaved}

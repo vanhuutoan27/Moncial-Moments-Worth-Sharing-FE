@@ -7,6 +7,7 @@ import Link from "next/link"
 import {
   Bell,
   ChevronDown,
+  Home,
   Layers2,
   LogOut,
   MessageCircle,
@@ -15,7 +16,8 @@ import {
   Search,
   Sun,
   SunMoon,
-  UserPen
+  UserPen,
+  Users
 } from "lucide-react"
 import { useTheme } from "next-themes"
 
@@ -46,7 +48,7 @@ function Header() {
 
   return (
     <div className="bg-background border-border sticky top-0 z-50 w-full border shadow-sm">
-      <div className="container mx-auto flex h-16 items-center justify-between gap-2">
+      <div className="container mx-auto flex h-16 items-center justify-between gap-2 px-4">
         <div className="flex items-center gap-20">
           <Link href="/">
             <h2 className="text-foreground cursor-pointer text-2xl font-bold tracking-wider select-none">
@@ -54,7 +56,7 @@ function Header() {
             </h2>
           </Link>
 
-          <div className="relative">
+          <div className="relative hidden md:block">
             <Input type="text" placeholder="Search something..." className="w-[400px]" />
 
             <Search
@@ -66,14 +68,22 @@ function Header() {
         </div>
 
         <div className="flex items-center space-x-8">
-          <div className="hidden space-x-1 lg:flex">
-            <Button variant="ghost" size="icon" className="relative">
-              <MessageCircle size={20} color="var(--primary)" className="opacity-70" />
+          <div className="space-x-1">
+            <Button variant="ghost" size="icon" className="size-10">
+              <Home size={20} color="var(--primary)" className="size-5 opacity-70" />
+            </Button>
+
+            <Button variant="ghost" size="icon" className="size-10">
+              <Users size={20} color="var(--primary)" className="size-5 opacity-70" />
+            </Button>
+
+            <Button variant="ghost" size="icon" className="relative size-10">
+              <MessageCircle size={20} color="var(--primary)" className="size-5 opacity-70" />
               <span className="border-background bg-destructive absolute top-1.5 right-1.5 size-3 rounded-full border-2" />
             </Button>
 
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell size={20} color="var(--primary)" className="opacity-70" />
+            <Button variant="ghost" size="icon" className="relative size-10">
+              <Bell size={20} color="var(--primary)" className="size-5 opacity-70" />
               <span className="border-background bg-destructive absolute top-1.5 right-1.5 size-3 rounded-full border-2" />
             </Button>
           </div>

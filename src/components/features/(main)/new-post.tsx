@@ -262,8 +262,11 @@ function NewPost() {
       {isDragOver && (
         <div className="bg-primary/10 absolute inset-0 z-10 flex items-center justify-center rounded-lg backdrop-blur">
           <div className="flex flex-col items-center gap-2">
-            <Upload size={40} color="var(--primary)" />
-            <p className="text-primary text-lg font-medium">Drop images here to upload</p>
+            <Upload size={isPostExpanded ? 40 : 28} color="var(--primary)" />
+
+            {isPostExpanded && (
+              <p className="text-primary text-lg font-medium">Drop images here to upload</p>
+            )}
           </div>
         </div>
       )}
@@ -300,11 +303,14 @@ function NewPost() {
           </>
         ) : (
           <div className="flex w-full items-center justify-between gap-4">
-            <div>
+            <div className="space-y-0.5">
               <h3 className="text-foreground w-fit cursor-pointer text-sm font-semibold">
                 Văn Hữu Toàn
               </h3>
-              <p className="text-muted-foreground text-xs">Củ Chi</p>
+
+              <p className="text-muted-foreground text-xs">
+                <span className="cursor-pointer hover:underline">@vanhuutoan27</span> • Củ Chi
+              </p>
             </div>
 
             <div className="flex items-center gap-2">

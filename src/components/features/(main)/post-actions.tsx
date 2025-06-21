@@ -29,16 +29,16 @@ function PostActions({ isLiked, isSaved, onLike, onSave, onComment, onShare }: P
             size={20}
             color={isLiked ? "var(--destructive)" : "var(--primary)"}
             fill={isLiked ? "var(--destructive)" : "none"}
-            className="opacity-70"
+            className="size-5 opacity-70"
           />
         </Button>
 
         <Button variant="ghost" size="icon" onClick={onComment}>
-          <MessageCircle size={20} color="var(--primary)" className="opacity-70" />
+          <MessageCircle size={20} color="var(--primary)" className="size-5 opacity-70" />
         </Button>
 
         <Button variant="ghost" size="icon" onClick={onShare}>
-          <Send size={20} color="var(--primary)" className="opacity-70" />
+          <Send size={20} color="var(--primary)" className="size-5 opacity-70" />
         </Button>
       </div>
 
@@ -52,7 +52,7 @@ function PostActions({ isLiked, isSaved, onLike, onSave, onComment, onShare }: P
           size={20}
           color={isSaved ? "#eab308" : "var(--primary)"}
           fill={isSaved ? "#eab308" : "none"}
-          className="opacity-70"
+          className="size-5 opacity-70"
         />
       </Button>
     </div>
