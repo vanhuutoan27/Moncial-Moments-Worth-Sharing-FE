@@ -66,6 +66,7 @@ function NewPost() {
   const dropZoneRef = useRef<HTMLDivElement>(null)
 
   const [isPostExpanded, setIsPostExpanded] = useState(false)
+  const [isLocationSectionVisible, setIsLocationSectionVisible] = useState(false)
   const [isHashtagSectionVisible, setIsHashtagSectionVisible] = useState(false)
   const [isDragOver, setIsDragOver] = useState(false)
 
@@ -206,6 +207,10 @@ function NewPost() {
     },
     [processFiles]
   )
+
+  const toggleLocationSection = useCallback(() => {
+    setIsLocationSectionVisible((prev) => !prev)
+  }, [])
 
   const toggleHashtagSection = useCallback(() => {
     setIsHashtagSectionVisible((prev) => !prev)
@@ -378,8 +383,17 @@ function NewPost() {
           </div>
 
           <div className="flex gap-2">
-            <Button type="button" variant="outline" size="sm" className="font-normal">
-              <MapPin size={12} color="var(--primary)" />
+            <Button
+              type="button"
+              variant={isLocationSectionVisible ? "default" : "outline"}
+              size="sm"
+              onChange={toggleLocationSection}
+              className="font-normal"
+            >
+              <MapPin
+                size={12}
+                color={isLocationSectionVisible ? "var(--foreground)" : "var(--primary)"}
+              />
               Location
             </Button>
 
@@ -444,6 +458,14 @@ function NewPost() {
                 onImageRemove={handleImageRemoval}
                 showDeleteButtons
               />
+            </div>
+          )}
+
+          {isLocationSectionVisible && (
+            <div className="space-y-2">
+              <Label htmlFor="location">Location</Label>
+
+              <Input id="location" type="text" placeholder="Add a location..." />
             </div>
           )}
 
