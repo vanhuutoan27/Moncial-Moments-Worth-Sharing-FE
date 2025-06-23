@@ -2,256 +2,166 @@
 
 import React, { useCallback, useRef, useState } from "react"
 
-import {
-  ChevronDown,
-  Globe,
-  Hash,
-  Image as ImageIcon,
-  LockKeyhole,
-  MapPin,
-  PencilLine,
-  Trash2,
-  Upload,
-  Users,
-  X
-} from "lucide-react"
+import { PencilLine } from "lucide-react"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 
-import { Privacy, getPrivacyInfo } from "@/constants/enums/privacy"
+import { Privacy } from "@/constants/enums/privacy"
 
 import { PostImageType } from "@/schemas/post-schema"
 
-import PostImage from "./post-image"
+import { processImageFile, sanitizeHashtag } from "@/utils/helpers"
 
-const HASHTAG_SUGGESTIONS = [
-  "photography",
-  "travel",
-  "food",
-  "nature",
-  "art",
-  "technology",
-  "fitness",
-  "lifestyle",
-  "music",
-  "design",
-  "coding",
-  "startup",
-  "business",
-  "health",
-  "education",
-  "gaming",
-  "sports",
-  "fashion"
-] as const
-
-const MAX_HASHTAG_COUNT = 10
-const MAX_CAPTION_CHARACTERS = 2000
-const HASHTAG_SUGGESTION_DISPLAY_LIMIT = 6
+import DragOverlay from "./drag-overlay"
+import HashtagSection from "./hashtag-section"
+import ImageSection from "./image-section"
+import LocationSection from "./location-section"
+import NewPostActions from "./new-post-actions"
+import UserHeader from "./user-header"
 
 function NewPost() {
   const imageInputRef = useRef<HTMLInputElement>(null)
   const dropZoneRef = useRef<HTMLDivElement>(null)
 
-  const [isPostExpanded, setIsPostExpanded] = useState(false)
-  const [isLocationSectionVisible, setIsLocationSectionVisible] = useState(false)
-  const [isHashtagSectionVisible, setIsHashtagSectionVisible] = useState(false)
-  const [isDragOver, setIsDragOver] = useState(false)
+  const [isExpanded, setIsExpanded] = useState<boolean>(false)
+  const [showLocationSection, setShowLocationSection] = useState<boolean>(false)
+  const [showHashtagSection, setShowHashtagSection] = useState<boolean>(false)
+  const [isDragOver, setIsDragOver] = useState<boolean>(false)
 
-  const [selectedPrivacy, setSelectedPrivacy] = useState<Privacy>(Privacy.PUBLIC)
-  const [captionText, setCaptionText] = useState("")
-  const [selectedHashtags, setSelectedHashtags] = useState<string[]>([])
-  const [currentHashtagInput, setCurrentHashtagInput] = useState("")
+  const [privacy, setPrivacy] = useState<Privacy>(Privacy.PUBLIC)
+  const [caption, setCaption] = useState<string>("")
+  const [locationQuery, setLocationQuery] = useState<string>("")
+  const [hashtags, setHashtags] = useState<string[]>([])
+  const [hashtagInput, setHashtagInput] = useState<string>("")
+  const [imageFiles, setImageFiles] = useState<File[]>([])
+  const [processedImages, setProcessedImages] = useState<PostImageType[]>([])
 
-  const [uploadedImageFiles, setUploadedImageFiles] = useState<File[]>([])
-  const [processedPostImages, setProcessedPostImages] = useState<PostImageType[]>([])
-
-  const privacyConfig = getPrivacyInfo(selectedPrivacy)
-  const PrivacyIcon = privacyConfig.icon
-
-  const canAddMoreHashtags = selectedHashtags.length < MAX_HASHTAG_COUNT
-
-  const filteredHashtagSuggestions = HASHTAG_SUGGESTIONS.filter(
-    (suggestion) => !selectedHashtags.includes(suggestion)
-  )
-    .filter((suggestion) => suggestion.includes(currentHashtagInput.toLowerCase()))
-    .slice(0, HASHTAG_SUGGESTION_DISPLAY_LIMIT)
-
-  const shouldShowHashtagSuggestions = filteredHashtagSuggestions.length > 0
-
-  const sanitizeHashtagInput = useCallback((input: string): string => {
-    return input.replace(/^#/, "").trim().toLowerCase()
-  }, [])
-
-  const processImageFile = useCallback((file: File): Promise<PostImageType> => {
-    return new Promise((resolve) => {
-      const fileReader = new FileReader()
-      fileReader.onload = (loadEvent) => {
-        const imageDataUrl = loadEvent.target?.result as string
-        const postImage: PostImageType = {
-          url: imageDataUrl,
-          altText: file.name
-        }
-        resolve(postImage)
-      }
-      fileReader.readAsDataURL(file)
-    })
-  }, [])
+  const canAddHashtags = hashtags.length < 10
 
   const processFiles = useCallback(
     async (files: FileList | File[]) => {
-      const filesToProcess = Array.from(files).filter((file) => file.type.startsWith("image/"))
-      if (filesToProcess.length === 0) return
+      const imageFiles = Array.from(files).filter((file) => file.type.startsWith("image/"))
+      if (imageFiles.length === 0) return
 
-      const processedImages = await Promise.all(
-        filesToProcess.map((file) => processImageFile(file))
-      )
+      const processed = await Promise.all(imageFiles.map(processImageFile))
 
-      setUploadedImageFiles((prev) => [...prev, ...filesToProcess])
-      setProcessedPostImages((prev) => [...prev, ...processedImages])
+      setImageFiles((prev) => [...prev, ...imageFiles])
+      setProcessedImages((prev) => [...prev, ...processed])
 
-      if (!isPostExpanded) {
-        setIsPostExpanded(true)
-      }
+      if (!isExpanded) setIsExpanded(true)
     },
-    [processImageFile, isPostExpanded]
+    [isExpanded]
   )
 
-  const handlePostExpansion = useCallback(() => {
-    setIsPostExpanded(true)
+  const handleExpand = useCallback(() => setIsExpanded(true), [])
+
+  const handleCancel = useCallback(() => {
+    setIsExpanded(false)
+    setHashtags([])
+    setHashtagInput("")
+    setImageFiles([])
+    setProcessedImages([])
+    setCaption("")
+    setLocationQuery("")
+    setShowLocationSection(false)
+    setShowHashtagSection(false)
   }, [])
 
-  const handlePostCancellation = useCallback(() => {
-    setIsPostExpanded(false)
-    setSelectedHashtags([])
-    setCurrentHashtagInput("")
-    setUploadedImageFiles([])
-    setProcessedPostImages([])
-    setCaptionText("")
+  const toggleLocationSection = useCallback(() => {
+    setShowLocationSection((prev) => !prev)
   }, [])
 
-  const handlePrivacySelection = useCallback((newPrivacy: Privacy) => {
-    setSelectedPrivacy(newPrivacy)
+  const toggleHashtagSection = useCallback(() => {
+    setShowHashtagSection((prev) => !prev)
   }, [])
 
-  const handleCaptionChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newCaption = event.target.value.slice(0, MAX_CAPTION_CHARACTERS)
-    setCaptionText(newCaption)
+  const triggerImageUpload = useCallback(() => {
+    imageInputRef.current?.click()
   }, [])
 
-  const handleImageSelection = useCallback(
-    async (event: React.ChangeEvent<HTMLInputElement>) => {
-      const selectedFiles = event.target.files
-      if (!selectedFiles) return
+  const handleCaptionChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setCaption(e.target.value.slice(0, 2000))
+  }, [])
 
-      await processFiles(selectedFiles)
+  const handleImageSelect = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const files = e.target.files
+      if (!files) return
 
-      if (imageInputRef.current) {
-        imageInputRef.current.value = ""
-      }
+      await processFiles(files)
+      if (imageInputRef.current) imageInputRef.current.value = ""
     },
     [processFiles]
   )
 
-  const handleImageRemoval = useCallback((indexToRemove: number) => {
-    setUploadedImageFiles((prev) => prev.filter((_, index) => index !== indexToRemove))
-    setProcessedPostImages((prev) => prev.filter((_, index) => index !== indexToRemove))
+  const removeImage = useCallback((index: number) => {
+    setImageFiles((prev) => prev.filter((_, i) => i !== index))
+    setProcessedImages((prev) => prev.filter((_, i) => i !== index))
   }, [])
 
-  const handleAllImagesClearing = useCallback(() => {
-    setUploadedImageFiles([])
-    setProcessedPostImages([])
+  const clearAllImages = useCallback(() => {
+    setImageFiles([])
+    setProcessedImages([])
   }, [])
 
-  const triggerImageSelection = useCallback(() => {
-    imageInputRef.current?.click()
-  }, [])
-
-  const handleDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault()
-    event.stopPropagation()
+  const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
     setIsDragOver(true)
   }, [])
 
-  const handleDragLeave = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault()
-    event.stopPropagation()
-
-    if (!dropZoneRef.current?.contains(event.relatedTarget as Node)) {
+  const handleDragLeave = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (!dropZoneRef.current?.contains(e.relatedTarget as Node)) {
       setIsDragOver(false)
     }
   }, [])
 
   const handleDrop = useCallback(
-    async (event: React.DragEvent<HTMLDivElement>) => {
-      event.preventDefault()
-      event.stopPropagation()
+    async (e: React.DragEvent<HTMLDivElement>) => {
+      e.preventDefault()
+      e.stopPropagation()
       setIsDragOver(false)
 
-      const files = event.dataTransfer.files
-      if (files.length > 0) {
-        await processFiles(files)
-      }
+      const files = e.dataTransfer.files
+      if (files.length > 0) await processFiles(files)
     },
     [processFiles]
   )
 
-  const toggleLocationSection = useCallback(() => {
-    setIsLocationSectionVisible((prev) => !prev)
-  }, [])
+  const addHashtag = useCallback(
+    (tag: string) => {
+      const sanitized = sanitizeHashtag(tag)
 
-  const toggleHashtagSection = useCallback(() => {
-    setIsHashtagSectionVisible((prev) => !prev)
-  }, [])
-
-  const addHashtagToSelection = useCallback(
-    (hashtagInput: string) => {
-      const sanitizedTag = sanitizeHashtagInput(hashtagInput)
-
-      const isValidTag = sanitizedTag.length > 0
-      const isUniqueTag = !selectedHashtags.includes(sanitizedTag)
-      const hasAvailableSlots = canAddMoreHashtags
-
-      if (isValidTag && isUniqueTag && hasAvailableSlots) {
-        setSelectedHashtags((prev) => [...prev, sanitizedTag])
-        setCurrentHashtagInput("")
+      if (sanitized.length > 0 && !hashtags.includes(sanitized) && canAddHashtags) {
+        setHashtags((prev) => [...prev, sanitized])
+        setHashtagInput("")
       }
     },
-    [selectedHashtags, canAddMoreHashtags, sanitizeHashtagInput]
+    [hashtags, canAddHashtags]
   )
 
-  const removeHashtagFromSelection = useCallback((hashtagToRemove: string) => {
-    setSelectedHashtags((prev) => prev.filter((tag) => tag !== hashtagToRemove))
+  const removeHashtag = useCallback((tagToRemove: string) => {
+    setHashtags((prev) => prev.filter((tag) => tag !== tagToRemove))
   }, [])
 
-  const handleHashtagInputKeyPress = useCallback(
-    (event: React.KeyboardEvent<HTMLInputElement>) => {
-      const { key } = event
-      const isSubmissionKey = ["Enter", " ", ","].includes(key)
-      const isBackspaceKey = key === "Backspace"
+  const handleKeyPress = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      const { key } = e
 
-      if (isSubmissionKey) {
-        event.preventDefault()
-        if (currentHashtagInput.trim()) {
-          addHashtagToSelection(currentHashtagInput)
-        }
-      } else if (isBackspaceKey && !currentHashtagInput && selectedHashtags.length > 0) {
-        setSelectedHashtags((prev) => prev.slice(0, -1))
+      if (["Enter", " ", ","].includes(key)) {
+        e.preventDefault()
+        if (hashtagInput.trim()) addHashtag(hashtagInput)
+      } else if (key === "Backspace" && !hashtagInput && hashtags.length > 0) {
+        setHashtags((prev) => prev.slice(0, -1))
       }
     },
-    [currentHashtagInput, selectedHashtags, addHashtagToSelection]
+    [hashtagInput, hashtags, addHashtag]
   )
 
   return (
@@ -264,17 +174,7 @@ function NewPost() {
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
     >
-      {isDragOver && (
-        <div className="bg-primary/10 absolute inset-0 z-10 flex items-center justify-center rounded-lg backdrop-blur">
-          <div className="flex flex-col items-center gap-2">
-            <Upload size={isPostExpanded ? 40 : 28} color="var(--primary)" />
-
-            {isPostExpanded && (
-              <p className="text-primary text-lg font-medium">Drop images here to upload</p>
-            )}
-          </div>
-        </div>
-      )}
+      {isDragOver && <DragOverlay isExpanded={isExpanded} />}
 
       <div className="flex items-center gap-4">
         <Avatar className="size-10">
@@ -285,13 +185,13 @@ function NewPost() {
           <AvatarFallback>{"Zotaeus".charAt(0)}</AvatarFallback>
         </Avatar>
 
-        {!isPostExpanded ? (
+        {!isExpanded ? (
           <>
             <div className="relative w-full">
               <Input
                 type="text"
                 placeholder="Share your thoughts with the world..."
-                onFocus={handlePostExpansion}
+                onFocus={handleExpand}
                 className="w-full cursor-pointer"
               />
 
@@ -302,79 +202,25 @@ function NewPost() {
               />
             </div>
 
-            <Button variant="default" onClick={handlePostExpansion}>
+            <Button variant="default" onClick={handleExpand}>
               Share
             </Button>
           </>
         ) : (
-          <div className="flex w-full items-center justify-between gap-4">
-            <div className="space-y-0.5">
-              <h3 className="text-foreground w-fit cursor-pointer text-sm font-semibold">
-                Văn Hữu Toàn
-              </h3>
-
-              <p className="text-muted-foreground text-xs">
-                <span className="cursor-pointer hover:underline">@vanhuutoan27</span> • Củ Chi
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="cursor-default font-normal">
-                    <PrivacyIcon size={16} color="var(--primary)" className="opacity-70" />
-                    {privacyConfig.label}
-                    <ChevronDown size={20} />
-                  </Button>
-                </DropdownMenuTrigger>
-
-                <DropdownMenuContent className="max-w-64">
-                  <DropdownMenuGroup>
-                    <DropdownMenuItem onClick={() => handlePrivacySelection(Privacy.PUBLIC)}>
-                      <Globe size={16} color="var(--primary)" className="opacity-70" />
-                      <span>Public</span>
-                    </DropdownMenuItem>
-
-                    <DropdownMenuItem onClick={() => handlePrivacySelection(Privacy.PRIVATE)}>
-                      <LockKeyhole size={16} color="var(--primary)" className="opacity-70" />
-                      <span>Private</span>
-                    </DropdownMenuItem>
-
-                    <DropdownMenuItem
-                      onClick={() => handlePrivacySelection(Privacy.FOLLOWERS_ONLY)}
-                    >
-                      <Users size={16} color="var(--primary)" className="opacity-70" />
-                      <span>Followers Only</span>
-                    </DropdownMenuItem>
-                  </DropdownMenuGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handlePostCancellation}
-                className="text-muted-foreground hover:text-foreground"
-              >
-                <X size={16} />
-              </Button>
-            </div>
-          </div>
+          <UserHeader privacy={privacy} onPrivacyChange={setPrivacy} onCancel={handleCancel} />
         )}
       </div>
 
-      {isPostExpanded && (
+      {isExpanded && (
         <div className="space-y-4">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label htmlFor="caption">Caption</Label>
-              <span className="text-muted-foreground text-xs">
-                {captionText.length}/{MAX_CAPTION_CHARACTERS}
-              </span>
+              <span className="text-muted-foreground text-xs">{caption.length}/2000</span>
             </div>
 
             <Textarea
-              value={captionText}
+              value={caption}
               onChange={handleCaptionChange}
               placeholder="Share your thoughts with the world..."
               rows={4}
@@ -382,146 +228,50 @@ function NewPost() {
             />
           </div>
 
-          <div className="flex gap-2">
-            <Button
-              type="button"
-              variant={isLocationSectionVisible ? "default" : "outline"}
-              size="sm"
-              onChange={toggleLocationSection}
-              className="font-normal"
-            >
-              <MapPin
-                size={12}
-                color={isLocationSectionVisible ? "var(--foreground)" : "var(--primary)"}
-              />
-              Location
-            </Button>
+          <NewPostActions
+            showLocationSection={showLocationSection}
+            showHashtagSection={showHashtagSection}
+            hasImages={imageFiles.length > 0}
+            onLocationToggle={toggleLocationSection}
+            onHashtagToggle={toggleHashtagSection}
+            onImageUpload={triggerImageUpload}
+          />
 
-            <input
-              ref={imageInputRef}
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={handleImageSelection}
-              className="hidden"
+          <input
+            ref={imageInputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={handleImageSelect}
+            className="hidden"
+          />
+
+          {showLocationSection && (
+            <LocationSection
+              locationQuery={locationQuery}
+              onLocationChange={setLocationQuery}
+              onLocationSelect={setLocationQuery}
             />
-
-            <Button
-              type="button"
-              variant={uploadedImageFiles.length > 0 ? "default" : "outline"}
-              size="sm"
-              onClick={triggerImageSelection}
-              className="font-normal"
-            >
-              <ImageIcon
-                size={12}
-                color={uploadedImageFiles.length > 0 ? "var(--foreground)" : "var(--primary)"}
-              />
-              Upload
-            </Button>
-
-            <Button
-              type="button"
-              variant={isHashtagSectionVisible ? "default" : "outline"}
-              size="sm"
-              onClick={toggleHashtagSection}
-              className="font-normal"
-            >
-              <Hash
-                size={12}
-                color={isHashtagSectionVisible ? "var(--foreground)" : "var(--primary)"}
-              />
-              Hashtag
-            </Button>
-          </div>
-
-          {processedPostImages.length > 0 && (
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label>Images ({processedPostImages.length})</Label>
-
-                <Button
-                  type="button"
-                  variant="destructive"
-                  size="sm"
-                  onClick={handleAllImagesClearing}
-                  className="font-normal"
-                >
-                  <Trash2 size={12} />
-                  Clear all
-                </Button>
-              </div>
-
-              <PostImage
-                images={processedPostImages}
-                priority
-                onImageRemove={handleImageRemoval}
-                showDeleteButtons
-              />
-            </div>
           )}
 
-          {isLocationSectionVisible && (
-            <div className="space-y-2">
-              <Label htmlFor="location">Location</Label>
+          <ImageSection
+            images={processedImages}
+            onImageRemove={removeImage}
+            onClearAll={clearAllImages}
+          />
 
-              <Input id="location" type="text" placeholder="Add a location..." />
-            </div>
+          {showHashtagSection && (
+            <HashtagSection
+              hashtags={hashtags}
+              hashtagInput={hashtagInput}
+              onHashtagInputChange={setHashtagInput}
+              onAddHashtag={addHashtag}
+              onRemoveHashtag={removeHashtag}
+              onKeyPress={handleKeyPress}
+            />
           )}
 
-          {isHashtagSectionVisible && (
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="hashtags">Hashtags</Label>
-                <span className="text-muted-foreground text-xs">
-                  {selectedHashtags.length}/{MAX_HASHTAG_COUNT}
-                </span>
-              </div>
-
-              <div className="space-y-3">
-                <div className="border-input dark:bg-input/20 flex flex-wrap items-center gap-x-2 gap-y-0 rounded-md border bg-transparent px-3 py-1 shadow-xs">
-                  {selectedHashtags.map((hashtag) => (
-                    <Badge key={hashtag} variant="default" className="rounded-sm">
-                      #{hashtag}
-                      <span onClick={() => removeHashtagFromSelection(hashtag)}>
-                        <X size={14} className="cursor-pointer" />
-                      </span>
-                    </Badge>
-                  ))}
-
-                  <Input
-                    id="hashtags"
-                    value={currentHashtagInput}
-                    onChange={(e) => setCurrentHashtagInput(e.target.value)}
-                    onKeyDown={handleHashtagInputKeyPress}
-                    placeholder={
-                      selectedHashtags.length === 0 ? "Add hashtags..." : "Add more hashtags..."
-                    }
-                    className="min-w-[120px] flex-1 border-0 bg-transparent p-0 focus-visible:border-0 focus-visible:ring-0 dark:bg-transparent"
-                  />
-                </div>
-
-                {shouldShowHashtagSuggestions && (
-                  <div className="flex flex-wrap gap-2">
-                    {filteredHashtagSuggestions.map((suggestion) => (
-                      <Button
-                        key={suggestion}
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => addHashtagToSelection(suggestion)}
-                        className="h-7 text-xs"
-                      >
-                        #{suggestion}
-                      </Button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-
-          <Button variant="default" className="mt-2 w-full">
+          <Button type="submit" variant="default" className="mt-2 w-full">
             Share
           </Button>
         </div>

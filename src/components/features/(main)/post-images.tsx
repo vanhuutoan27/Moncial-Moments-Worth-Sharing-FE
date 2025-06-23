@@ -21,7 +21,7 @@ const ASPECT_RATIOS = {
   wide: "aspect-video"
 }
 
-interface PostImageProps {
+interface PostImagesProps {
   images: PostImageType[]
   aspectRatio?: "square" | "portrait" | "landscape" | "wide"
   priority?: boolean
@@ -30,14 +30,14 @@ interface PostImageProps {
   className?: string
 }
 
-function PostImage({
+function PostImages({
   images,
   aspectRatio = "portrait",
   priority = false,
   onImageRemove,
   showDeleteButtons = false,
   className = ""
-}: PostImageProps) {
+}: PostImagesProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false })
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set())
@@ -183,4 +183,4 @@ function PostImage({
   )
 }
 
-export default PostImage
+export default PostImages

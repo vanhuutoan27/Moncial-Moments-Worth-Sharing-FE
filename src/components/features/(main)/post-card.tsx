@@ -23,7 +23,7 @@ import { PostType } from "@/schemas/post-schema"
 
 import PostActions from "./post-actions"
 import PostContent from "./post-content"
-import PostImage from "./post-image"
+import PostImages from "./post-images"
 import PostLikes from "./post-likes"
 
 interface PostCardProps {
@@ -142,7 +142,7 @@ function PostCard({ postData, onLike, onSave, onShare, onComment, onMenuAction }
       </div>
 
       {postData.images && postData.images.length > 0 && (
-        <PostImage images={postData.images} priority />
+        <PostImages images={postData.images} priority />
       )}
 
       <div className="space-y-4">

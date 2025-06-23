@@ -51,7 +51,7 @@ function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between gap-2 px-4">
         <div className="flex items-center gap-20">
           <Link href="/">
-            <h2 className="text-foreground cursor-pointer text-2xl font-bold tracking-wider select-none">
+            <h2 className="text-foreground cursor-pointer text-3xl font-bold tracking-wider select-none">
               Mon<span className="text-primary">cial</span>
             </h2>
           </Link>
