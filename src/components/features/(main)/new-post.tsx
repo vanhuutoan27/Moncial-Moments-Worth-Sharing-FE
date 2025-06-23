@@ -4,7 +4,8 @@ import React, { useCallback, useRef, useState } from "react"
 
 import { PencilLine } from "lucide-react"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import UserAvatar from "@/components/shared/user-avatar"
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -177,13 +178,14 @@ function NewPost() {
       {isDragOver && <DragOverlay isExpanded={isExpanded} />}
 
       <div className="flex items-center gap-4">
-        <Avatar className="size-10">
-          <AvatarImage
-            src="https://firebasestorage.googleapis.com/v0/b/diamoondb-1412.appspot.com/o/Moncial%2Fusers%2F28a9df75-5841-4351-9f4a-78b209514b10.jpg?alt=media&token=e316d291-6534-4c7c-ae96-a8ff35a3a946"
-            alt="Zotaeus"
-          />
-          <AvatarFallback>{"Zotaeus".charAt(0)}</AvatarFallback>
-        </Avatar>
+        <UserAvatar
+          user={{
+            fullName: "Zotaeus",
+            avatarUrl:
+              "https://firebasestorage.googleapis.com/v0/b/diamoondb-1412.appspot.com/o/Moncial%2Fusers%2F28a9df75-5841-4351-9f4a-78b209514b10.jpg?alt=media&token=e316d291-6534-4c7c-ae96-a8ff35a3a946"
+          }}
+          size="md"
+        />
 
         {!isExpanded ? (
           <>

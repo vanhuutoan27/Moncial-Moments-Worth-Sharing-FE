@@ -2,7 +2,7 @@ import React from "react"
 
 import { AuthorType } from "@/schemas/user-schema"
 
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
+import UserAvatar from "./user-avatar"
 
 interface UserProfileProps {
   author: AuthorType
@@ -11,10 +11,7 @@ interface UserProfileProps {
 function UserProfile({ author }: UserProfileProps) {
   return (
     <div className="flex justify-between gap-4">
-      <Avatar className="size-9">
-        <AvatarImage src={author.avatarUrl} alt={author.fullName} />
-        <AvatarFallback>{author.fullName.charAt(0)}</AvatarFallback>
-      </Avatar>
+      <UserAvatar user={author} className="size-9" />
 
       <div className="space-y-1">
         <h4 className="cursor-pointer text-sm font-semibold">{author.fullName}</h4>

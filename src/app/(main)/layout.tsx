@@ -13,7 +13,7 @@ function MainLayout({ children }: MainLayoutProps) {
     <div className="bg-background min-h-screen">
       <Header />
 
-      <main className="container mx-auto my-10">{children}</main>
+      <main className="container mx-auto my-10 px-4">{children}</main>
     </div>
   )
 }

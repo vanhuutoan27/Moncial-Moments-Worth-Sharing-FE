@@ -2,8 +2,6 @@
 
 import React from "react"
 
-import Link from "next/link"
-
 import {
   Bell,
   ChevronDown,
@@ -21,7 +19,8 @@ import {
 } from "lucide-react"
 import { useTheme } from "next-themes"
 
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
+import { SpringElement } from "../animate-ui/spring-element"
+import UserAvatar from "../shared/user-avatar"
 import { Button } from "../ui/button"
 import {
   DropdownMenu,
@@ -38,23 +37,23 @@ import {
 } from "../ui/dropdown-menu"
 import { Input } from "../ui/input"
 
+const ROUTES = [
+  { label: "Profile", icon: UserPen },
+  { label: "Settings", icon: Layers2 }
+] as const
+
 function Header() {
   const { theme, setTheme } = useTheme()
-
-  const routes = [
-    { label: "Profile", icon: UserPen },
-    { label: "Settings", icon: Layers2 }
-  ]
 
   return (
     <div className="bg-background border-border sticky top-0 z-50 w-full border shadow-sm">
       <div className="container mx-auto flex h-16 items-center justify-between gap-2 px-4">
         <div className="flex items-center gap-20">
-          <Link href="/">
-            <h2 className="text-foreground cursor-pointer text-3xl font-bold tracking-wider select-none">
+          <SpringElement>
+            <h2 className="text-foreground cursor-pointer text-2xl font-bold tracking-wider select-none md:text-3xl">
               Mon<span className="text-primary">cial</span>
             </h2>
-          </Link>
+          </SpringElement>
 
           <div className="relative hidden md:block">
             <Input type="text" placeholder="Search something..." className="w-[400px]" />
@@ -68,7 +67,7 @@ function Header() {
         </div>
 
         <div className="flex items-center space-x-8">
-          <div className="space-x-1">
+          <div className="hidden space-x-1 md:flex">
             <Button variant="ghost" size="icon" className="size-10">
               <Home size={20} color="var(--primary)" className="size-5 opacity-70" />
             </Button>
@@ -96,13 +95,14 @@ function Header() {
                 className="hover:bg-transparent focus-visible:ring-0 dark:hover:bg-transparent"
               >
                 <div className="relative">
-                  <Avatar>
-                    <AvatarImage
-                      src="https://firebasestorage.googleapis.com/v0/b/diamoondb-1412.appspot.com/o/Moncial%2Fusers%2F28a9df75-5841-4351-9f4a-78b209514b10.jpg?alt=media&token=e316d291-6534-4c7c-ae96-a8ff35a3a946"
-                      alt="Zotaeus"
-                    />
-                    <AvatarFallback>{"Zotaeus".charAt(0)}</AvatarFallback>
-                  </Avatar>
+                  <UserAvatar
+                    user={{
+                      fullName: "Zotaeus",
+                      avatarUrl:
+                        "https://firebasestorage.googleapis.com/v0/b/diamoondb-1412.appspot.com/o/Moncial%2Fusers%2F28a9df75-5841-4351-9f4a-78b209514b10.jpg?alt=media&token=e316d291-6534-4c7c-ae96-a8ff35a3a946"
+                    }}
+                    size="sm"
+                  />
 
                   <span className="border-background absolute -right-0.5 -bottom-0.5 size-3 rounded-full border-2 bg-emerald-500" />
                 </div>
@@ -122,7 +122,7 @@ function Header() {
               <DropdownMenuSeparator />
 
               <DropdownMenuGroup>
-                {routes.map((route, index) => {
+                {ROUTES.map((route, index) => {
                   const Icon = route.icon
 
                   return (

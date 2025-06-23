@@ -1,8 +1,8 @@
 "use client"
 
-import React, { useMemo } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import UserAvatar from "@/components/shared/user-avatar"
 
 import { usersData } from "@/constants/data/users"
 
@@ -11,16 +11,33 @@ interface PostLikesProps {
 }
 
 function PostLikes({ likesCount }: PostLikesProps) {
-  const displayUsers = useMemo(() => usersData.slice(2, 7), [])
+  const [displayCount, setDisplayCount] = useState<number>(5)
+
+  useEffect(() => {
+    const updateDisplayCount = () => {
+      if (window.innerWidth < 640) {
+        setDisplayCount(3)
+      } else if (window.innerWidth < 1024) {
+        setDisplayCount(4)
+      } else {
+        setDisplayCount(5)
+      }
+    }
+
+    updateDisplayCount()
+
+    window.addEventListener("resize", updateDisplayCount)
+
+    return () => window.removeEventListener("resize", updateDisplayCount)
+  }, [])
+
+  const displayUsers = useMemo(() => usersData.slice(2, 2 + displayCount), [displayCount])
 
   return (
     <div className="flex items-center rounded-full border p-1">
       <div className="flex -space-x-1.5">
         {displayUsers.map((user) => (
-          <Avatar key={user.id} className="size-7">
-            <AvatarImage src={user.avatarUrl} alt={user.fullName} />
-            <AvatarFallback>{user.fullName.charAt(0)}</AvatarFallback>
-          </Avatar>
+          <UserAvatar key={user.id} user={user} className="size-7" />
         ))}
       </div>
 
@@ -31,7 +48,7 @@ function PostLikes({ likesCount }: PostLikesProps) {
         </span>{" "}
         and{" "}
         <span className="text-foreground cursor-pointer font-medium hover:underline">
-          {Math.max(0, likesCount - 5)} others
+          {Math.max(0, likesCount - displayCount)} others
         </span>
         .
       </p>
