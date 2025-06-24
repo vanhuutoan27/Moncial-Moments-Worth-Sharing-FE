@@ -44,7 +44,7 @@ function Header() {
   const { theme, setTheme } = useTheme()
 
   return (
-    <div className="bg-background border-border sticky top-0 z-50 w-full border shadow-sm">
+    <div className="bg-background border-border sticky top-0 z-50 w-full border border-b shadow-sm">
       <div className="container mx-auto flex h-16 items-center justify-between gap-2 px-4">
         <div className="flex items-center gap-20">
           <SpringElement>
@@ -66,20 +66,20 @@ function Header() {
 
         <div className="flex items-center space-x-8">
           <div className="hidden space-x-1 md:flex">
-            {/* <Button variant="ghost" size="icon" className="size-10">
+            {/* <Button type="button" variant="ghost" size="icon" className="size-10">
               <Home size={20} color="var(--primary)" className="size-5 opacity-70" />
             </Button>
 
-            <Button variant="ghost" size="icon" className="size-10">
+            <Button type="button" variant="ghost" size="icon" className="size-10">
               <Users size={20} color="var(--primary)" className="size-5 opacity-70" />
             </Button> */}
 
-            <Button variant="ghost" size="icon" className="relative size-10">
+            <Button type="button" variant="ghost" size="icon" className="relative size-10">
               <MessageCircle size={20} color="var(--primary)" className="size-5 opacity-70" />
               <span className="border-background bg-destructive absolute top-1.5 right-1.5 size-3 rounded-full border-2" />
             </Button>
 
-            <Button variant="ghost" size="icon" className="relative size-10">
+            <Button type="button" variant="ghost" size="icon" className="relative size-10">
               <Bell size={20} color="var(--primary)" className="size-5 opacity-70" />
               <span className="border-background bg-destructive absolute top-1.5 right-1.5 size-3 rounded-full border-2" />
             </Button>
@@ -88,6 +88,7 @@ function Header() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
+                type="button"
                 variant="ghost"
                 size="icon"
                 className="hover:bg-transparent focus-visible:ring-0 dark:hover:bg-transparent"
@@ -145,7 +146,7 @@ function Header() {
                     <DropdownMenuSubContent>
                       <DropdownMenuItem
                         onClick={() => setTheme("light")}
-                        className={`cursor-pointer ${theme === "light" ? "bg-border" : ""}`}
+                        className={`${theme === "light" ? "bg-border" : ""}`}
                       >
                         <Sun size={16} color="var(--primary)" className="opacity-70" />
                         <span>Light</span>
@@ -153,7 +154,7 @@ function Header() {
 
                       <DropdownMenuItem
                         onClick={() => setTheme("dark")}
-                        className={`cursor-pointer ${theme === "dark" ? "bg-border" : ""}`}
+                        className={`${theme === "dark" ? "bg-border" : ""}`}
                       >
                         <Moon size={16} color="var(--primary)" className="opacity-70" />
                         <span>Dark</span>
@@ -163,7 +164,7 @@ function Header() {
 
                       <DropdownMenuItem
                         onClick={() => setTheme("system")}
-                        className={`cursor-pointer ${theme === "system" ? "bg-border" : ""}`}
+                        className={`${theme === "system" ? "bg-border" : ""}`}
                       >
                         <Monitor size={16} color="var(--primary)" className="opacity-70" />
                         <span>System</span>

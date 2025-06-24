@@ -204,7 +204,12 @@ function NewPost() {
               />
             </div>
 
-            <Button variant="default" onClick={handleExpand} className="hidden md:block">
+            <Button
+              type="button"
+              variant="default"
+              onClick={handleExpand}
+              className="hidden font-semibold md:block"
+            >
               Share
             </Button>
           </>
@@ -273,7 +278,7 @@ function NewPost() {
             />
           )}
 
-          <Button type="submit" variant="default" className="mt-2 w-full">
+          <Button type="submit" variant="default" className="mt-2 w-full font-semibold">
             Share
           </Button>
         </div>

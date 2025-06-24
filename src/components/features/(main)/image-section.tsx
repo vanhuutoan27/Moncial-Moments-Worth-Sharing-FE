@@ -25,13 +25,7 @@ function ImageSection({ images, onImageRemove, onClearAll }: ImageSectionProps) 
       <div className="flex items-center justify-between">
         <Label>Images ({images.length})</Label>
 
-        <Button
-          type="button"
-          variant="destructive"
-          size="sm"
-          onClick={onClearAll}
-          className="font-normal"
-        >
+        <Button type="button" variant="destructive" size="sm" onClick={onClearAll}>
           <Trash2 size={12} />
           Clear all
         </Button>

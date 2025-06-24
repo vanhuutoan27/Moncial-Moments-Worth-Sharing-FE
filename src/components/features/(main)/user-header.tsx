@@ -37,7 +37,7 @@ function UserHeader({ privacy, onPrivacyChange, onCancel }: UserHeaderProps) {
       <div className="flex items-center gap-2">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="cursor-default font-normal">
+            <Button type="button" variant="outline" className="cursor-default">
               <PrivacyIcon size={16} color="var(--primary)" className="opacity-70" />
               {privacyConfig.label}
               <ChevronDown size={20} />
@@ -65,6 +65,7 @@ function UserHeader({ privacy, onPrivacyChange, onCancel }: UserHeaderProps) {
         </DropdownMenu>
 
         <Button
+          type="button"
           variant="ghost"
           size="sm"
           onClick={onCancel}

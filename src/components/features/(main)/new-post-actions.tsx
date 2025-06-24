@@ -30,7 +30,7 @@ function NewPostActions({
         variant={showLocationSection ? "default" : "outline"}
         size="sm"
         onClick={onLocationToggle}
-        className="border font-normal"
+        className="border"
       >
         <MapPin
           size={16}
@@ -45,7 +45,7 @@ function NewPostActions({
         variant={hasImages ? "default" : "outline"}
         size="sm"
         onClick={onImageUpload}
-        className="border font-normal"
+        className="border"
       >
         <ImageIcon
           size={16}
@@ -60,7 +60,7 @@ function NewPostActions({
         variant={showHashtagSection ? "default" : "outline"}
         size="sm"
         onClick={onHashtagToggle}
-        className="border font-normal"
+        className="border"
       >
         <Hash
           size={16}

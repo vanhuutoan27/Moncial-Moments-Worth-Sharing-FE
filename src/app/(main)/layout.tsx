@@ -2,7 +2,6 @@
 
 import React from "react"
 
-import BottomNavigation from "@/components/layout/bottom-navigation"
 import Header from "@/components/layout/header"
 import LeftSidebar from "@/components/layout/left-sidebar"
 import RightSidebar from "@/components/layout/right-sidebar"
@@ -28,9 +27,9 @@ function MainLayout({ children }: MainLayoutProps) {
         </aside>
       </div>
 
-      <div className="border-border bg-background/95 fixed right-0 bottom-0 left-0 z-50 h-16 border-t px-4 backdrop-blur lg:hidden">
+      {/* <div className="border-border bg-background/95 fixed right-0 bottom-0 left-0 z-50 h-16 border-t px-4 backdrop-blur lg:hidden">
         <BottomNavigation />
-      </div>
+      </div> */}
     </div>
   )
 }

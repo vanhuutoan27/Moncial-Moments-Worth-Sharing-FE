@@ -2,7 +2,6 @@
 
 import React, { useCallback, useMemo } from "react"
 
-import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import {
@@ -11,7 +10,6 @@ import {
   Calendar,
   Home,
   Info,
-  LucideIcon,
   MessageCircle,
   Search,
   Settings,
@@ -22,12 +20,7 @@ import {
 
 import { Button } from "../ui/button"
 import { Separator } from "../ui/separator"
-
-interface Route {
-  label: string
-  href: string
-  icon: LucideIcon
-}
+import SidebarGroup from "./sidebar-group"
 
 const MAIN_ROUTES = [
   { label: "Home", href: "/", icon: Home },
@@ -51,58 +44,6 @@ const OTHER_ROUTES = [
   { label: "Settings", href: "/settings", icon: Settings },
   { label: "Help", href: "/help", icon: Info }
 ] as const
-
-interface SidebarGroupProps {
-  routes: readonly Route[]
-  pathname: string
-}
-
-function SidebarGroup({ routes, pathname }: SidebarGroupProps) {
-  return (
-    <div className="flex flex-col gap-2 py-2">
-      {routes.map((route) => {
-        const isActive = pathname === route.href
-
-        return <SidebarItem key={route.href} route={route} isActive={isActive} />
-      })}
-    </div>
-  )
-}
-
-interface SidebarItemProps {
-  route: Route
-  isActive: boolean
-  onNavigate?: () => void
-}
-
-function SidebarItem({ route, isActive, onNavigate }: SidebarItemProps) {
-  const Icon = route.icon
-
-  const handleClick = useCallback(() => {
-    if (!isActive) {
-      onNavigate?.()
-    }
-  }, [isActive, onNavigate])
-
-  return (
-    <Button
-      key={route.label}
-      variant={isActive ? "default" : "ghost"}
-      asChild
-      onClick={handleClick}
-      className="h-10 w-full justify-start gap-4"
-    >
-      <Link href={route.href} className="flex items-center justify-between">
-        <Icon
-          size={16}
-          color={isActive ? "#fff" : "var(--primary)"}
-          className="size-4 opacity-70"
-        />
-        {route.label}
-      </Link>
-    </Button>
-  )
-}
 
 function LeftSidebar() {
   const pathname = usePathname()
@@ -132,7 +73,13 @@ function LeftSidebar() {
 
       <Separator />
 
-      <Button variant="default" size="lg" onClick={handleShare} className="mt-4 w-full">
+      <Button
+        type="button"
+        variant="default"
+        size="lg"
+        onClick={handleShare}
+        className="mt-4 w-full font-semibold"
+      >
         Share
       </Button>
     </div>

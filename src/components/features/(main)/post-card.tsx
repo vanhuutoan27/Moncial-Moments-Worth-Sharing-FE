@@ -113,7 +113,7 @@ function PostCard({ postData, onLike, onSave, onShare, onComment, onMenuAction }
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" aria-label="Post options">
+            <Button type="button" variant="ghost" size="icon">
               <Ellipsis size={20} color="var(--primary)" className="size-5 opacity-70" />
             </Button>
           </DropdownMenuTrigger>
