@@ -39,7 +39,7 @@ function PostImages({
   className = ""
 }: PostImagesProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false })
-  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [selectedIndex, setSelectedIndex] = useState<number>(0)
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set())
 
   const scrollTo = useCallback(

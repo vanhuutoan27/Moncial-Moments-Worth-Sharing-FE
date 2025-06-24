@@ -103,7 +103,7 @@ function Header() {
                     size="sm"
                   />
 
-                  <span className="border-background absolute -right-0.5 -bottom-0.5 size-3 rounded-full border-2 bg-emerald-500" />
+                  <span className="border-background absolute -right-0.5 -bottom-0.5 size-3 rounded-full border-2 bg-green-600" />
                 </div>
 
                 <ChevronDown size={16} color="var(--primary)" className="opacity-70" />

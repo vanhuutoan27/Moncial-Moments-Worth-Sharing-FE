@@ -19,7 +19,7 @@ interface SidebarGroupProps {
 
 function SidebarGroup({ routes, pathname }: SidebarGroupProps) {
   return (
-    <div className="flex flex-col gap-2 py-2">
+    <div className="space-y-2">
       {routes.map((route) => {
         const isActive = pathname === route.href
 

@@ -35,11 +35,11 @@ function NewPost() {
 
   const [privacy, setPrivacy] = useState<Privacy>(Privacy.PUBLIC)
   const [caption, setCaption] = useState<string>("")
+  const [imageFiles, setImageFiles] = useState<File[]>([])
+  const [processedImages, setProcessedImages] = useState<PostImageType[]>([])
   const [locationQuery, setLocationQuery] = useState<string>("")
   const [hashtags, setHashtags] = useState<string[]>([])
   const [hashtagInput, setHashtagInput] = useState<string>("")
-  const [imageFiles, setImageFiles] = useState<File[]>([])
-  const [processedImages, setProcessedImages] = useState<PostImageType[]>([])
 
   const canAddHashtags = hashtags.length < 10
 
@@ -62,14 +62,18 @@ function NewPost() {
 
   const handleCancel = useCallback(() => {
     setIsExpanded(false)
-    setHashtags([])
-    setHashtagInput("")
+    setCaption("")
     setImageFiles([])
     setProcessedImages([])
-    setCaption("")
     setLocationQuery("")
+    setHashtags([])
+    setHashtagInput("")
     setShowLocationSection(false)
     setShowHashtagSection(false)
+  }, [])
+
+  const handleCaptionChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setCaption(e.target.value.slice(0, 2000))
   }, [])
 
   const toggleLocationSection = useCallback(() => {
@@ -82,10 +86,6 @@ function NewPost() {
 
   const triggerImageUpload = useCallback(() => {
     imageInputRef.current?.click()
-  }, [])
-
-  const handleCaptionChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setCaption(e.target.value.slice(0, 2000))
   }, [])
 
   const handleImageSelect = useCallback(
@@ -236,12 +236,12 @@ function NewPost() {
           </div>
 
           <NewPostActions
+            hasImages={imageFiles.length > 0}
             showLocationSection={showLocationSection}
             showHashtagSection={showHashtagSection}
-            hasImages={imageFiles.length > 0}
+            onImageUpload={triggerImageUpload}
             onLocationToggle={toggleLocationSection}
             onHashtagToggle={toggleHashtagSection}
-            onImageUpload={triggerImageUpload}
           />
 
           <input

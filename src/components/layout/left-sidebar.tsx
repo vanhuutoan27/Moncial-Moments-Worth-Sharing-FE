@@ -63,11 +63,11 @@ function LeftSidebar() {
   }, [])
 
   return (
-    <div className="py-10">
+    <div>
       {routeGroups.map((group, index) => (
         <div key={group.key}>
           <SidebarGroup routes={group.routes} pathname={pathname} />
-          {index < routeGroups.length - 1 && <Separator />}
+          {index < routeGroups.length - 1 && <Separator className="my-2" />}
         </div>
       ))}
 
