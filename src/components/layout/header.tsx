@@ -5,7 +5,6 @@ import React from "react"
 import {
   Bell,
   ChevronDown,
-  Home,
   Layers2,
   LogOut,
   MessageCircle,
@@ -14,8 +13,7 @@ import {
   Search,
   Sun,
   SunMoon,
-  UserPen,
-  Users
+  UserPen
 } from "lucide-react"
 import { useTheme } from "next-themes"
 
@@ -68,13 +66,13 @@ function Header() {
 
         <div className="flex items-center space-x-8">
           <div className="hidden space-x-1 md:flex">
-            <Button variant="ghost" size="icon" className="size-10">
+            {/* <Button variant="ghost" size="icon" className="size-10">
               <Home size={20} color="var(--primary)" className="size-5 opacity-70" />
             </Button>
 
             <Button variant="ghost" size="icon" className="size-10">
               <Users size={20} color="var(--primary)" className="size-5 opacity-70" />
-            </Button>
+            </Button> */}
 
             <Button variant="ghost" size="icon" className="relative size-10">
               <MessageCircle size={20} color="var(--primary)" className="size-5 opacity-70" />

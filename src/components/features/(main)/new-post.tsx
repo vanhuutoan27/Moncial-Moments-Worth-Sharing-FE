@@ -204,7 +204,7 @@ function NewPost() {
               />
             </div>
 
-            <Button variant="default" onClick={handleExpand}>
+            <Button variant="default" onClick={handleExpand} className="hidden md:block">
               Share
             </Button>
           </>

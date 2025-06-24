@@ -30,9 +30,13 @@ function NewPostActions({
         variant={showLocationSection ? "default" : "outline"}
         size="sm"
         onClick={onLocationToggle}
-        className="font-normal"
+        className="border font-normal"
       >
-        <MapPin size={12} color={showLocationSection ? "var(--foreground)" : "var(--primary)"} />
+        <MapPin
+          size={16}
+          color={showLocationSection ? "#fff" : "var(--primary)"}
+          className="size-4 opacity-70"
+        />
         Location
       </Button>
 
@@ -41,9 +45,13 @@ function NewPostActions({
         variant={hasImages ? "default" : "outline"}
         size="sm"
         onClick={onImageUpload}
-        className="font-normal"
+        className="border font-normal"
       >
-        <ImageIcon size={12} color={hasImages ? "var(--foreground)" : "var(--primary)"} />
+        <ImageIcon
+          size={16}
+          color={hasImages ? "#fff" : "var(--primary)"}
+          className="size-4 opacity-70"
+        />
         Upload
       </Button>
 
@@ -52,9 +60,13 @@ function NewPostActions({
         variant={showHashtagSection ? "default" : "outline"}
         size="sm"
         onClick={onHashtagToggle}
-        className="font-normal"
+        className="border font-normal"
       >
-        <Hash size={12} color={showHashtagSection ? "var(--foreground)" : "var(--primary)"} />
+        <Hash
+          size={16}
+          color={showHashtagSection ? "#fff" : "var(--primary)"}
+          className="size-4 opacity-70"
+        />
         Hashtag
       </Button>
     </div>
