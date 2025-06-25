@@ -29,13 +29,13 @@ import PostLikes from "./post-likes"
 interface PostCardProps {
   postData: PostType
   onLike?: (postId: string, isLiked: boolean) => void
-  onSave?: (postId: string, isSaved: boolean) => void
   onShare?: (postId: string) => void
   onComment?: (postId: string) => void
+  onSave?: (postId: string, isSaved: boolean) => void
   onMenuAction?: (postId: string, action: string) => void
 }
 
-function PostCard({ postData, onLike, onSave, onShare, onComment, onMenuAction }: PostCardProps) {
+function PostCard({ postData, onLike, onComment, onShare, onSave, onMenuAction }: PostCardProps) {
   const [isLiked, setIsLiked] = useState<boolean>(false)
   const [isSaved, setIsSaved] = useState<boolean>(false)
 

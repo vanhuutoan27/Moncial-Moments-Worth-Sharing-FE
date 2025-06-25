@@ -78,7 +78,7 @@ function LeftSidebar() {
         variant="default"
         size="lg"
         onClick={handleShare}
-        className="mt-4 w-full font-semibold"
+        className="mt-6 w-full font-semibold"
       >
         Share
       </Button>

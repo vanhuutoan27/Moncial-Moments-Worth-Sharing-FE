@@ -16,7 +16,7 @@ interface PostActionsProps {
   onSave: () => void
 }
 
-const MotionButton = motion(Button)
+const MotionButton = motion.create(Button)
 
 function PostActions({ isLiked, isSaved, onLike, onComment, onShare, onSave }: PostActionsProps) {
   const [showFloatingHeart, setShowFloatingHeart] = useState<boolean>(false)

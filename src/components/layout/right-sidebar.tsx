@@ -2,9 +2,12 @@
 
 import React, { useMemo } from "react"
 
+import { Search } from "lucide-react"
+
 import EventCard from "../features/(main)/event-card"
 import HashtagCard from "../features/(main)/hashtag-card"
 import UserCard from "../features/(main)/user-card"
+import { Input } from "../ui/input"
 import { Separator } from "../ui/separator"
 
 const TRENDING_HASHTAGS = [
@@ -108,6 +111,18 @@ function RightSidebar() {
             <h3 className="text-foreground my-2 text-sm font-semibold">{group.label}</h3>
 
             <div className="space-y-2">
+              {group.key === "users" && (
+                <div className="relative">
+                  <Input type="text" placeholder="Search users..." />
+
+                  <Search
+                    size={16}
+                    color="var(--primary)"
+                    className="absolute top-2.5 right-3 opacity-70"
+                  />
+                </div>
+              )}
+
               {group.items.map((item) => {
                 if ("tag" in item) {
                   return <HashtagCard key={item.id} hashtag={item} />
