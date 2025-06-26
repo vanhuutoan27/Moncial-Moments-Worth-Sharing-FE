@@ -11,11 +11,11 @@ import { Input } from "../ui/input"
 import { Separator } from "../ui/separator"
 
 const TRENDING_HASHTAGS = [
-  { id: 1, tag: "travel", title: "Ẩm thực đường phố", count: 2400, trend: "up" },
-  { id: 2, tag: "food", title: "Ẩm thực đường phố", count: 1850, trend: "up" },
-  { id: 3, tag: "nature", title: "Tranh màu nước", count: 1200, trend: "stable" },
-  { id: 4, tag: "art", title: "Gió cả phê", count: 980, trend: "up" },
-  { id: 5, tag: "health", title: "Hoang hôn", count: 756, trend: "down" }
+  { id: 1, tag: "travel", count: 2400, trend: "up" },
+  { id: 2, tag: "food", count: 1850, trend: "up" },
+  { id: 3, tag: "nature", count: 1200, trend: "stable" },
+  { id: 4, tag: "art", count: 980, trend: "up" },
+  { id: 5, tag: "health", count: 756, trend: "down" }
 ] as const
 
 const UPCOMING_EVENTS = [
@@ -107,35 +107,39 @@ function RightSidebar() {
     <div>
       {itemGroups.map((group, index) => (
         <div key={group.key}>
-          <div>
-            <h3 className="text-foreground my-2 text-sm font-semibold">{group.label}</h3>
+          {group.items.length > 0 && (
+            <div>
+              <h3 className="text-foreground my-2 text-sm font-semibold">{group.label}</h3>
 
-            <div className="space-y-2">
-              {group.key === "users" && (
-                <div className="relative">
-                  <Input type="text" placeholder="Search users..." />
+              <div className="space-y-2">
+                {group.key === "users" && (
+                  <div className="relative">
+                    <Input type="text" placeholder="Search users..." />
 
-                  <Search
-                    size={16}
-                    color="var(--primary)"
-                    className="absolute top-2.5 right-3 opacity-70"
-                  />
-                </div>
-              )}
+                    <Search
+                      size={16}
+                      color="var(--primary)"
+                      className="absolute top-2.5 right-3 opacity-70"
+                    />
+                  </div>
+                )}
 
-              {group.items.map((item) => {
-                if ("tag" in item) {
-                  return <HashtagCard key={item.id} hashtag={item} />
-                } else if ("date" in item) {
-                  return <EventCard key={item.id} event={item} />
-                } else {
-                  return <UserCard key={item.id} user={item} />
-                }
-              })}
+                {group.items.map((item) => {
+                  if ("tag" in item) {
+                    return <HashtagCard key={item.id} hashtag={item} />
+                  } else if ("date" in item) {
+                    return <EventCard key={item.id} event={item} />
+                  } else {
+                    return <UserCard key={item.id} user={item} />
+                  }
+                })}
+              </div>
             </div>
-          </div>
+          )}
 
-          {index < itemGroups.length - 1 && <Separator className="my-2" />}
+          {index < itemGroups.length - 1 && group.items.length > 0 && (
+            <Separator className="my-2" />
+          )}
         </div>
       ))}
     </div>
