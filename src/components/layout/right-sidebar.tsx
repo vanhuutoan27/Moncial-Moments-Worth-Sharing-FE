@@ -6,7 +6,7 @@ import { Search } from "lucide-react"
 
 import EventCard from "../features/(main)/event-card"
 import HashtagCard from "../features/(main)/hashtag-card"
-import UserCard from "../features/(main)/user-card"
+import UserCard from "../shared/user-card"
 import { Input } from "../ui/input"
 import { Separator } from "../ui/separator"
 
