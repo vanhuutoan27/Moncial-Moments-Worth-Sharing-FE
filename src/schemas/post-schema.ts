@@ -5,7 +5,7 @@ import { Privacy } from "@/constants/enums/privacy"
 import { uuidSchema } from "./base-schema"
 import { authorSchema } from "./user-schema"
 
-export const postImageSchema = z.object({
+export const postMediaSchema = z.object({
   url: z.string().url({ message: "Image URL must be a valid URL" }),
   altText: z.string().max(255, { message: "Alt text must not exceed 255 characters." }).optional()
 })
@@ -20,7 +20,7 @@ const postSchema = z.object({
   location: z.string().max(100, { message: "Location must not exceed 100 characters" }).optional(),
 
   images: z
-    .array(postImageSchema)
+    .array(postMediaSchema)
     .max(10, { message: "Cannot upload more than 10 images per post." })
     .optional(),
 
@@ -76,7 +76,7 @@ export const updatePostPrivacySchema = postSchema.pick({
   privacy: true
 })
 
-export type PostImageType = z.infer<typeof postImageSchema>
+export type PostMediaType = z.infer<typeof postMediaSchema>
 
 export type PostType = z.infer<typeof postSchema>
 export type CreatePostType = z.infer<typeof createPostSchema>

@@ -12,7 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 import { cn } from "@/lib/utils"
 
-import { PostImageType } from "@/schemas/post-schema"
+import { PostMediaType } from "@/schemas/post-schema"
 
 const ASPECT_RATIOS = {
   square: "aspect-square",
@@ -21,8 +21,8 @@ const ASPECT_RATIOS = {
   wide: "aspect-video"
 }
 
-interface PostImagesProps {
-  images: PostImageType[]
+interface PostImageProps {
+  images: PostMediaType[]
   aspectRatio?: "square" | "portrait" | "landscape" | "wide"
   priority?: boolean
   onImageRemove?: (index: number) => void
@@ -30,14 +30,14 @@ interface PostImagesProps {
   className?: string
 }
 
-function PostImages({
+function PostImage({
   images,
   aspectRatio = "portrait",
   priority = false,
   onImageRemove,
   showDeleteButtons = false,
   className = ""
-}: PostImagesProps) {
+}: PostImageProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false })
   const [selectedIndex, setSelectedIndex] = useState<number>(0)
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set())
@@ -149,9 +149,9 @@ function PostImages({
                   variant="ghost"
                   size="icon"
                   onClick={(e) => handleImageRemove(index, e)}
-                  className="transition-color absolute top-2 right-2 z-20 bg-black/50 text-white duration-300 hover:text-black"
+                  className="transition-color absolute top-2 right-2 z-20 bg-black/50 duration-300"
                 >
-                  <X size={14} />
+                  <X size={16} fill="#fff" className="size-4" />
                 </Button>
               )}
             </div>
@@ -175,7 +175,7 @@ function PostImages({
       )}
 
       {images.length > 1 && !showDeleteButtons && (
-        <div className="absolute top-2 right-2 z-10 rounded-full bg-black/40 px-2 py-1 text-xs text-white backdrop-blur select-none">
+        <div className="absolute top-2 right-2 z-10 rounded-full bg-black/30 px-2 py-1 text-xs text-white backdrop-blur select-none">
           {selectedIndex + 1}/{images.length}
         </div>
       )}
@@ -183,4 +183,4 @@ function PostImages({
   )
 }
 
-export default PostImages
+export default PostImage

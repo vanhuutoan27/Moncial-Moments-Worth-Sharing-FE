@@ -23,7 +23,7 @@ import { PostType } from "@/schemas/post-schema"
 
 import PostActions from "./post-actions"
 import PostContent from "./post-content"
-import PostImages from "./post-images"
+import PostImage from "./post-image"
 import PostLikes from "./post-likes"
 
 interface PostCardProps {
@@ -81,15 +81,7 @@ function PostCard({ postData, onLike, onComment, onShare, onSave, onMenuAction }
     <div className="border-border flex w-full flex-col gap-4 rounded-lg border p-4 shadow-md">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <HoverCard>
-            <HoverCardTrigger asChild>
-              <UserAvatar user={postData.author} />
-            </HoverCardTrigger>
-
-            <HoverCardContent className="w-80">
-              <UserProfile author={postData.author} />
-            </HoverCardContent>
-          </HoverCard>
+          <UserAvatar user={postData.author} />
 
           <div className="space-y-0.5">
             <HoverCard>
@@ -142,7 +134,7 @@ function PostCard({ postData, onLike, onComment, onShare, onSave, onMenuAction }
       </div>
 
       {postData.images && postData.images.length > 0 && (
-        <PostImages images={postData.images} priority />
+        <PostImage images={postData.images} priority />
       )}
 
       <div className="space-y-4">

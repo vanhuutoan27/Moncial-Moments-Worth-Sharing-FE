@@ -7,12 +7,12 @@ import { Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 
-import { PostImageType } from "@/schemas/post-schema"
+import { PostMediaType } from "@/schemas/post-schema"
 
-import PostImages from "./post-images"
+import PostImage from "./post-image"
 
 interface ImageSectionProps {
-  images: PostImageType[]
+  images: PostMediaType[]
   onImageRemove: (index: number) => void
   onClearAll: () => void
 }
@@ -31,7 +31,7 @@ function ImageSection({ images, onImageRemove, onClearAll }: ImageSectionProps) 
         </Button>
       </div>
 
-      <PostImages images={images} priority onImageRemove={onImageRemove} showDeleteButtons />
+      <PostImage images={images} priority onImageRemove={onImageRemove} showDeleteButtons />
     </div>
   )
 }

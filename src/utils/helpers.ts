@@ -1,10 +1,10 @@
-import { PostImageType } from "@/schemas/post-schema"
+import { PostMediaType } from "@/schemas/post-schema"
 
 export const sanitizeHashtag = (input: string): string => {
   return input.replace(/^#/, "").trim().toLowerCase()
 }
 
-export const processImageFile = (file: File): Promise<PostImageType> => {
+export const processImageFile = (file: File): Promise<PostMediaType> => {
   return new Promise((resolve) => {
     const reader = new FileReader()
 
