@@ -13,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea"
 
 import { Privacy } from "@/constants/enums/privacy"
 
-import { PostImageType } from "@/schemas/post-schema"
+import { PostMediaType } from "@/schemas/post-schema"
 
 import { processImageFile, sanitizeHashtag } from "@/utils/helpers"
 
@@ -22,7 +22,7 @@ import HashtagSection from "./hashtag-section"
 import ImageSection from "./image-section"
 import LocationSection from "./location-section"
 import NewPostActions from "./new-post-actions"
-import UserHeader from "./user-header"
+import NewPostHeader from "./new-post-header"
 
 function NewPost() {
   const imageInputRef = useRef<HTMLInputElement>(null)
@@ -36,7 +36,7 @@ function NewPost() {
   const [privacy, setPrivacy] = useState<Privacy>(Privacy.PUBLIC)
   const [caption, setCaption] = useState<string>("")
   const [imageFiles, setImageFiles] = useState<File[]>([])
-  const [processedImages, setProcessedImages] = useState<PostImageType[]>([])
+  const [processedImages, setProcessedImages] = useState<PostMediaType[]>([])
   const [locationQuery, setLocationQuery] = useState<string>("")
   const [hashtags, setHashtags] = useState<string[]>([])
   const [hashtagInput, setHashtagInput] = useState<string>("")
@@ -214,7 +214,7 @@ function NewPost() {
             </Button>
           </>
         ) : (
-          <UserHeader privacy={privacy} onPrivacyChange={setPrivacy} onCancel={handleCancel} />
+          <NewPostHeader privacy={privacy} onPrivacyChange={setPrivacy} onCancel={handleCancel} />
         )}
       </div>
 
