@@ -1,9 +1,9 @@
 "use client"
 
-import React, { ReactNode } from "react"
+import React from "react"
 
 interface AdminLayoutProps {
-  children: ReactNode
+  children: React.ReactNode
 }
 
 function AdminLayout({ children }: AdminLayoutProps) {

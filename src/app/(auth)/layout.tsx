@@ -1,9 +1,9 @@
 "use client"
 
-import React, { ReactNode } from "react"
+import React from "react"
 
 interface AuthLayoutProps {
-  children: ReactNode
+  children: React.ReactNode
 }
 
 function AuthLayout({ children }: AuthLayoutProps) {

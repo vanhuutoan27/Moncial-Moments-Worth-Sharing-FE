@@ -1,9 +1,9 @@
 "use client"
 
-import React, { ReactNode } from "react"
+import React from "react"
 
 interface UserLayoutProps {
-  children: ReactNode
+  children: React.ReactNode
 }
 
 function UserLayout({ children }: UserLayoutProps) {
