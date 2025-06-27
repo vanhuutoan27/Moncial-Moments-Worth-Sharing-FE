@@ -43,11 +43,11 @@ function PostLikes({ likesCount }: PostLikesProps) {
 
       <p className="text-muted-foreground px-2 text-xs">
         Liked by{" "}
-        <span className="text-foreground cursor-pointer font-medium hover:underline">
+        <span className="text-foreground cursor-pointer font-medium underline-offset-4 hover:underline">
           {displayUsers[0]?.fullName}
         </span>{" "}
         and{" "}
-        <span className="text-foreground cursor-pointer font-medium hover:underline">
+        <span className="text-foreground cursor-pointer font-medium underline-offset-4 hover:underline">
           {Math.max(0, likesCount - displayCount)} others
         </span>
         .

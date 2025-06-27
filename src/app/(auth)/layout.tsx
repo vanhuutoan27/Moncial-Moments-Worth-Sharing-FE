@@ -9,7 +9,7 @@ interface AuthLayoutProps {
 function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <div className="bg-background min-h-screen">
-      <main className="flex-1 px-4 py-10 pb-20 lg:mx-64 lg:pb-10">{children}</main>
+      <main className="flex-1">{children}</main>
     </div>
   )
 }

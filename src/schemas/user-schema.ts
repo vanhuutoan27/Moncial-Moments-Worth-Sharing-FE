@@ -68,5 +68,12 @@ export const authorSchema = userSchema.pick({
   avatarUrl: true
 })
 
+export const loginSchema = userSchema.pick({
+  email: true,
+  password: true
+})
+
 export type UserType = z.infer<typeof userSchema>
 export type AuthorType = z.infer<typeof authorSchema>
+
+export type LoginType = z.infer<typeof loginSchema>

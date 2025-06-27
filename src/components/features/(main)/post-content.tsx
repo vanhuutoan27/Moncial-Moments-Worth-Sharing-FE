@@ -14,7 +14,7 @@ function PostContent({ caption, hashtags }: PostContentProps) {
 
       <p className="text-muted-foreground text-sm">
         {hashtags?.map((hashtag, index) => (
-          <span key={index} className="cursor-pointer hover:underline">
+          <span key={index} className="cursor-pointer underline-offset-4 hover:underline">
             #{hashtag}{" "}
           </span>
         ))}

@@ -97,7 +97,9 @@ function PostCard({ postData, onLike, onComment, onShare, onSave, onMenuAction }
             </HoverCard>
 
             <p className="text-muted-foreground text-xs">
-              <span className="cursor-pointer hover:underline">@{postData.author.username}</span>{" "}
+              <span className="cursor-pointer underline-offset-4 hover:underline">
+                @{postData.author.username}
+              </span>{" "}
               {postData && `• ${postData.location}`} • {formattedDate}
             </p>
           </div>

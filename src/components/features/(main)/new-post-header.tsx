@@ -30,7 +30,8 @@ function NewPostHeader({ privacy, onPrivacyChange, onCancel }: NewPostHeaderProp
       <div className="space-y-0.5">
         <h3 className="text-foreground w-fit cursor-pointer text-sm font-semibold">Văn Hữu Toàn</h3>
         <p className="text-muted-foreground text-xs">
-          <span className="cursor-pointer hover:underline">@vanhuutoan27</span> • Củ Chi
+          <span className="cursor-pointer underline-offset-4 hover:underline">@vanhuutoan27</span> •
+          Củ Chi
         </p>
       </div>
 
