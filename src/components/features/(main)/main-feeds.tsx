@@ -4,6 +4,8 @@ import React, { useCallback, useMemo, useState } from "react"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+import { ZOTAEUS } from "@/constants/app"
+import { commentsData } from "@/constants/data/comments"
 import { postsData } from "@/constants/data/posts"
 
 import PostCard from "./post-card"
@@ -13,8 +15,18 @@ type FeedOption = "feed" | "trending" | "following" | "saved"
 function MainFeeds() {
   const [activeTab, setActiveTab] = useState<FeedOption>("feed")
 
-  const followingUserIds = useMemo(() => ["user1", "user2", "user3"], [])
-  // const savedPostIds = useMemo(() => ["post1", "post3", "post5"], [])
+  const currentUserData = useMemo(
+    () => ({
+      id: ZOTAEUS.id,
+      fullName: ZOTAEUS.fullName,
+      username: ZOTAEUS.username,
+      avatarUrl: ZOTAEUS.avatarUrl
+    }),
+    []
+  )
+
+  const followingUserIds = useMemo(() => ["a094db3e-d897-4e6b-9588-8fec7029a923"], [])
+  const savedPostIds = useMemo(() => ["p1", "p5"], [])
 
   const tabs: { value: FeedOption; label: string }[] = [
     { value: "feed", label: "Feed" },
@@ -53,17 +65,45 @@ function MainFeeds() {
 
       case "following":
         return posts
+          .filter((post) => followingUserIds.includes(post.authorId))
+          .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
 
       case "saved":
         return posts
+          .filter((post) => savedPostIds.includes(post.id))
+          .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
 
       default:
         return posts
     }
-  }, [activeTab, followingUserIds])
+  }, [activeTab, followingUserIds, savedPostIds])
 
   const handleTabChange = useCallback((value: string) => {
     setActiveTab(value as FeedOption)
+  }, [])
+
+  const handleLike = useCallback((postId: string, isLiked: boolean) => {
+    console.log("Like toggled:", postId, isLiked)
+  }, [])
+
+  const handleComment = useCallback((postId: string) => {
+    console.log("Comment clicked:", postId)
+  }, [])
+
+  const handleShare = useCallback((postId: string) => {
+    console.log("Share clicked:", postId)
+  }, [])
+
+  const handleSave = useCallback((postId: string, isSaved: boolean) => {
+    console.log("Save toggled:", postId, isSaved)
+  }, [])
+
+  const handleMenuAction = useCallback((postId: string, action: string) => {
+    console.log("Menu action:", postId, action)
+  }, [])
+
+  const handleCommentSubmit = useCallback((postId: string, content: string) => {
+    console.log("Comment submitted:", postId, content)
   }, [])
 
   return (
@@ -81,7 +121,20 @@ function MainFeeds() {
           <TabsContent key={tab.value} value={tab.value} className="w-full">
             <div className="flex flex-col items-center space-y-6">
               {filteredPostsData.length > 0 ? (
-                filteredPostsData.map((post) => <PostCard key={post.id} postData={post} />)
+                filteredPostsData.map((post) => (
+                  <PostCard
+                    key={post.id}
+                    postData={post}
+                    commentsData={commentsData.filter((comment) => comment.postId === post.id)}
+                    currentUser={currentUserData}
+                    onLike={handleLike}
+                    onComment={handleComment}
+                    onShare={handleShare}
+                    onSave={handleSave}
+                    onMenuAction={handleMenuAction}
+                    onCommentSubmit={handleCommentSubmit}
+                  />
+                ))
               ) : (
                 <p className="text-muted-foreground my-10 text-center text-base">
                   {activeTab === "following" && "No posts from people you follow"}

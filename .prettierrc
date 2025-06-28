@@ -12,6 +12,7 @@
     "^(react/(.*)$)|^(react$)",
     "^(next/(.*)$)|^(next$)",
     "<THIRD_PARTY_MODULES>",
+    "^@/components/animate-ui/(.*)$",
     "^@/components/features/(.*)$",
     "^@/components/forms/(.*)$",
     "^@/components/layout/(.*)$",
