@@ -2,8 +2,51 @@
 
 import React from "react"
 
+import { useRouter } from "next/navigation"
+
+import SadWhale from "@/components/shared/sad-whale"
+
+import { Button } from "@/components/ui/button"
+
 function NotFoundPage() {
-  return <div>NotFoundPage</div>
+  const router = useRouter()
+
+  const handleGoHome = () => {
+    router.push("/")
+  }
+
+  const handleGoBack = () => {
+    router.back()
+  }
+
+  return (
+    <div className="flex h-full flex-col items-center justify-center space-y-6">
+      <SadWhale />
+
+      <div className="space-y-2 text-center">
+        <h3 className="text-primary text-2xl font-bold">Oops! This page has swum away 🐋</h3>
+
+        <p className="text-muted-foreground">
+          It looks like this link no longer exists or has been moved. Don't worry, head back to the
+          homepage to discover other amazing posts!
+        </p>
+      </div>
+
+      <div className="space-x-4">
+        <Button variant="outline" onClick={handleGoBack}>
+          Go Back
+        </Button>
+
+        <Button variant="default" onClick={handleGoHome}>
+          Go Home
+        </Button>
+      </div>
+
+      <p className="text-muted-foreground mt-6 text-center text-sm">
+        Moncial • Where beautiful moments are shared
+      </p>
+    </div>
+  )
 }
 
 export default NotFoundPage
