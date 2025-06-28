@@ -17,6 +17,8 @@ import {
 } from "lucide-react"
 import { useTheme } from "next-themes"
 
+import { ZOTAEUS } from "@/constants/app"
+
 import { SpringElement } from "../animate-ui/spring-element"
 import UserAvatar from "../shared/user-avatar"
 import { Button } from "../ui/button"
@@ -59,7 +61,7 @@ function Header() {
             <Search
               size={16}
               color="var(--primary)"
-              className="absolute top-2.5 right-3 opacity-70"
+              className="absolute top-1/2 right-3 -translate-y-1/2 opacity-70"
             />
           </div>
         </div>
@@ -96,9 +98,8 @@ function Header() {
                 <div className="relative">
                   <UserAvatar
                     user={{
-                      fullName: "Zotaeus",
-                      avatarUrl:
-                        "https://firebasestorage.googleapis.com/v0/b/diamoondb-1412.appspot.com/o/Moncial%2Fusers%2F28a9df75-5841-4351-9f4a-78b209514b10.jpg?alt=media&token=e316d291-6534-4c7c-ae96-a8ff35a3a946"
+                      fullName: ZOTAEUS.fullName,
+                      avatarUrl: ZOTAEUS.avatarUrl
                     }}
                     size="sm"
                   />

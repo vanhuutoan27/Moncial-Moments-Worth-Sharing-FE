@@ -9,7 +9,7 @@ export const usersData: Omit<UserType, "password">[] = [
     username: "asd",
     bio: "",
     avatarUrl:
-      "https://firebasestorage.googleapis.com/v0/b/diamoondb-1412.appspot.com/o/Moncial%2Fusers%2F7e8790fc-4c68-4de5-9788-475404d26cf7.jpg?alt=media&token=02a55598-4dee-46a4-8ed0-f15f926eb1a3",
+      "https://res.cloudinary.com/zotaeus27/image/upload/w_100,h_100,c_fill,f_auto,q_auto,dpr_auto/v1751095373/28a9df75-5841-4351-9f4a-78b209514b10_fj79mu.jpg",
     isPrivate: true,
     isActive: true,
     followersCount: 0,
@@ -30,7 +30,7 @@ export const usersData: Omit<UserType, "password">[] = [
     username: "zotaeus",
     bio: "",
     avatarUrl:
-      "https://firebasestorage.googleapis.com/v0/b/diamoondb-1412.appspot.com/o/Moncial%2Fusers%2F28a9df75-5841-4351-9f4a-78b209514b10.jpg?alt=media&token=e316d291-6534-4c7c-ae96-a8ff35a3a946",
+      "https://res.cloudinary.com/zotaeus27/image/upload/w_100,h_100,c_fill,f_auto,q_auto,dpr_auto/v1751095373/28a9df75-5841-4351-9f4a-78b209514b10_fj79mu.jpg",
     isPrivate: false,
     isActive: true,
     followersCount: 0,
@@ -51,7 +51,7 @@ export const usersData: Omit<UserType, "password">[] = [
     username: "vanhuutoan27",
     bio: "",
     avatarUrl:
-      "https://firebasestorage.googleapis.com/v0/b/diamoondb-1412.appspot.com/o/Moncial%2Fusers%2F28a9df75-5841-4351-9f4a-78b209514b10.jpg?alt=media&token=e316d291-6534-4c7c-ae96-a8ff35a3a946",
+      "https://res.cloudinary.com/zotaeus27/image/upload/w_100,h_100,c_fill,f_auto,q_auto,dpr_auto/v1751095373/28a9df75-5841-4351-9f4a-78b209514b10_fj79mu.jpg",
     isPrivate: false,
     isActive: true,
     followersCount: 0,
@@ -72,7 +72,7 @@ export const usersData: Omit<UserType, "password">[] = [
     username: "khaitoir",
     bio: "",
     avatarUrl:
-      "https://firebasestorage.googleapis.com/v0/b/diamoondb-1412.appspot.com/o/Moncial%2Fusers%2F500762646_1506618343655976_1461943053375761717_n.jpg?alt=media&token=994b29d3-f1cc-46c7-9c01-1a3af8181171",
+      "https://res.cloudinary.com/zotaeus27/image/upload/w_100,h_100,c_fill,f_auto,q_auto,dpr_auto/v1751095376/500762646_1506618343655976_1461943053375761717_n_xgz6o3.jpg",
     isPrivate: true,
     isActive: false,
     followersCount: 0,
@@ -93,7 +93,7 @@ export const usersData: Omit<UserType, "password">[] = [
     username: "shadownnguyen",
     bio: "",
     avatarUrl:
-      "https://firebasestorage.googleapis.com/v0/b/diamoondb-1412.appspot.com/o/Moncial%2Fusers%2F272977218_917566738909962_2404494298328639775_n.jpg?alt=media&token=bd80b7ec-b25e-4bf6-884a-e9944d1a5d12",
+      "https://res.cloudinary.com/zotaeus27/image/upload/w_100,h_100,c_fill,f_auto,q_auto,dpr_auto/v1751095369/272977218_917566738909962_2404494298328639775_n_gk1zof.jpg",
     isPrivate: true,
     isActive: true,
     followersCount: 0,
@@ -114,7 +114,7 @@ export const usersData: Omit<UserType, "password">[] = [
     username: "saophadao1472",
     bio: "",
     avatarUrl:
-      "https://firebasestorage.googleapis.com/v0/b/diamoondb-1412.appspot.com/o/Moncial%2Fusers%2F501264081_2439519409751669_7817836673522694058_n.jpg?alt=media&token=e7b28090-d61d-488c-abf8-5d2571ce70e8",
+      "https://res.cloudinary.com/zotaeus27/image/upload/w_100,h_100,c_fill,f_auto,q_auto,dpr_auto/v1751095384/501264081_2439519409751669_7817836673522694058_n_vpmkbm.jpg",
     isPrivate: true,
     isActive: false,
     followersCount: 0,
@@ -135,7 +135,7 @@ export const usersData: Omit<UserType, "password">[] = [
     username: "teagon",
     bio: "",
     avatarUrl:
-      "https://firebasestorage.googleapis.com/v0/b/diamoondb-1412.appspot.com/o/Moncial%2Fusers%2F497834851_684220240988007_6550764112132279883_n.jpg?alt=media&token=12fbcdf9-bfa4-45b8-9fc2-30775f409a69",
+      "https://res.cloudinary.com/zotaeus27/image/upload/w_100,h_100,c_fill,f_auto,q_auto,dpr_auto/v1751095372/497834851_684220240988007_6550764112132279883_n_eoepwv.jpg",
     isPrivate: true,
     isActive: false,
     followersCount: 0,
