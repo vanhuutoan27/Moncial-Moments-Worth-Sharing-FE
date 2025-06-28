@@ -157,7 +157,7 @@ function LoginPage() {
                     </Link>
                   </div>
 
-                  <Button disabled={isLoading} type="submit" className="h-10 w-full font-semibold">
+                  <Button type="submit" disabled={isLoading} className="h-10 w-full font-semibold">
                     {isLoading ? (
                       <>
                         <Loader2 size={24} className="animate-spin" />

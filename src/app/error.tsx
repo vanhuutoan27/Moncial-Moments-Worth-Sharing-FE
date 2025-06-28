@@ -33,7 +33,7 @@ function ErrorPage({ error, reset }: ErrorPageProps) {
   }
 
   return (
-    <div className="flex h-full flex-col items-center justify-center space-y-6">
+    <div className="flex h-full min-h-[calc(100vh-160px)] flex-col items-center justify-center space-y-6">
       <SadWhale />
 
       <div className="space-y-2 text-center">
@@ -59,15 +59,15 @@ function ErrorPage({ error, reset }: ErrorPageProps) {
       </div>
 
       <div className="space-x-4">
-        <Button variant="outline" onClick={handleGoBack}>
+        <Button type="button" variant="outline" onClick={handleGoBack}>
           Go Back
         </Button>
 
-        <Button variant="outline" onClick={handleTryAgain}>
+        <Button type="button" variant="outline" onClick={handleTryAgain}>
           Try Again
         </Button>
 
-        <Button variant="default" onClick={handleGoHome}>
+        <Button type="button" variant="default" onClick={handleGoHome}>
           Go Home
         </Button>
       </div>

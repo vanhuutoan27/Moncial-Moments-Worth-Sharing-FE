@@ -10,7 +10,7 @@ interface PageWrapperProps {
   splashDuration?: number
 }
 
-function PageWrapper({ children, showSplash = true, splashDuration = 2000 }: PageWrapperProps) {
+function PageWrapper({ children, showSplash = true, splashDuration = 1000 }: PageWrapperProps) {
   const [splashComplete, setSplashComplete] = useState<boolean>(!showSplash)
   const [contentReady, setContentReady] = useState<boolean>(!showSplash)
 
@@ -21,20 +21,16 @@ function PageWrapper({ children, showSplash = true, splashDuration = 2000 }: Pag
     }, 100)
   }
 
-  return (
-    <>
-      {showSplash && !splashComplete && (
-        <SplashScreen onComplete={handleSplashComplete} duration={splashDuration} />
-      )}
+  if (showSplash && !splashComplete) {
+    return <SplashScreen onComplete={handleSplashComplete} duration={splashDuration} />
+  }
 
-      <div
-        className={`transition-all duration-500 ${
-          contentReady ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-        }`}
-      >
-        {children}
-      </div>
-    </>
+  return (
+    <div
+      className={`transition-opacity duration-500 ${contentReady ? "opacity-100" : "opacity-0"}`}
+    >
+      {children}
+    </div>
   )
 }
 

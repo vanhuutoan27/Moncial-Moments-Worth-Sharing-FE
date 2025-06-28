@@ -14,7 +14,7 @@ interface MainLayoutProps {
 
 function MainLayout({ children }: MainLayoutProps) {
   return (
-    <PageWrapper showSplash={true} splashDuration={2000}>
+    <PageWrapper>
       <div className="bg-background min-h-screen">
         <Header />
 
