@@ -13,7 +13,7 @@ function HomePage() {
   // }
 
   return (
-    <div className="mx-auto flex max-w-lg flex-col items-center space-y-6">
+    <div className="space-y-6">
       <NewPost />
       <MainFeeds />
     </div>

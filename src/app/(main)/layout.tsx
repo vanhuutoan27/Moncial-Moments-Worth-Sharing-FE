@@ -23,7 +23,9 @@ function MainLayout({ children }: MainLayoutProps) {
             <LeftSidebar />
           </aside>
 
-          <main className="flex-1 px-4 py-10 pb-20 lg:mx-64 lg:pb-10">{children}</main>
+          <main className="max-w-none flex-1 px-4 py-10 pb-20 lg:mr-72 lg:ml-64 lg:pb-10">
+            <div className="mx-auto h-full min-h-[calc(100vh-160px)] max-w-lg">{children}</div>
+          </main>
 
           <aside className="border-border bg-background fixed top-16 right-0 z-40 hidden h-[calc(100vh-64px)] w-72 overflow-y-auto border-l px-4 py-4 lg:block">
             <RightSidebar />
