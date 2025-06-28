@@ -24,8 +24,8 @@ import { Input } from "@/components/ui/input"
 import { LoginType, loginSchema } from "@/schemas/user-schema"
 
 function LoginPage() {
-  const [showPassword, setShowPassword] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [showPassword, setShowPassword] = useState<boolean>(false)
 
   const form = useForm<LoginType>({
     resolver: zodResolver(loginSchema),
@@ -128,7 +128,7 @@ function LoginPage() {
                             <Input
                               type={showPassword ? "text" : "password"}
                               placeholder="******"
-                              className="h-11 pr-10 pl-10"
+                              className="h-11 px-10"
                               {...field}
                             />
 
@@ -157,7 +157,7 @@ function LoginPage() {
                     </Link>
                   </div>
 
-                  <Button disabled={isLoading} type="submit" className="h-10 w-full">
+                  <Button disabled={isLoading} type="submit" className="h-10 w-full font-semibold">
                     {isLoading ? (
                       <>
                         <Loader2 size={24} className="animate-spin" />
@@ -180,7 +180,7 @@ function LoginPage() {
                     </div>
                   </div>
 
-                  <Button type="button" variant="outline" className="w-full">
+                  <Button type="button" variant="outline" className="w-full font-semibold">
                     <Github size={16} />
                     Continue with GitHub
                   </Button>
@@ -218,7 +218,7 @@ function LoginPage() {
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/50 to-transparent" />
 
         <Image
-          src="/images/DSC02610.jpg"
+          src="/images/hoan-hao.jpg"
           alt="Moncial Login Background"
           fill
           priority
