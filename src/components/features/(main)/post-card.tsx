@@ -1,8 +1,9 @@
 "use client"
 
-import React, { useCallback, useMemo, useState } from "react"
+import React, { useCallback, useState } from "react"
 
-import { formatDistanceToNow } from "date-fns"
+import Link from "next/link"
+
 import { Bookmark, Ellipsis, Eye, Trash2 } from "lucide-react"
 
 import UserAvatar from "@/components/shared/user-avatar"
@@ -19,36 +20,43 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 
+import { CommentType } from "@/schemas/comment-schema"
 import { PostType } from "@/schemas/post-schema"
+import { AuthorType } from "@/schemas/user-schema"
+
+import { formatTimeAgo } from "@/utils/formatters"
 
 import PostActions from "./post-actions"
+import PostComments from "./post-comments"
 import PostContent from "./post-content"
 import PostImage from "./post-image"
 import PostLikes from "./post-likes"
 
 interface PostCardProps {
   postData: PostType
+  commentsData?: CommentType[]
+  currentUser?: AuthorType
   onLike?: (postId: string, isLiked: boolean) => void
   onShare?: (postId: string) => void
   onComment?: (postId: string) => void
   onSave?: (postId: string, isSaved: boolean) => void
   onMenuAction?: (postId: string, action: string) => void
+  onCommentSubmit?: (postId: string, content: string) => void
 }
 
-function PostCard({ postData, onLike, onComment, onShare, onSave, onMenuAction }: PostCardProps) {
+function PostCard({
+  postData,
+  commentsData = [],
+  currentUser,
+  onLike,
+  onComment,
+  onShare,
+  onSave,
+  onMenuAction,
+  onCommentSubmit
+}: PostCardProps) {
   const [isLiked, setIsLiked] = useState<boolean>(false)
   const [isSaved, setIsSaved] = useState<boolean>(false)
-
-  const formattedDate = useMemo(
-    () => formatDistanceToNow(new Date(postData.createdAt), { addSuffix: true }),
-    [postData.createdAt]
-  )
-
-  const commentsText = useMemo(() => {
-    if (postData.commentsCount === 0) return "No comments yet"
-    if (postData.commentsCount === 1) return "View 1 comment"
-    return `View all ${postData.commentsCount} comments`
-  }, [postData.commentsCount])
 
   const handleLikeToggle = useCallback(() => {
     const newLikedState = !isLiked
@@ -77,6 +85,13 @@ function PostCard({ postData, onLike, onComment, onShare, onSave, onMenuAction }
     [onMenuAction, postData.id]
   )
 
+  const handleCommentSubmit = useCallback(
+    (content: string) => {
+      onCommentSubmit?.(postData.id, content)
+    },
+    [onCommentSubmit, postData.id]
+  )
+
   return (
     <div className="border-border flex w-full flex-col gap-4 rounded-lg border p-4 shadow-md">
       <div className="flex items-center justify-between">
@@ -87,7 +102,10 @@ function PostCard({ postData, onLike, onComment, onShare, onSave, onMenuAction }
             <HoverCard>
               <HoverCardTrigger asChild>
                 <h3 className="text-foreground w-fit cursor-pointer text-sm font-semibold">
-                  {postData.author.fullName}
+                  {postData.author.fullName}{" "}
+                  <span className="text-muted-foreground inline-block cursor-pointer font-normal md:hidden">
+                    @{postData.author.username}
+                  </span>
                 </h3>
               </HoverCardTrigger>
 
@@ -97,10 +115,19 @@ function PostCard({ postData, onLike, onComment, onShare, onSave, onMenuAction }
             </HoverCard>
 
             <p className="text-muted-foreground text-xs">
-              <span className="cursor-pointer underline-offset-4 hover:underline">
-                @{postData.author.username}
-              </span>{" "}
-              {postData && `• ${postData.location}`} • {formattedDate}
+              {postData.author.username && (
+                <span className="hidden cursor-pointer underline-offset-4 hover:underline md:inline-block">
+                  @{postData.author.username}
+                </span>
+              )}
+
+              {postData.author.username && <span className="hidden md:inline"> • </span>}
+
+              {postData.location && <span>{postData.location}</span>}
+
+              {postData.author.username && postData.location && " • "}
+
+              <Link href={`/posts/${postData.id}`}>{formatTimeAgo(postData.createdAt)}</Link>
             </p>
           </div>
         </div>
@@ -152,9 +179,14 @@ function PostCard({ postData, onLike, onComment, onShare, onSave, onMenuAction }
         <PostLikes likesCount={postData.likesCount} />
 
         <PostContent caption={postData.caption} hashtags={postData.hashtags} />
-      </div>
 
-      <p className="text-muted-foreground w-fit cursor-pointer text-sm">{commentsText}</p>
+        <PostComments
+          commentsData={commentsData}
+          commentsCount={postData.commentsCount}
+          currentUser={currentUser}
+          onCommentSubmit={handleCommentSubmit}
+        />
+      </div>
     </div>
   )
 }
