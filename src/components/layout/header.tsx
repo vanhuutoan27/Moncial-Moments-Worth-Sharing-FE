@@ -47,8 +47,8 @@ function Header() {
 
   return (
     <div className="bg-background border-border sticky top-0 z-50 w-full border border-b shadow-sm">
-      <div className="container mx-auto flex h-16 items-center justify-between gap-2 px-4">
-        <div className="flex items-center gap-20">
+      <div className="flex h-16 items-center justify-between gap-2 px-4">
+        <div className="flex items-center gap-40">
           <SpringElement>
             <h2 className="text-foreground cursor-pointer text-2xl font-bold tracking-wider select-none md:text-3xl">
               Mon<span className="text-primary">cial</span>
