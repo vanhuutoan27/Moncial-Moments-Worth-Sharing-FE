@@ -22,6 +22,8 @@ export default getRequestConfig(async () => {
     }
   } catch (error) {
     console.warn(`Messages for locale "${locale}" not found, falling back to English.`)
+    console.log(error)
+
     return {
       locale: "en",
       messages: (await import(`../../messages/en.json`)).default
