@@ -1,0 +1,102 @@
+{
+  "app": {
+    "name": "Moncial",
+    "common": {
+      "actions": {
+        "search": "搜索内容...",
+        "loading": "加载中...",
+        "submit": "提交",
+        "cancel": "取消",
+        "save": "保存",
+        "edit": "编辑",
+        "delete": "删除"
+      },
+      "navigation": {
+        "back": "返回",
+        "next": "下一步",
+        "home": "首页",
+        "profile": "个人资料",
+        "settings": "设置"
+      }
+    },
+    "header": {
+      "search": {
+        "placeholder": "搜索内容..."
+      },
+      "menu": {
+        "items": {
+          "profile": "个人资料",
+          "settings": "设置",
+          "language": "语言",
+          "logout": "退出登录"
+        },
+        "theme": {
+          "title": "主题",
+          "options": {
+            "light": "浅色",
+            "dark": "深色",
+            "system": "跟随系统"
+          }
+        }
+      }
+    },
+    "auth": {
+      "login": {
+        "title": "欢迎回来",
+        "description": "登录您的 Moncial 账户以继续您的旅程",
+        "form": {
+          "fields": {
+            "email": {
+              "label": "邮箱",
+              "placeholder": "请输入您的邮箱",
+              "validations": {
+                "required": "邮箱是必填项。",
+                "invalid": "请输入有效的邮箱地址。"
+              }
+            },
+            "password": {
+              "label": "密码",
+              "placeholder": "请输入您的密码",
+              "validations": {
+                "required": "密码是必填项。",
+                "constraints": {
+                  "min": "密码至少需要 6 个字符。",
+                  "max": "密码不能超过 32 个字符。"
+                },
+                "requirements": {
+                  "uppercase": "密码必须包含至少一个大写字母。",
+                  "lowercase": "密码必须包含至少一个小写字母。",
+                  "number": "密码必须包含至少一个数字。",
+                  "special": "密码必须包含至少一个特殊字符。"
+                }
+              }
+            }
+          },
+          "actions": {
+            "submit": "登录",
+            "submitLoading": "登录中...",
+            "forgotPassword": "忘记密码？"
+          },
+          "links": {
+            "noAccount": "还没有账户？",
+            "signUp": "创建账户"
+          }
+        },
+        "social": {
+          "divider": "或使用以下方式继续",
+          "providers": {
+            "github": "使用 GitHub 继续"
+          }
+        },
+        "legal": {
+          "agreement": "继续操作即表示您同意我们的",
+          "links": {
+            "termsOfService": "服务条款",
+            "privacyPolicy": "隐私政策"
+          },
+          "conjunction": "和"
+        }
+      }
+    }
+  }
+}

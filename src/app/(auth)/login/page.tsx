@@ -7,8 +7,11 @@ import Link from "next/link"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Eye, EyeOff, Github, Loader2, Lock, Mail } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
+
+import ThemeToggle from "@/components/shared/theme-toggle"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -21,14 +24,16 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { LoginType, loginSchema } from "@/schemas/user-schema"
+import { LoginType, loginSchema } from "@/validations/user-schema"
 
 function LoginPage() {
+  const t = useTranslations("app.auth.login")
+
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
   const form = useForm<LoginType>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(loginSchema(t)),
     defaultValues: {
       email: "zotaeus@gmail.com",
       password: "123As@"
@@ -58,11 +63,15 @@ function LoginPage() {
   return (
     <div className="grid min-h-screen lg:grid-cols-2">
       <div className="flex flex-col p-6 md:p-10">
-        <Link href="/" className="flex justify-center md:justify-start">
-          <h2 className="text-foreground cursor-pointer text-2xl font-bold tracking-wider select-none md:text-3xl">
-            Mon<span className="text-primary">cial</span>
-          </h2>
-        </Link>
+        <div className="flex items-center justify-between">
+          <Link href="/" className="flex justify-center md:justify-start">
+            <h2 className="text-foreground cursor-pointer text-2xl font-bold tracking-wider select-none md:text-3xl">
+              Mon<span className="text-primary">cial</span>
+            </h2>
+          </Link>
+
+          <ThemeToggle />
+        </div>
 
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-sm">
@@ -73,10 +82,10 @@ function LoginPage() {
                     <Lock size={24} color="var(--primary)" className="opacity-70" />
                   </div>
 
-                  <h3 className="text-foreground mt-2 text-2xl font-bold">Welcome Back</h3>
+                  <h3 className="text-foreground mt-2 text-2xl font-bold">{t("title")}</h3>
 
                   <p className="text-muted-foreground px-4 text-sm text-balance">
-                    Sign in to your Moncial account to continue your journey
+                    {t("description")}
                   </p>
                 </div>
 
@@ -86,7 +95,7 @@ function LoginPage() {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>{t("form.fields.email.label")}</FormLabel>
 
                         <FormControl>
                           <div className="relative">
@@ -98,7 +107,7 @@ function LoginPage() {
 
                             <Input
                               type="email"
-                              placeholder="zotaeus@gmail.com"
+                              placeholder={t("form.fields.email.placeholder")}
                               className="h-11 pl-10"
                               {...field}
                             />
@@ -115,7 +124,7 @@ function LoginPage() {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Password</FormLabel>
+                        <FormLabel>{t("form.fields.password.label")}</FormLabel>
 
                         <FormControl>
                           <div className="relative">
@@ -127,7 +136,7 @@ function LoginPage() {
 
                             <Input
                               type={showPassword ? "text" : "password"}
-                              placeholder="******"
+                              placeholder={t("form.fields.password.placeholder")}
                               className="h-11 px-10"
                               {...field}
                             />
@@ -153,7 +162,7 @@ function LoginPage() {
 
                   <div className="flex items-center justify-end text-sm">
                     <Link href="#" className="text-primary">
-                      Forgot password?
+                      {t("form.actions.forgotPassword")}
                     </Link>
                   </div>
 
@@ -161,10 +170,10 @@ function LoginPage() {
                     {isLoading ? (
                       <>
                         <Loader2 size={24} className="animate-spin" />
-                        Signing in...
+                        {t("form.actions.submitLoading")}
                       </>
                     ) : (
-                      "Sign In"
+                      t("form.actions.submit")
                     )}
                   </Button>
 
@@ -175,24 +184,24 @@ function LoginPage() {
 
                     <div className="relative flex justify-center text-xs uppercase">
                       <span className="bg-card text-muted-foreground px-3 font-medium">
-                        Or continue with
+                        {t("social.divider")}
                       </span>
                     </div>
                   </div>
 
                   <Button type="button" variant="outline" className="w-full font-semibold">
                     <Github size={16} />
-                    Continue with GitHub
+                    {t("social.providers.github")}
                   </Button>
                 </div>
 
                 <div className="mt-4 text-center">
                   <span className="text-muted-foreground text-sm">
-                    Don&apos;t have an account?{" "}
+                    {t("form.links.noAccount")}{" "}
                   </span>
 
                   <Link href="#" className="text-primary text-sm font-medium">
-                    Create account
+                    {t("form.links.signUp")}
                   </Link>
                 </div>
               </form>
@@ -200,13 +209,13 @@ function LoginPage() {
 
             <div className="mt-6 text-center">
               <p className="text-muted-foreground text-xs">
-                By continuing, you agree to our{" "}
+                {t("legal.agreement")}{" "}
                 <Link href="#" className="text-primary text-sm">
-                  Terms of Service
+                  {t("legal.links.termsOfService")}
                 </Link>{" "}
-                and{" "}
+                {t("legal.conjunction")}{" "}
                 <Link href="#" className="text-primary text-sm">
-                  Privacy Policy
+                  {t("legal.links.privacyPolicy")}
                 </Link>
               </p>
             </div>

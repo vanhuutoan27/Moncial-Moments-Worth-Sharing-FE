@@ -1,0 +1,102 @@
+{
+  "app": {
+    "name": "Moncial",
+    "common": {
+      "actions": {
+        "search": "Tìm kiếm...",
+        "loading": "Đang tải...",
+        "submit": "Gửi",
+        "cancel": "Hủy",
+        "save": "Lưu",
+        "edit": "Chỉnh sửa",
+        "delete": "Xóa"
+      },
+      "navigation": {
+        "back": "Quay lại",
+        "next": "Tiếp theo",
+        "home": "Trang chủ",
+        "profile": "Hồ sơ",
+        "settings": "Cài đặt"
+      }
+    },
+    "header": {
+      "search": {
+        "placeholder": "Tìm kiếm gì đó..."
+      },
+      "menu": {
+        "items": {
+          "profile": "Hồ sơ",
+          "settings": "Cài đặt",
+          "language": "Ngôn ngữ",
+          "logout": "Đăng xuất"
+        },
+        "theme": {
+          "title": "Giao diện",
+          "options": {
+            "light": "Sáng",
+            "dark": "Tối",
+            "system": "Hệ thống"
+          }
+        }
+      }
+    },
+    "auth": {
+      "login": {
+        "title": "Chào mừng trở lại",
+        "description": "Đăng nhập vào tài khoản Moncial để tiếp tục hành trình của bạn",
+        "form": {
+          "fields": {
+            "email": {
+              "label": "Email",
+              "placeholder": "Nhập email của bạn",
+              "validations": {
+                "required": "Email là bắt buộc.",
+                "invalid": "Email không hợp lệ."
+              }
+            },
+            "password": {
+              "label": "Mật khẩu",
+              "placeholder": "Nhập mật khẩu",
+              "validations": {
+                "required": "Mật khẩu là bắt buộc.",
+                "constraints": {
+                  "min": "Mật khẩu phải có ít nhất 6 ký tự.",
+                  "max": "Mật khẩu không được vượt quá 32 ký tự."
+                },
+                "requirements": {
+                  "uppercase": "Mật khẩu phải chứa ít nhất một chữ cái viết hoa.",
+                  "lowercase": "Mật khẩu phải chứa ít nhất một chữ cái viết thường.",
+                  "number": "Mật khẩu phải chứa ít nhất một số.",
+                  "special": "Mật khẩu phải chứa ít nhất một ký tự đặc biệt."
+                }
+              }
+            }
+          },
+          "actions": {
+            "submit": "Đăng nhập",
+            "submitLoading": "Đang đăng nhập...",
+            "forgotPassword": "Quên mật khẩu?"
+          },
+          "links": {
+            "noAccount": "Chưa có tài khoản?",
+            "signUp": "Tạo tài khoản"
+          }
+        },
+        "social": {
+          "divider": "HOẶC TIẾP TỤC VỚI",
+          "providers": {
+            "github": "Tiếp tục với GitHub"
+          }
+        },
+        "legal": {
+          "agreement": "Bằng cách tiếp tục, bạn đồng ý với",
+          "links": {
+            "termsOfService": "Điều khoản dịch vụ",
+            "privacyPolicy": "Chính sách bảo mật"
+          },
+          "conjunction": "và"
+        }
+      }
+    }
+  }
+}

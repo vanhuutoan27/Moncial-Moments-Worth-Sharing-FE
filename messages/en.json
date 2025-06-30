@@ -1,0 +1,102 @@
+{
+  "app": {
+    "name": "Moncial",
+    "common": {
+      "actions": {
+        "search": "Search something...",
+        "loading": "Loading...",
+        "submit": "Submit",
+        "cancel": "Cancel",
+        "save": "Save",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "navigation": {
+        "back": "Back",
+        "next": "Next",
+        "home": "Home",
+        "profile": "Profile",
+        "settings": "Settings"
+      }
+    },
+    "header": {
+      "search": {
+        "placeholder": "Search something..."
+      },
+      "menu": {
+        "items": {
+          "profile": "Profile",
+          "settings": "Settings",
+          "language": "Language",
+          "logout": "Logout"
+        },
+        "theme": {
+          "title": "Theme",
+          "options": {
+            "light": "Light",
+            "dark": "Dark",
+            "system": "System"
+          }
+        }
+      }
+    },
+    "auth": {
+      "login": {
+        "title": "Welcome Back",
+        "description": "Sign in to your Moncial account to continue your journey",
+        "form": {
+          "fields": {
+            "email": {
+              "label": "Email",
+              "placeholder": "Enter your email",
+              "validations": {
+                "required": "Email is required.",
+                "invalid": "Must be a valid email address."
+              }
+            },
+            "password": {
+              "label": "Password",
+              "placeholder": "Enter your password",
+              "validations": {
+                "required": "Password is required.",
+                "constraints": {
+                  "min": "Password must be at least 6 characters.",
+                  "max": "Password cannot exceed 32 characters."
+                },
+                "requirements": {
+                  "uppercase": "Password must contain at least one uppercase letter.",
+                  "lowercase": "Password must contain at least one lowercase letter.",
+                  "number": "Password must contain at least one number.",
+                  "special": "Password must contain at least one special character."
+                }
+              }
+            }
+          },
+          "actions": {
+            "submit": "Sign In",
+            "submitLoading": "Signing in...",
+            "forgotPassword": "Forgot Password?"
+          },
+          "links": {
+            "noAccount": "Don't have an account?",
+            "signUp": "Create account"
+          }
+        },
+        "social": {
+          "divider": "OR CONTINUE WITH",
+          "providers": {
+            "github": "Continue with GitHub"
+          }
+        },
+        "legal": {
+          "agreement": "By continuing, you agree to our",
+          "links": {
+            "termsOfService": "Terms of Service",
+            "privacyPolicy": "Privacy Policy"
+          },
+          "conjunction": "and"
+        }
+      }
+    }
+  }
+}
