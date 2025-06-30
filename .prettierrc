@@ -33,6 +33,8 @@
   ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
+  "importOrderGroupNamespaceSpecifiers": true,
+  "importOrderCaseInsensitive": true,
   "tailwindFunctions": ["cva", "cx", "cn", "clsx", "tv", "twMerge"],
   "plugins": [
     "@trivago/prettier-plugin-sort-imports",

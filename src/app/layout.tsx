@@ -6,7 +6,7 @@ import { getLocale, getMessages } from "next-intl/server"
 
 import { Toaster } from "@/components/ui/sonner"
 
-import { ThemeProvider } from "@/providers/theme-provider"
+import { ThemeProvider } from "@/providers/ThemeProvider"
 
 import "../styles/globals.css"
 

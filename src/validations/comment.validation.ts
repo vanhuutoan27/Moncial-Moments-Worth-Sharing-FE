@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { uuidSchema } from "./base.validation"
+import { uuidSchema } from "./common.validation"
 import { authorSchema } from "./user.validation"
 
 const commentSchema = z.object({
@@ -8,7 +8,7 @@ const commentSchema = z.object({
   authorId: uuidSchema,
   postId: uuidSchema,
 
-  author: authorSchema,
+  author: authorSchema((key: string) => key),
 
   content: z.string().max(1000, { message: "Comment cannot exceed 1000 characters." }),
 

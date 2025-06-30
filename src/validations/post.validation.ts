@@ -2,7 +2,7 @@ import { z } from "zod"
 
 import { Privacy } from "@/constants/enums/privacy"
 
-import { uuidSchema } from "./base.validation"
+import { uuidSchema } from "./common.validation"
 import { authorSchema } from "./user.validation"
 
 export const postMediaSchema = z.object({
@@ -14,7 +14,7 @@ const postSchema = z.object({
   id: uuidSchema,
   authorId: uuidSchema,
 
-  author: authorSchema,
+  author: authorSchema((key: string) => key),
 
   caption: z.string().max(2000, { message: "Caption cannot exceed 2000 characters." }).optional(),
   location: z.string().max(100, { message: "Location must not exceed 100 characters" }).optional(),

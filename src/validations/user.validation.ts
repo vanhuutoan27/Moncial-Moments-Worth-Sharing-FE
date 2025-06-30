@@ -1,7 +1,7 @@
 import { TranslationValues } from "next-intl"
 import { z } from "zod"
 
-import { uuidSchema } from "./base.validation"
+import { uuidSchema } from "./common.validation"
 
 export const userSchema = (t: (key: string, values?: TranslationValues) => string) => {
   return z.object({
