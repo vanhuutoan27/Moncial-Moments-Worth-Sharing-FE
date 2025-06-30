@@ -2,8 +2,8 @@
 
 import React, { useMemo, useState } from "react"
 
-import { CommentType } from "@/schemas/comment-schema"
-import { AuthorType } from "@/schemas/user-schema"
+import { CommentType } from "@/validations/comment.validation"
+import { AuthorType } from "@/validations/user.validation"
 
 import CommentCard from "./comment-card"
 import CommentInput from "./comment-input"

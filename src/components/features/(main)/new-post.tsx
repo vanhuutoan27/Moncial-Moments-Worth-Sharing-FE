@@ -14,9 +14,9 @@ import { Textarea } from "@/components/ui/textarea"
 import { ZOTAEUS } from "@/constants/app"
 import { Privacy } from "@/constants/enums/privacy"
 
-import { PostMediaType } from "@/schemas/post-schema"
+import { processImageFile, sanitizeHashtag } from "@/utils/helper.util"
 
-import { processImageFile, sanitizeHashtag } from "@/utils/helpers"
+import { PostMediaType } from "@/validations/post.validation"
 
 import DragOverlay from "./drag-overlay"
 import HashtagSection from "./hashtag-section"

@@ -4,7 +4,7 @@ import React from "react"
 
 import { Hash } from "lucide-react"
 
-import { formatPostCount } from "@/utils/formatters"
+import { formatPostCount } from "@/utils/format.util"
 
 interface HashtagCardProps {
   hashtag: {

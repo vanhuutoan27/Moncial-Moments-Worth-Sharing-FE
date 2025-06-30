@@ -7,7 +7,7 @@ import { MapPin } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-import { formatPostCount } from "@/utils/formatters"
+import { formatPostCount } from "@/utils/format.util"
 
 const LOCATIONS = [
   { name: "Thành phố Hồ Chí Minh", posts: 12847 },

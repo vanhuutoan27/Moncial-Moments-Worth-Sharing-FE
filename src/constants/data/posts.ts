@@ -1,4 +1,4 @@
-import { PostType } from "@/schemas/post-schema"
+import { PostType } from "@/validations/post.validation"
 
 import { Privacy } from "../enums/privacy"
 

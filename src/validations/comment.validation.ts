@@ -1,7 +1,7 @@
 import { z } from "zod"
 
-import { uuidSchema } from "./base-schema"
-import { authorSchema } from "./user-schema"
+import { uuidSchema } from "./base.validation"
+import { authorSchema } from "./user.validation"
 
 const commentSchema = z.object({
   id: uuidSchema,

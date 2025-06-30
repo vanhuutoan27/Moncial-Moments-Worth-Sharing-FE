@@ -9,7 +9,7 @@ import UserAvatar from "@/components/shared/user-avatar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-import { AuthorType } from "@/schemas/user-schema"
+import { AuthorType } from "@/validations/user.validation"
 
 function CommentInput({
   currentUser,

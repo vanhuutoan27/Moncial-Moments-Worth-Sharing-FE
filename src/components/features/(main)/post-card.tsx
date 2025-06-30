@@ -20,11 +20,11 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 
-import { CommentType } from "@/schemas/comment-schema"
-import { PostType } from "@/schemas/post-schema"
-import { AuthorType } from "@/schemas/user-schema"
+import { formatTimeAgo } from "@/utils/format.util"
 
-import { formatTimeAgo } from "@/utils/formatters"
+import { CommentType } from "@/validations/comment.validation"
+import { PostType } from "@/validations/post.validation"
+import { AuthorType } from "@/validations/user.validation"
 
 import PostActions from "./post-actions"
 import PostComments from "./post-comments"

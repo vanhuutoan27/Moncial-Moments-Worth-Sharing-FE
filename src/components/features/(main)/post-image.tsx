@@ -12,7 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 import { cn } from "@/lib/utils"
 
-import { PostMediaType } from "@/schemas/post-schema"
+import { PostMediaType } from "@/validations/post.validation"
 
 const ASPECT_RATIOS = {
   square: "aspect-square",

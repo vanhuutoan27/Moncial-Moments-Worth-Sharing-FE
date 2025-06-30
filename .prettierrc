@@ -24,11 +24,11 @@
     "^@/hooks/(.*)$",
     "^@/lib/(.*)$",
     "^@/providers/(.*)$",
-    "^@/schemas/(.*)$",
     "^@/stores/(.*)$",
     "^@/styles/(.*)$",
     "^@/types/(.*)$",
     "^@/utils/(.*)$",
+    "^@/validations/(.*)$",
     "^[./]"
   ],
   "importOrderSeparation": true,

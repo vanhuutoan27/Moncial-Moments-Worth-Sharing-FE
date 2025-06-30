@@ -2,8 +2,8 @@ import { z } from "zod"
 
 import { Privacy } from "@/constants/enums/privacy"
 
-import { uuidSchema } from "./base-schema"
-import { authorSchema } from "./user-schema"
+import { uuidSchema } from "./base.validation"
+import { authorSchema } from "./user.validation"
 
 export const postMediaSchema = z.object({
   url: z.string().url({ message: "Image URL must be a valid URL" }),

@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { uuidSchema } from "./base-schema"
+import { uuidSchema } from "./base.validation"
 
 const hashtagSchema = z.object({
   id: uuidSchema,

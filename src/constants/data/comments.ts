@@ -1,4 +1,4 @@
-import { CommentType } from "@/schemas/comment-schema";
+import { CommentType } from "@/validations/comment.validation";
 
 export const commentsData: CommentType[] = [
   // Comments for post p1 (graduation post)

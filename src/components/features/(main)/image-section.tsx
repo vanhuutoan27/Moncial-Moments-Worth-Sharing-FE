@@ -7,7 +7,7 @@ import { Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 
-import { PostMediaType } from "@/schemas/post-schema"
+import { PostMediaType } from "@/validations/post.validation"
 
 import PostImage from "./post-image"
 

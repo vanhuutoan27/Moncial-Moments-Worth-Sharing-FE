@@ -1,4 +1,4 @@
-import { getCloudinaryUrl } from "@/config/cloudinary"
+import { getCloudinaryUrl } from "@/config/cloudinary.config"
 
 export const APP = {
   NAME: "Moncial",

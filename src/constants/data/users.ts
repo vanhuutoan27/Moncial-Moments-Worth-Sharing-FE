@@ -1,4 +1,4 @@
-import { UserType } from "@/schemas/user-schema"
+import { UserType } from "@/validations/user.validation"
 
 export const usersData: Omit<UserType, "password">[] = [
   {

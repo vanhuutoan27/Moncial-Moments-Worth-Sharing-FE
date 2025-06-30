@@ -4,9 +4,9 @@ import React from "react"
 
 import UserAvatar from "@/components/shared/user-avatar"
 
-import { CommentType } from "@/schemas/comment-schema"
+import { formatTimeAgo } from "@/utils/format.util"
 
-import { formatTimeAgo } from "@/utils/formatters"
+import { CommentType } from "@/validations/comment.validation"
 
 interface CommentCardProps {
   commentData: CommentType

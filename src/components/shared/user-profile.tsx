@@ -1,6 +1,6 @@
 import React from "react"
 
-import { AuthorType } from "@/schemas/user-schema"
+import { AuthorType } from "@/validations/user.validation"
 
 import UserAvatar from "./user-avatar"
 

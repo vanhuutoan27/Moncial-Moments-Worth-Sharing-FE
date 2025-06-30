@@ -1,4 +1,4 @@
-import { PostMediaType } from "@/schemas/post-schema"
+import { PostMediaType } from "@/validations/post.validation"
 
 export const sanitizeHashtag = (input: string): string => {
   return input.replace(/^#/, "").trim().toLowerCase()

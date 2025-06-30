@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { LoginType, loginSchema } from "@/validations/user-schema"
+import { LoginType, loginSchema } from "@/validations/user.validation"
 
 function LoginPage() {
   const t = useTranslations("app.auth.login")
