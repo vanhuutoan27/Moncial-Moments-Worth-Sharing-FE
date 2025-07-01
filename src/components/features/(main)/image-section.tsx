@@ -3,6 +3,7 @@
 import React from "react"
 
 import { Trash2 } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
@@ -18,16 +19,20 @@ interface ImageSectionProps {
 }
 
 function ImageSection({ images, onImageRemove, onClearAll }: ImageSectionProps) {
+  const t = useTranslations("app.post.compose.form.fields.images")
+
   if (images.length === 0) return null
 
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <Label>Images ({images.length})</Label>
+        <Label>
+          {t("label")} ({images.length})
+        </Label>
 
         <Button type="button" variant="destructive" size="sm" onClick={onClearAll}>
           <Trash2 size={12} />
-          Clear all
+          {t("actions.clearAll")}
         </Button>
       </div>
 

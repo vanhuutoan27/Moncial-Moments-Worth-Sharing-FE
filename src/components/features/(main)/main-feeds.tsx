@@ -2,6 +2,8 @@
 
 import React, { useCallback, useMemo, useState } from "react"
 
+import { useTranslations } from "next-intl"
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { ZOTAEUS } from "@/constants/app"
@@ -13,6 +15,8 @@ import PostCard from "./post-card"
 type FeedOption = "feed" | "trending" | "following" | "saved"
 
 function MainFeeds() {
+  const t = useTranslations("app.post.feed.tabs")
+
   const [activeTab, setActiveTab] = useState<FeedOption>("feed")
 
   const currentUserData = useMemo(
@@ -29,10 +33,10 @@ function MainFeeds() {
   const savedPostIds = useMemo(() => ["p1", "p5"], [])
 
   const tabs: { value: FeedOption; label: string }[] = [
-    { value: "feed", label: "Feed" },
-    { value: "trending", label: "Trending" },
-    { value: "following", label: "Following" },
-    { value: "saved", label: "Saved" }
+    { value: "feed", label: t("feed") },
+    { value: "trending", label: t("trending") },
+    { value: "following", label: t("following") },
+    { value: "saved", label: t("saved") }
   ]
 
   const filteredPostsData = useMemo(() => {

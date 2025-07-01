@@ -3,6 +3,7 @@
 import React from "react"
 
 import { ChevronDown, Globe, LockKeyhole, Users, X } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -13,7 +14,7 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 
-import { Privacy, getPrivacyInfo } from "@/constants/enums/privacy"
+import { getPrivacyInfo, Privacy } from "@/constants/enums/privacy"
 
 interface NewPostHeaderProps {
   privacy: Privacy
@@ -22,6 +23,8 @@ interface NewPostHeaderProps {
 }
 
 function NewPostHeader({ privacy, onPrivacyChange, onCancel }: NewPostHeaderProps) {
+  const t = useTranslations("app.post.compose")
+
   const privacyConfig = getPrivacyInfo(privacy)
   const PrivacyIcon = privacyConfig.icon
 
@@ -41,7 +44,7 @@ function NewPostHeader({ privacy, onPrivacyChange, onCancel }: NewPostHeaderProp
           <DropdownMenuTrigger asChild>
             <Button type="button" variant="outline" className="cursor-default">
               <PrivacyIcon size={16} color="var(--primary)" className="opacity-70" />
-              {privacyConfig.label}
+              {t(`visibility.${privacy.toLowerCase()}`)}
               <ChevronDown size={20} />
             </Button>
           </DropdownMenuTrigger>
@@ -50,17 +53,17 @@ function NewPostHeader({ privacy, onPrivacyChange, onCancel }: NewPostHeaderProp
             <DropdownMenuGroup>
               <DropdownMenuItem onClick={() => onPrivacyChange(Privacy.PUBLIC)}>
                 <Globe size={16} color="var(--primary)" className="opacity-70" />
-                <span>Public</span>
+                <span>{t("visibility.public")}</span>
               </DropdownMenuItem>
 
               <DropdownMenuItem onClick={() => onPrivacyChange(Privacy.PRIVATE)}>
                 <LockKeyhole size={16} color="var(--primary)" className="opacity-70" />
-                <span>Private</span>
+                <span>{t("visibility.private")}</span>
               </DropdownMenuItem>
 
               <DropdownMenuItem onClick={() => onPrivacyChange(Privacy.FOLLOWERS_ONLY)}>
                 <Users size={16} color="var(--primary)" className="opacity-70" />
-                <span>Followers Only</span>
+                <span>{t("visibility.friends")}</span>
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>

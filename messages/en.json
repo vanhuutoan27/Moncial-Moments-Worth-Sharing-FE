@@ -3,25 +3,34 @@
     "name": "Moncial",
     "common": {
       "actions": {
-        "search": "Search something...",
+        "share": "Share",
+        "like": "Like",
+        "comment": "Comment",
+        "bookmark": "Bookmark",
+        "follow": "Follow",
+        "unfollow": "Unfollow",
+        "search": "Discover something amazing...",
         "loading": "Loading...",
         "submit": "Submit",
         "cancel": "Cancel",
         "save": "Save",
         "edit": "Edit",
-        "delete": "Delete"
+        "delete": "Delete",
+        "viewAll": "View all",
+        "clearAll": "Clear all"
       },
       "navigation": {
-        "back": "Back",
-        "next": "Next",
         "home": "Home",
+        "explore": "Explore",
         "profile": "Profile",
-        "settings": "Settings"
+        "settings": "Settings",
+        "back": "Back",
+        "next": "Next"
       }
     },
     "header": {
       "search": {
-        "placeholder": "Search something..."
+        "placeholder": "Discover amazing content and people..."
       },
       "menu": {
         "items": {
@@ -31,13 +40,142 @@
           "logout": "Logout"
         },
         "theme": {
-          "title": "Theme",
+          "label": "Theme",
           "options": {
             "light": "Light",
             "dark": "Dark",
             "system": "System"
           }
         }
+      }
+    },
+    "sidebar": {
+      "navigation": {
+        "home": "Home",
+        "explore": "Explore",
+        "trending": "Trending",
+        "notifications": "Notifications",
+        "messages": "Messages",
+        "profile": "Profile",
+        "groups": "Groups",
+        "events": "Events",
+        "bookmarks": "Bookmarks",
+        "settings": "Settings",
+        "help": "Help"
+      },
+      "actions": {
+        "share": "Share"
+      }
+    },
+    "post": {
+      "compose": {
+        "visibility": {
+          "public": "Public",
+          "private": "Private",
+          "friends": "Friends Only"
+        },
+        "attachments": {
+          "photo": "Photo",
+          "video": "Video",
+          "event": "Event",
+          "location": "Location",
+          "hashtag": "Hashtag"
+        },
+        "actions": {
+          "share": "Share",
+          "shareLoading": "Sharing...",
+          "saveDraft": "Save Draft",
+          "preview": "Preview"
+        },
+        "form": {
+          "fields": {
+            "caption": {
+              "label": "Caption",
+              "placeholder": "Share your thoughts with the world...",
+              "validations": {
+                "maxLength": "Caption cannot exceed {{max}} characters."
+              }
+            },
+            "privacy": {
+              "label": "Privacy",
+              "validations": {
+                "required": "Privacy setting is required.",
+                "invalid": "Privacy setting must be Public, Private, or Followers Only."
+              }
+            },
+            "images": {
+              "label": "Images",
+              "placeholder": "Add photos that tell your story...",
+              "validations": {
+                "invalidUrl": "Image URL must be a valid URL.",
+                "maxImages": "Cannot upload more than {{max}} images per post.",
+                "altTextMaxLength": "Alt text must not exceed {{max}} characters."
+              },
+              "actions": {
+                "remove": "Remove Image",
+                "clearAll": "Clear All"
+              }
+            },
+            "location": {
+              "label": "Location",
+              "placeholder": "Where did this adventure take you...",
+              "validations": {
+                "maxLength": "Location must not exceed {{max}} characters."
+              }
+            },
+            "hashtags": {
+              "label": "Hashtags",
+              "placeholder": "Tag your vibe... #inspiration #moment",
+              "validations": {
+                "minLength": "Hashtag must be at least {{min}} characters long.",
+                "maxLength": "Hashtag cannot exceed {{max}} characters.",
+                "maxCount": "Cannot add more than {{max}} hashtags per post.",
+                "format": "Hashtags must start with # and contain only letters, numbers, and underscores."
+              }
+            }
+          }
+        }
+      },
+      "feed": {
+        "tabs": {
+          "feed": "Feed",
+          "trending": "Trending",
+          "following": "Following",
+          "saved": "Saved"
+        }
+      },
+      "interactions": {
+        "likedBy": "Liked by {{user}} and {{count}} others",
+        "comments": "{{count}} comments",
+        "viewComments": "View all {{count}} comments",
+        "addComment": "Share your thoughts on this post..."
+      },
+      "media": {
+        "altText": {
+          "label": "Alt text",
+          "placeholder": "Describe this image to make your content accessible to everyone...",
+          "description": "Help make your content accessible to everyone"
+        }
+      }
+    },
+    "widgets": {
+      "trending": {
+        "label": "Trending Hashtags"
+      },
+      "events": {
+        "label": "Upcoming Events",
+        "attendees": "{{count}} attendees"
+      },
+      "onlineUsers": {
+        "label": "Online Users",
+        "searchPlaceholder": "Find friends who are online..."
+      }
+    },
+    "users": {
+      "status": {
+        "online": "Online",
+        "offline": "Offline",
+        "away": "Away"
       }
     },
     "auth": {
@@ -48,20 +186,20 @@
           "fields": {
             "email": {
               "label": "Email",
-              "placeholder": "Enter your email",
+              "placeholder": "Enter your email to connect with the world...",
               "validations": {
                 "required": "Email is required.",
-                "invalid": "Must be a valid email address."
+                "invalid": "Email must be a valid email address."
               }
             },
             "password": {
               "label": "Password",
-              "placeholder": "Enter your password",
+              "placeholder": "Enter your password to unlock your journey...",
               "validations": {
                 "required": "Password is required.",
                 "constraints": {
-                  "min": "Password must be at least 6 characters.",
-                  "max": "Password cannot exceed 32 characters."
+                  "minLength": "Password must be at least {{min}} characters.",
+                  "maxLength": "Password cannot exceed {{max}} characters."
                 },
                 "requirements": {
                   "uppercase": "Password must contain at least one uppercase letter.",
@@ -90,6 +228,83 @@
         },
         "legal": {
           "agreement": "By continuing, you agree to our",
+          "links": {
+            "termsOfService": "Terms of Service",
+            "privacyPolicy": "Privacy Policy"
+          },
+          "conjunction": "and"
+        }
+      },
+      "register": {
+        "title": "Join Moncial",
+        "description": "Create your account and start sharing your moments",
+        "form": {
+          "fields": {
+            "email": {
+              "label": "Email",
+              "placeholder": "Enter your email to join our community...",
+              "validations": {
+                "required": "Email is required.",
+                "invalid": "Email must be a valid email address.",
+                "taken": "An account with this email already exists."
+              }
+            },
+            "username": {
+              "label": "Username",
+              "placeholder": "Choose a username that represents you...",
+              "validations": {
+                "required": "Username is required.",
+                "constraints": {
+                  "minLength": "Username must be at least {{min}} characters.",
+                  "maxLength": "Username cannot exceed {{max}} characters."
+                },
+                "format": "Username can only contain letters, numbers, and underscores.",
+                "taken": "This username is already taken."
+              }
+            },
+            "password": {
+              "label": "Password",
+              "placeholder": "Create a strong password for your account...",
+              "validations": {
+                "required": "Password is required.",
+                "constraints": {
+                  "minLength": "Password must be at least {{min}} characters.",
+                  "maxLength": "Password cannot exceed {{max}} characters."
+                },
+                "requirements": {
+                  "uppercase": "Password must contain at least one uppercase letter.",
+                  "lowercase": "Password must contain at least one lowercase letter.",
+                  "number": "Password must contain at least one number.",
+                  "special": "Password must contain at least one special character."
+                }
+              }
+            },
+            "confirmPassword": {
+              "label": "Confirm Password",
+              "placeholder": "Confirm your password to secure your journey...",
+              "validations": {
+                "required": "Please confirm your password.",
+                "mismatch": "Passwords do not match."
+              }
+            }
+          },
+          "actions": {
+            "submit": "Create Account",
+            "submitLoading": "Creating account..."
+          },
+          "links": {
+            "hasAccount": "Already have an account?",
+            "signIn": "Sign in"
+          }
+        },
+        "social": {
+          "divider": "OR CONTINUE WITH",
+          "providers": {
+            "github": "Continue with GitHub"
+          }
+        },
+        "legal": {
+          "agreement": "By creating an account, you agree to our",
           "links": {
             "termsOfService": "Terms of Service",
             "privacyPolicy": "Privacy Policy"

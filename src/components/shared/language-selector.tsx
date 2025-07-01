@@ -39,7 +39,7 @@ export function LanguageSelector() {
       startTransition(() => {
         document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000`
 
-        router.refresh()
+        window.location.reload()
       })
     },
     [router]

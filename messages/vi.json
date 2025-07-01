@@ -3,25 +3,34 @@
     "name": "Moncial",
     "common": {
       "actions": {
-        "search": "Tìm kiếm...",
+        "share": "Chia sẻ",
+        "like": "Thích",
+        "comment": "Bình luận",
+        "bookmark": "Lưu",
+        "follow": "Theo dõi",
+        "unfollow": "Bỏ theo dõi",
+        "search": "Khám phá điều gì đó tuyệt vời...",
         "loading": "Đang tải...",
         "submit": "Gửi",
         "cancel": "Hủy",
         "save": "Lưu",
         "edit": "Chỉnh sửa",
-        "delete": "Xóa"
+        "delete": "Xóa",
+        "viewAll": "Xem tất cả",
+        "clearAll": "Xóa tất cả"
       },
       "navigation": {
-        "back": "Quay lại",
-        "next": "Tiếp theo",
         "home": "Trang chủ",
+        "explore": "Khám phá",
         "profile": "Hồ sơ",
-        "settings": "Cài đặt"
+        "settings": "Cài đặt",
+        "back": "Quay lại",
+        "next": "Tiếp theo"
       }
     },
     "header": {
       "search": {
-        "placeholder": "Tìm kiếm gì đó..."
+        "placeholder": "Khám phá nội dung và mọi người tuyệt vời..."
       },
       "menu": {
         "items": {
@@ -31,7 +40,7 @@
           "logout": "Đăng xuất"
         },
         "theme": {
-          "title": "Giao diện",
+          "label": "Giao diện",
           "options": {
             "light": "Sáng",
             "dark": "Tối",
@@ -40,28 +49,157 @@
         }
       }
     },
+    "sidebar": {
+      "navigation": {
+        "home": "Trang chủ",
+        "explore": "Khám phá",
+        "trending": "Xu hướng",
+        "notifications": "Thông báo",
+        "messages": "Tin nhắn",
+        "profile": "Hồ sơ",
+        "groups": "Nhóm",
+        "events": "Sự kiện",
+        "bookmarks": "Đã lưu",
+        "settings": "Cài đặt",
+        "help": "Trợ giúp"
+      },
+      "actions": {
+        "share": "Chia sẻ"
+      }
+    },
+    "post": {
+      "compose": {
+        "visibility": {
+          "public": "Công khai",
+          "private": "Riêng tư",
+          "friends": "Chỉ bạn bè"
+        },
+        "attachments": {
+          "photo": "Ảnh",
+          "video": "Video",
+          "event": "Sự kiện",
+          "location": "Vị trí",
+          "hashtag": "Hashtag"
+        },
+        "actions": {
+          "share": "Chia sẻ",
+          "shareLoading": "Đang chia sẻ...",
+          "saveDraft": "Lưu nháp",
+          "preview": "Xem trước"
+        },
+        "form": {
+          "fields": {
+            "caption": {
+              "label": "Nội dung",
+              "placeholder": "Chia sẻ suy nghĩ của bạn với thế giới...",
+              "validations": {
+                "maxLength": "Nội dung không được vượt quá {{max}} ký tự."
+              }
+            },
+            "privacy": {
+              "label": "Quyền riêng tư",
+              "validations": {
+                "required": "Cài đặt quyền riêng tư là bắt buộc.",
+                "invalid": "Cài đặt quyền riêng tư phải là Công khai, Riêng tư hoặc Chỉ người theo dõi."
+              }
+            },
+            "images": {
+              "label": "Hình ảnh",
+              "placeholder": "Thêm những bức ảnh kể câu chuyện của bạn...",
+              "validations": {
+                "invalidUrl": "URL hình ảnh phải là một URL hợp lệ.",
+                "maxImages": "Không thể tải lên quá {{max}} hình ảnh cho mỗi bài viết.",
+                "altTextMaxLength": "Văn bản thay thế không được vượt quá {{max}} ký tự."
+              },
+              "actions": {
+                "remove": "Xóa hình ảnh",
+                "clearAll": "Xóa tất cả"
+              }
+            },
+            "location": {
+              "label": "Vị trí",
+              "placeholder": "Cuộc phiêu lưu này đã đưa bạn đến đâu...",
+              "validations": {
+                "maxLength": "Vị trí không được vượt quá {{max}} ký tự."
+              }
+            },
+            "hashtags": {
+              "label": "Hashtags",
+              "placeholder": "Gắn thẻ tâm trạng của bạn... #inspiration #moment",
+              "validations": {
+                "minLength": "Hashtag phải có ít nhất {{min}} ký tự.",
+                "maxLength": "Hashtag không được vượt quá {{max}} ký tự.",
+                "maxCount": "Không thể thêm quá {{max}} hashtag cho mỗi bài viết.",
+                "format": "Hashtag phải bắt đầu bằng # và chỉ chứa chữ cái, số và dấu gạch dưới."
+              }
+            }
+          }
+        }
+      },
+      "feed": {
+        "tabs": {
+          "feed": "Bảng tin",
+          "trending": "Xu hướng",
+          "following": "Đang theo dõi",
+          "saved": "Đã lưu"
+        }
+      },
+      "interactions": {
+        "likedBy": "{{user}} và {{count}} người khác đã thích",
+        "comments": "{{count}} bình luận",
+        "viewComments": "Xem tất cả {{count}} bình luận",
+        "addComment": "Chia sẻ suy nghĩ của bạn về bài viết này..."
+      },
+      "media": {
+        "altText": {
+          "label": "Văn bản thay thế",
+          "placeholder": "Mô tả hình ảnh này để nội dung của bạn dễ tiếp cận với mọi người...",
+          "description": "Giúp nội dung của bạn dễ tiếp cận với mọi người"
+        }
+      }
+    },
+    "widgets": {
+      "trending": {
+        "label": "Hashtags xu hướng"
+      },
+      "events": {
+        "label": "Sự kiện sắp tới",
+        "attendees": "{{count}} người tham gia"
+      },
+      "onlineUsers": {
+        "label": "Người dùng trực tuyến",
+        "searchPlaceholder": "Tìm bạn bè đang trực tuyến..."
+      }
+    },
+    "users": {
+      "status": {
+        "online": "Trực tuyến",
+        "offline": "Ngoại tuyến",
+        "away": "Vắng mặt"
+      }
+    },
     "auth": {
       "login": {
         "title": "Chào mừng trở lại",
-        "description": "Đăng nhập vào tài khoản Moncial để tiếp tục hành trình của bạn",
+        "description": "Đăng nhập vào tài khoản Moncial của bạn để tiếp tục hành trình",
         "form": {
           "fields": {
             "email": {
               "label": "Email",
-              "placeholder": "Nhập email của bạn",
+              "placeholder": "Nhập email của bạn để kết nối với thế giới...",
               "validations": {
                 "required": "Email là bắt buộc.",
-                "invalid": "Email không hợp lệ."
+                "invalid": "Email phải là một địa chỉ email hợp lệ."
               }
             },
             "password": {
               "label": "Mật khẩu",
-              "placeholder": "Nhập mật khẩu",
+              "placeholder": "Nhập mật khẩu để mở khóa hành trình của bạn...",
               "validations": {
                 "required": "Mật khẩu là bắt buộc.",
                 "constraints": {
-                  "min": "Mật khẩu phải có ít nhất 6 ký tự.",
-                  "max": "Mật khẩu không được vượt quá 32 ký tự."
+                  "minLength": "Mật khẩu phải có ít nhất {{min}} ký tự.",
+                  "maxLength": "Mật khẩu không được vượt quá {{max}} ký tự."
                 },
                 "requirements": {
                   "uppercase": "Mật khẩu phải chứa ít nhất một chữ cái viết hoa.",
@@ -90,6 +228,83 @@
         },
         "legal": {
           "agreement": "Bằng cách tiếp tục, bạn đồng ý với",
+          "links": {
+            "termsOfService": "Điều khoản dịch vụ",
+            "privacyPolicy": "Chính sách bảo mật"
+          },
+          "conjunction": "và"
+        }
+      },
+      "register": {
+        "title": "Tham gia Moncial",
+        "description": "Tạo tài khoản của bạn và bắt đầu chia sẻ những khoảnh khắc",
+        "form": {
+          "fields": {
+            "email": {
+              "label": "Email",
+              "placeholder": "Nhập email của bạn để tham gia cộng đồng...",
+              "validations": {
+                "required": "Email là bắt buộc.",
+                "invalid": "Email phải là một địa chỉ email hợp lệ.",
+                "taken": "Một tài khoản với email này đã tồn tại."
+              }
+            },
+            "username": {
+              "label": "Tên người dùng",
+              "placeholder": "Chọn một tên người dùng đại diện cho bạn...",
+              "validations": {
+                "required": "Tên người dùng là bắt buộc.",
+                "constraints": {
+                  "minLength": "Tên người dùng phải có ít nhất {{min}} ký tự.",
+                  "maxLength": "Tên người dùng không được vượt quá {{max}} ký tự."
+                },
+                "format": "Tên người dùng chỉ có thể chứa chữ cái, số và dấu gạch dưới.",
+                "taken": "Tên người dùng này đã được sử dụng."
+              }
+            },
+            "password": {
+              "label": "Mật khẩu",
+              "placeholder": "Tạo một mật khẩu mạnh cho tài khoản của bạn...",
+              "validations": {
+                "required": "Mật khẩu là bắt buộc.",
+                "constraints": {
+                  "minLength": "Mật khẩu phải có ít nhất {{min}} ký tự.",
+                  "maxLength": "Mật khẩu không được vượt quá {{max}} ký tự."
+                },
+                "requirements": {
+                  "uppercase": "Mật khẩu phải chứa ít nhất một chữ cái viết hoa.",
+                  "lowercase": "Mật khẩu phải chứa ít nhất một chữ cái viết thường.",
+                  "number": "Mật khẩu phải chứa ít nhất một số.",
+                  "special": "Mật khẩu phải chứa ít nhất một ký tự đặc biệt."
+                }
+              }
+            },
+            "confirmPassword": {
+              "label": "Xác nhận mật khẩu",
+              "placeholder": "Xác nhận mật khẩu để bảo vệ hành trình của bạn...",
+              "validations": {
+                "required": "Vui lòng xác nhận mật khẩu của bạn.",
+                "mismatch": "Mật khẩu không khớp."
+              }
+            }
+          },
+          "actions": {
+            "submit": "Tạo tài khoản",
+            "submitLoading": "Đang tạo tài khoản..."
+          },
+          "links": {
+            "hasAccount": "Đã có tài khoản?",
+            "signIn": "Đăng nhập"
+          }
+        },
+        "social": {
+          "divider": "HOẶC TIẾP TỤC VỚI",
+          "providers": {
+            "github": "Tiếp tục với GitHub"
+          }
+        },
+        "legal": {
+          "agreement": "Bằng cách tạo tài khoản, bạn đồng ý với",
           "links": {
             "termsOfService": "Điều khoản dịch vụ",
             "privacyPolicy": "Chính sách bảo mật"

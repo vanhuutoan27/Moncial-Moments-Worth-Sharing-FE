@@ -17,36 +17,39 @@ import {
   User,
   Users
 } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Button } from "../ui/button"
 import { Separator } from "../ui/separator"
 import SidebarGroup from "./sidebar-group"
 
-const MAIN_ROUTES = [
-  { label: "Home", href: "/", icon: Home },
-  { label: "Explore", href: "/explore", icon: Search },
-  { label: "Trending", href: "/trending", icon: TrendingUp },
-  { label: "Notifications", href: "/notifications", icon: Bell }
-] as const
-
-const SOCIAL_ROUTES = [
-  { label: "Messages", href: "/messages", icon: MessageCircle },
-  { label: "Groups", href: "/groups", icon: Users },
-  { label: "Events", href: "/events", icon: Calendar }
-] as const
-
-const PERSONAL_ROUTES = [
-  { label: "Profile", href: "/profile", icon: User },
-  { label: "Bookmarks", href: "/bookmarks", icon: Bookmark }
-] as const
-
-const OTHER_ROUTES = [
-  { label: "Settings", href: "/settings", icon: Settings },
-  { label: "Help", href: "/help", icon: Info }
-] as const
-
 function LeftSidebar() {
+  const t = useTranslations("app.sidebar")
+
   const pathname = usePathname()
+
+  const MAIN_ROUTES = [
+    { label: t("navigation.home"), href: "/", icon: Home },
+    { label: t("navigation.explore"), href: "/explore", icon: Search },
+    { label: t("navigation.trending"), href: "/trending", icon: TrendingUp },
+    { label: t("navigation.notifications"), href: "/notifications", icon: Bell }
+  ] as const
+
+  const SOCIAL_ROUTES = [
+    { label: t("navigation.messages"), href: "/messages", icon: MessageCircle },
+    { label: t("navigation.profile"), href: "/groups", icon: Users },
+    { label: t("navigation.groups"), href: "/events", icon: Calendar }
+  ] as const
+
+  const PERSONAL_ROUTES = [
+    { label: t("navigation.events"), href: "/profile", icon: User },
+    { label: t("navigation.bookmarks"), href: "/bookmarks", icon: Bookmark }
+  ] as const
+
+  const OTHER_ROUTES = [
+    { label: t("navigation.settings"), href: "/settings", icon: Settings },
+    { label: t("navigation.help"), href: "/help", icon: Info }
+  ] as const
 
   const routeGroups = useMemo(
     () => [
@@ -80,7 +83,7 @@ function LeftSidebar() {
         onClick={handleShare}
         className="mt-6 w-full font-semibold"
       >
-        Share
+        {t("actions.share")}
       </Button>
     </div>
   )

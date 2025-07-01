@@ -29,7 +29,7 @@ export function ThemeSelector() {
       <DropdownMenuSub>
         <DropdownMenuSubTrigger>
           <SunMoon size={16} color="var(--primary)" className="opacity-70" />
-          <span>{t("title")}</span>
+          <span>{t("label")}</span>
         </DropdownMenuSubTrigger>
 
         <DropdownMenuPortal>

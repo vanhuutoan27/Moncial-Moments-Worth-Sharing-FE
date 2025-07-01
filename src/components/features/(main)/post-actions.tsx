@@ -3,7 +3,7 @@
 import React, { useCallback, useState } from "react"
 
 import { Bookmark, Heart, MessageCircle, Send } from "lucide-react"
-import { AnimatePresence, Variants, motion } from "motion/react"
+import { AnimatePresence, motion, Variants } from "motion/react"
 
 import { Button } from "@/components/ui/button"
 

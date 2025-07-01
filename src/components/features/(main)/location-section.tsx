@@ -3,6 +3,7 @@
 import React, { useState } from "react"
 
 import { MapPin } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -33,6 +34,8 @@ function LocationSection({
   onLocationChange,
   onLocationSelect
 }: LocationSectionProps) {
+  const t = useTranslations("app.post.compose.form.fields.location")
+
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false)
 
   const filteredLocations = LOCATIONS.filter((location) =>
@@ -60,7 +63,7 @@ function LocationSection({
 
   return (
     <div className="space-y-2">
-      <Label htmlFor="location">Location</Label>
+      <Label htmlFor="location">{t("label")}</Label>
 
       <div className="relative">
         <Input
@@ -70,7 +73,7 @@ function LocationSection({
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
-          placeholder="Where did this adventure take you?"
+          placeholder={t("placeholder")}
         />
 
         {showSuggestions && filteredLocations.length > 0 && (

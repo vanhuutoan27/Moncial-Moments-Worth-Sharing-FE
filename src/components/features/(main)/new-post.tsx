@@ -3,6 +3,7 @@
 import React, { useCallback, useRef, useState } from "react"
 
 import { PencilLine } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import UserAvatar from "@/components/shared/user-avatar"
 
@@ -26,6 +27,8 @@ import NewPostActions from "./new-post-actions"
 import NewPostHeader from "./new-post-header"
 
 function NewPost() {
+  const t = useTranslations("app.post.compose")
+
   const imageInputRef = useRef<HTMLInputElement>(null)
   const dropZoneRef = useRef<HTMLDivElement>(null)
 
@@ -192,7 +195,7 @@ function NewPost() {
             <div className="relative w-full">
               <Input
                 type="text"
-                placeholder="Share your thoughts with the world..."
+                placeholder={t("form.fields.caption.placeholder")}
                 onFocus={handleExpand}
                 className="w-full cursor-pointer"
               />
@@ -210,7 +213,7 @@ function NewPost() {
               onClick={handleExpand}
               className="hidden font-semibold md:block"
             >
-              Share
+              {t("actions.share")}
             </Button>
           </>
         ) : (
@@ -222,14 +225,14 @@ function NewPost() {
         <div className="space-y-4">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label htmlFor="caption">Caption</Label>
+              <Label htmlFor="caption">{t("form.fields.caption.label")}</Label>
               <span className="text-muted-foreground text-xs">{caption.length}/2000</span>
             </div>
 
             <Textarea
               value={caption}
               onChange={handleCaptionChange}
-              placeholder="Share your thoughts with the world..."
+              placeholder={t("form.fields.caption.placeholder")}
               rows={4}
               className="resize-none"
             />

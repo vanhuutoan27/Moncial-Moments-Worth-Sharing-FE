@@ -3,6 +3,7 @@
 import React from "react"
 
 import { X } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -47,6 +48,8 @@ function HashtagSection({
   onRemoveHashtag,
   onKeyPress
 }: HashtagSectionProps) {
+  const t = useTranslations("app.post.compose.form.fields.hashtags")
+
   const filteredHashtagSuggestions = HASHTAGS.filter((tag) => !hashtags.includes(tag))
     .filter((tag) => tag.includes(hashtagInput.toLowerCase()))
     .slice(0, 6)
@@ -54,7 +57,7 @@ function HashtagSection({
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <Label htmlFor="hashtags">Hashtags</Label>
+        <Label htmlFor="hashtags">{t("label")}</Label>
 
         <span className="text-muted-foreground text-xs">{hashtags.length}/10</span>
       </div>
@@ -75,11 +78,7 @@ function HashtagSection({
             value={hashtagInput}
             onChange={(e) => onHashtagInputChange(e.target.value)}
             onKeyDown={onKeyPress}
-            placeholder={
-              hashtags.length === 0
-                ? "Tag your vibe... #inspiration #moment"
-                : "What else captures this? #adventure #life"
-            }
+            placeholder={t("placeholder")}
             className="min-w-[120px] flex-1 border-0 bg-transparent p-0 focus-visible:border-0 focus-visible:ring-0 dark:bg-transparent"
           />
         </div>

@@ -3,6 +3,7 @@
 import React from "react"
 
 import { Calendar, Hash, Image as ImageIcon, MapPin, Video } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 
@@ -23,6 +24,8 @@ function NewPostActions({
   onLocationToggle,
   onHashtagToggle
 }: NewPostActionsProps) {
+  const t = useTranslations("app.post.compose.attachments")
+
   return (
     <div className="flex flex-wrap gap-2">
       <Button
@@ -37,17 +40,17 @@ function NewPostActions({
           color={hasImages ? "#fff" : "var(--primary)"}
           className="size-4 opacity-70"
         />
-        Photo
+        {t("photo")}
       </Button>
 
       <Button type="button" variant="outline" size="sm" className="border">
         <Video size={16} color="var(--primary)" className="size-4 opacity-70" />
-        Video
+        {t("video")}
       </Button>
 
       <Button type="button" variant="outline" size="sm" className="border">
         <Calendar size={16} color="var(--primary)" className="size-4 opacity-70" />
-        Event
+        {t("event")}
       </Button>
 
       <Button
@@ -62,7 +65,7 @@ function NewPostActions({
           color={showLocationSection ? "#fff" : "var(--primary)"}
           className="size-4 opacity-70"
         />
-        Location
+        {t("location")}
       </Button>
 
       <Button
@@ -77,7 +80,7 @@ function NewPostActions({
           color={showHashtagSection ? "#fff" : "var(--primary)"}
           className="size-4 opacity-70"
         />
-        Hashtag
+        {t("hashtag")}
       </Button>
     </div>
   )
