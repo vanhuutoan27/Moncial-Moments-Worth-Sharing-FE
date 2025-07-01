@@ -2,8 +2,6 @@
 
 import { useCallback, useTransition } from "react"
 
-import { useRouter } from "next/navigation"
-
 import { Languages } from "lucide-react"
 import { useLocale } from "next-intl"
 import { useTranslations } from "next-intl"
@@ -29,21 +27,18 @@ const LANGUAGES = [
 ] as const
 
 export function LanguageSelector() {
-  const locale = useLocale()
-  const router = useRouter()
-  const [isPending, startTransition] = useTransition()
   const t = useTranslations("app.header.menu.items")
 
-  const handleLanguageChange = useCallback(
-    (newLocale: string) => {
-      startTransition(() => {
-        document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000`
+  const locale = useLocale()
+  const [isPending, startTransition] = useTransition()
 
-        window.location.reload()
-      })
-    },
-    [router]
-  )
+  const handleLanguageChange = useCallback((newLocale: string) => {
+    startTransition(() => {
+      document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000`
+
+      window.location.reload()
+    })
+  }, [])
 
   return (
     <DropdownMenuGroup>

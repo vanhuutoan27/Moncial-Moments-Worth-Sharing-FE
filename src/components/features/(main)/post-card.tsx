@@ -5,7 +5,6 @@ import React, { useCallback, useState } from "react"
 import Link from "next/link"
 
 import { Bookmark, Ellipsis, Eye, Trash2 } from "lucide-react"
-import { useTranslations } from "next-intl"
 
 import UserAvatar from "@/components/shared/user-avatar"
 import UserProfile from "@/components/shared/user-profile"
@@ -56,8 +55,6 @@ function PostCard({
   onMenuAction,
   onCommentSubmit
 }: PostCardProps) {
-  const t = useTranslations("app.post")
-
   const [isLiked, setIsLiked] = useState<boolean>(false)
   const [isSaved, setIsSaved] = useState<boolean>(false)
 

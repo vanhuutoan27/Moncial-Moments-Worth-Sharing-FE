@@ -28,38 +28,37 @@ function LeftSidebar() {
 
   const pathname = usePathname()
 
-  const MAIN_ROUTES = [
-    { label: t("navigation.home"), href: "/", icon: Home },
-    { label: t("navigation.explore"), href: "/explore", icon: Search },
-    { label: t("navigation.trending"), href: "/trending", icon: TrendingUp },
-    { label: t("navigation.notifications"), href: "/notifications", icon: Bell }
-  ] as const
+  const routeGroups = useMemo(() => {
+    const MAIN_ROUTES = [
+      { label: t("navigation.home"), href: "/", icon: Home },
+      { label: t("navigation.explore"), href: "/explore", icon: Search },
+      { label: t("navigation.trending"), href: "/trending", icon: TrendingUp },
+      { label: t("navigation.notifications"), href: "/notifications", icon: Bell }
+    ] as const
 
-  const SOCIAL_ROUTES = [
-    { label: t("navigation.messages"), href: "/messages", icon: MessageCircle },
-    { label: t("navigation.profile"), href: "/groups", icon: Users },
-    { label: t("navigation.groups"), href: "/events", icon: Calendar }
-  ] as const
+    const SOCIAL_ROUTES = [
+      { label: t("navigation.messages"), href: "/messages", icon: MessageCircle },
+      { label: t("navigation.profile"), href: "/groups", icon: Users },
+      { label: t("navigation.groups"), href: "/events", icon: Calendar }
+    ] as const
 
-  const PERSONAL_ROUTES = [
-    { label: t("navigation.events"), href: "/profile", icon: User },
-    { label: t("navigation.bookmarks"), href: "/bookmarks", icon: Bookmark }
-  ] as const
+    const PERSONAL_ROUTES = [
+      { label: t("navigation.events"), href: "/profile", icon: User },
+      { label: t("navigation.bookmarks"), href: "/bookmarks", icon: Bookmark }
+    ] as const
 
-  const OTHER_ROUTES = [
-    { label: t("navigation.settings"), href: "/settings", icon: Settings },
-    { label: t("navigation.help"), href: "/help", icon: Info }
-  ] as const
+    const OTHER_ROUTES = [
+      { label: t("navigation.settings"), href: "/settings", icon: Settings },
+      { label: t("navigation.help"), href: "/help", icon: Info }
+    ] as const
 
-  const routeGroups = useMemo(
-    () => [
+    return [
       { key: "main", routes: MAIN_ROUTES },
       { key: "social", routes: SOCIAL_ROUTES },
       { key: "personal", routes: PERSONAL_ROUTES },
       { key: "other", routes: OTHER_ROUTES }
-    ],
-    []
-  )
+    ]
+  }, [t])
 
   const handleShare = useCallback(() => {
     console.log("Share button clicked")
