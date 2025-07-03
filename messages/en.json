@@ -93,7 +93,7 @@
               "label": "Caption",
               "placeholder": "Share your thoughts with the world...",
               "validations": {
-                "maxLength": "Caption cannot exceed {{max}} characters."
+                "maxLength": "Caption cannot exceed 2000 characters."
               }
             },
             "privacy": {
@@ -223,6 +223,7 @@
         "social": {
           "divider": "OR CONTINUE WITH",
           "providers": {
+            "google": "Continue with Google",
             "github": "Continue with GitHub"
           }
         },
@@ -255,8 +256,8 @@
               "validations": {
                 "required": "Username is required.",
                 "constraints": {
-                  "minLength": "Username must be at least {{min}} characters.",
-                  "maxLength": "Username cannot exceed {{max}} characters."
+                  "minLength": "Username must be at least 3 characters.",
+                  "maxLength": "Username cannot exceed 30 characters."
                 },
                 "format": "Username can only contain letters, numbers, and underscores.",
                 "taken": "This username is already taken."
@@ -268,8 +269,8 @@
               "validations": {
                 "required": "Password is required.",
                 "constraints": {
-                  "minLength": "Password must be at least {{min}} characters.",
-                  "maxLength": "Password cannot exceed {{max}} characters."
+                  "minLength": "Password must be at least 6 characters.",
+                  "maxLength": "Password cannot exceed 32 characters."
                 },
                 "requirements": {
                   "uppercase": "Password must contain at least one uppercase letter.",
@@ -300,6 +301,7 @@
         "social": {
           "divider": "OR CONTINUE WITH",
           "providers": {
+            "google": "Continue with Google",
             "github": "Continue with GitHub"
           }
         },

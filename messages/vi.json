@@ -93,7 +93,7 @@
               "label": "Nội dung",
               "placeholder": "Chia sẻ suy nghĩ của bạn với thế giới...",
               "validations": {
-                "maxLength": "Nội dung không được vượt quá {{max}} ký tự."
+                "maxLength": "Nội dung không được vượt quá 2000 ký tự."
               }
             },
             "privacy": {
@@ -223,6 +223,7 @@
         "social": {
           "divider": "HOẶC TIẾP TỤC VỚI",
           "providers": {
+            "google": "Tiếp tục với Google",
             "github": "Tiếp tục với GitHub"
           }
         },
@@ -255,8 +256,8 @@
               "validations": {
                 "required": "Tên người dùng là bắt buộc.",
                 "constraints": {
-                  "minLength": "Tên người dùng phải có ít nhất {{min}} ký tự.",
-                  "maxLength": "Tên người dùng không được vượt quá {{max}} ký tự."
+                  "minLength": "Tên người dùng phải có ít nhất 3 ký tự.",
+                  "maxLength": "Tên người dùng không được vượt quá 30 ký tự."
                 },
                 "format": "Tên người dùng chỉ có thể chứa chữ cái, số và dấu gạch dưới.",
                 "taken": "Tên người dùng này đã được sử dụng."
@@ -268,8 +269,8 @@
               "validations": {
                 "required": "Mật khẩu là bắt buộc.",
                 "constraints": {
-                  "minLength": "Mật khẩu phải có ít nhất {{min}} ký tự.",
-                  "maxLength": "Mật khẩu không được vượt quá {{max}} ký tự."
+                  "minLength": "Mật khẩu phải có ít nhất 6 ký tự.",
+                  "maxLength": "Mật khẩu không được vượt quá 32 ký tự."
                 },
                 "requirements": {
                   "uppercase": "Mật khẩu phải chứa ít nhất một chữ cái viết hoa.",
@@ -300,6 +301,7 @@
         "social": {
           "divider": "HOẶC TIẾP TỤC VỚI",
           "providers": {
+            "google": "Tiếp tục với Google",
             "github": "Tiếp tục với GitHub"
           }
         },

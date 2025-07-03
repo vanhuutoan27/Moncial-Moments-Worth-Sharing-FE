@@ -41,8 +41,8 @@ export const userSchema = (t: (key: string, values?: TranslationValues) => strin
 
     password: z
       .string({ required_error: t("form.fields.password.validations.required") })
-      .min(6, { message: t("form.fields.password.validations.constraints.min") })
-      .max(32, { message: t("form.fields.password.validations.constraints.max") })
+      .min(6, { message: t("form.fields.password.validations.constraints.minLength") })
+      .max(32, { message: t("form.fields.password.validations.constraints.maxLength") })
       .regex(/[A-Z]/, { message: t("form.fields.password.validations.requirements.uppercase") })
       .regex(/[a-z]/, { message: t("form.fields.password.validations.requirements.lowercase") })
       .regex(/\d/, { message: t("form.fields.password.validations.requirements.number") })

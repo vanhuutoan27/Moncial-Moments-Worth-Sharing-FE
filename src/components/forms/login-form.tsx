@@ -5,7 +5,8 @@ import React, { useState } from "react"
 import Link from "next/link"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Eye, EyeOff, Github, Loader2, Lock, Mail } from "lucide-react"
+import { Eye, EyeOff, Loader2, Lock, Mail } from "lucide-react"
+import { signIn } from "next-auth/react"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -23,10 +24,13 @@ import { Input } from "@/components/ui/input"
 
 import { loginSchema, LoginType } from "@/validations/user.validation"
 
+import GoogleIcon from "../shared/google-icon"
+
 function LoginForm() {
   const t = useTranslations("app.auth.login")
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false)
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
   const form = useForm<LoginType>({
@@ -41,19 +45,28 @@ function LoginForm() {
     try {
       setIsLoading(true)
 
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-
-      toast.message("Login successful!", {
-        description: "Login data: " + JSON.stringify(data, null, 2)
-      })
       console.log("Login data:", data)
+      toast.success("Login successful!")
     } catch (error) {
-      toast.message("Login failed. Please try again.", {
-        description: "Login error: " + error
-      })
+      toast.error("Login failed. Please try again.")
       console.log("Login error:", error)
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  const handleGoogleLogin = async () => {
+    try {
+      setIsGoogleLoading(true)
+
+      await signIn("google", {
+        callbackUrl: "/"
+      })
+    } catch (error) {
+      toast.error("Google login failed. Please try again.")
+      console.log("Google login error:", error)
+    } finally {
+      setIsGoogleLoading(false)
     }
   }
 
@@ -170,9 +183,24 @@ function LoginForm() {
             </div>
           </div>
 
-          <Button type="button" variant="outline" className="w-full font-semibold">
-            <Github size={16} />
-            {t("social.providers.github")}
+          <Button
+            type="button"
+            disabled={isGoogleLoading}
+            variant="outline"
+            className="w-full font-semibold"
+            onClick={handleGoogleLogin}
+          >
+            {isGoogleLoading ? (
+              <>
+                <Loader2 size={16} className="animate-spin" />
+                {t("form.actions.submitLoading")}
+              </>
+            ) : (
+              <>
+                <GoogleIcon />
+                {t("social.providers.google")}
+              </>
+            )}
           </Button>
         </div>
 

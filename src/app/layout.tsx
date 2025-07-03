@@ -6,6 +6,7 @@ import { getLocale, getMessages } from "next-intl/server"
 
 import { Toaster } from "@/components/ui/sonner"
 
+import SessionProvider from "@/providers/SessionProvider"
 import { ThemeProvider } from "@/providers/ThemeProvider"
 
 import "../styles/globals.css"
@@ -33,17 +34,19 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={`${poppins.variable} antialiased`}>
-        <NextIntlClientProvider messages={messages} locale={locale}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-            <Toaster />
-          </ThemeProvider>
-        </NextIntlClientProvider>
+        <SessionProvider>
+          <NextIntlClientProvider messages={messages} locale={locale}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+              <Toaster />
+            </ThemeProvider>
+          </NextIntlClientProvider>
+        </SessionProvider>
       </body>
     </html>
   )
