@@ -198,8 +198,8 @@
               "validations": {
                 "required": "Mật khẩu là bắt buộc.",
                 "constraints": {
-                  "minLength": "Mật khẩu phải có ít nhất {{min}} ký tự.",
-                  "maxLength": "Mật khẩu không được vượt quá {{max}} ký tự."
+                  "minLength": "Mật khẩu phải có ít nhất 6 ký tự.",
+                  "maxLength": "Mật khẩu không được vượt quá 32 ký tự."
                 },
                 "requirements": {
                   "uppercase": "Mật khẩu phải chứa ít nhất một chữ cái viết hoa.",

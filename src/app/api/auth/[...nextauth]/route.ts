@@ -37,6 +37,27 @@ const handler = NextAuth({
     }
   },
 
+  events: {
+    async signIn(message) {
+      if (typeof window !== "undefined" && message.account?.access_token) {
+        localStorage.setItem("accessToken", message.account.access_token)
+        localStorage.setItem("refreshToken", message.account.refresh_token ?? "")
+        localStorage.setItem(
+          "accessTokenExpires",
+          message.account.expires_at !== undefined ? message.account.expires_at.toString() : ""
+        )
+      }
+    },
+
+    async signOut() {
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("accessToken")
+        localStorage.removeItem("refreshToken")
+        localStorage.removeItem("accessTokenExpires")
+      }
+    }
+  },
+
   debug: process.env.NODE_ENV === "development"
 })
 

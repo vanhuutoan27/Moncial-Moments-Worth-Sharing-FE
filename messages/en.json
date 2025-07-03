@@ -198,8 +198,8 @@
               "validations": {
                 "required": "Password is required.",
                 "constraints": {
-                  "minLength": "Password must be at least {{min}} characters.",
-                  "maxLength": "Password cannot exceed {{max}} characters."
+                  "minLength": "Password must be at least 6 characters.",
+                  "maxLength": "Password cannot exceed 32 characters."
                 },
                 "requirements": {
                   "uppercase": "Password must contain at least one uppercase letter.",
