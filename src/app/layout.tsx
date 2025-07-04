@@ -6,6 +6,7 @@ import { getLocale, getMessages } from "next-intl/server"
 
 import { Toaster } from "@/components/ui/sonner"
 
+import QueryProvider from "@/providers/QueryProvider"
 import SessionProvider from "@/providers/SessionProvider"
 import { ThemeProvider } from "@/providers/ThemeProvider"
 
@@ -42,8 +43,10 @@ export default async function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              {children}
-              <Toaster />
+              <QueryProvider>
+                {children}
+                <Toaster />
+              </QueryProvider>
             </ThemeProvider>
           </NextIntlClientProvider>
         </SessionProvider>
