@@ -132,7 +132,7 @@ function PostCard({
           </div>
         </div>
 
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button type="button" variant="ghost" size="icon">
               <Ellipsis size={20} color="var(--primary)" className="size-5 opacity-70" />

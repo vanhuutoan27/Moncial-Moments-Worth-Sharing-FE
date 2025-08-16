@@ -27,7 +27,7 @@ export default function QueryProvider({ children }: QueryProviderProps) {
               ) {
                 return false
               }
-              
+
               return failureCount < 2
             },
             refetchOnWindowFocus: false,
